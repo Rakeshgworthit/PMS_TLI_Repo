@@ -1,0 +1,89 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "ExpenseCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Expense Category</h3>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+            @if (User.IsInRole("SuperAdmin"))
+            {
+                <button type="button" onclick="openModelpop('/Admin/CategoryLoadAddEdit', 'id', 0);" class='btn btn-primary pull-right'>
+                    <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+                </button>
+            }
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="responsive-table">
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
+                        @Html.MVCGrid("ExpenseCategories")
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var che = true;
+
+    function myFunction() {
+        debugger;
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true) {
+            debugger;
+            che = true;
+        } else {
+            che = false;
+        }
+    }
+
+    function SaveCategoryForm() {
+        var ch = che;
+        $('#IsActive').val(ch);
+        var form = $('#frmcategory');
+        $.validator.unobtrusive.parse(form);
+        if (form.valid()) {
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Admin/CategorySaveUpdate", // the URL of the controller action method
+                data: {
+                    id: $('#frmcategory').find("#id").val(),
+                    Parent: $('#frmcategory').find("#Parent").val(),
+                    ExpenseCategory1: $('#frmcategory').find("#ExpenseCategory1").val(),
+                    IsActive: $('#frmcategory').find("#IsActive").val(),
+                }, // optional data
+                success: function (result) {
+                    $.loader('close');
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {
+                        $("#btnClose").click();
+                        loadGrid();
+                        notify(result.msg, result.cls);
+                    }
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                }
+            });
+        }
+    }
+    function loadGrid() {
+        MVCGrid.reloadGrid('ExpenseCategories');
+    }
+</script>
+
+

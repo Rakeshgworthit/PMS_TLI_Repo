@@ -1,0 +1,192 @@
+﻿@model PMS.Models.ProjectAdditionsViewModel
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Add/Edit Additions & Omissions</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" id="frmProject" name="frmProject">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="customer_name">Address/Site:</label>
+                    <div class="col-sm-8">
+
+
+                        @Html.HiddenFor(o => o.id)
+                        @if (Model.isProjectClosed)
+                        {
+                            @Html.DropDownListFor(o => o.project_id, Model.ProjectList, new { @class = "form-control", @tabindex = "1", @disabled = "disabled" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(o => o.project_id, Model.ProjectList, new { @class = "form-control", @tabindex = "1" })
+                        }
+
+
+                        @Html.ValidationMessageFor(o => o.project_id, "", new { @class = "text-error" })
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Date:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.date, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "2" })
+                        @Html.ValidationMessageFor(o => o.date, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="customer_name">Type:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.record_type, Model.AdditionTypeList, new { @class = "form-control", @tabindex = "3" })
+                        @Html.ValidationMessageFor(o => o.record_type, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Description:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.addition_omissioni_description, new { @class = "form-control", @tabindex = "4" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Remarks:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.remarks, new { @class = "form-control", @tabindex = "5" })
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Invoice Amount with GST:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.total_amount, "{0:0.00}", new { @class = "form-control amount", @tabindex = "6" })
+                        @Html.ValidationMessageFor(o => o.total_amount, "", new { @class = "text-error" })
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Gst Percentage:</label>
+                    <div class="col-sm-8">
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.TextBoxFor(o => o.gst_percentage, new { @class = "form-control amount", @tabindex = "7" })
+                                </td>
+                                <td>
+                                    <strong>%</strong>
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(o => o.gst_percentage, "", new { @class = "text-error" })
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Gst Amount:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.gst_amount, "{0:0.00}", new { @class = "form-control amount", @tabindex = "8" })
+                        @Html.ValidationMessageFor(o => o.gst_amount, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Amount:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.amount, "{0:0.00}", new { @class = "form-control amount", @tabindex = "9" })
+                        @Html.ValidationMessageFor(o => o.amount, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+
+                @Html.HiddenFor(o => o.isactive)
+
+                @*<div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Is Active:</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(o => o.isactive, Model.ActiveInactiveList, new { @class = "form-control" })
+                        </div>
+                    </div>*@
+
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnSelect" name="btnSelect" type="button" class="btn btn-primary" onclick="SaveForm();">Save</button>
+    <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+
+
+<script>
+    $(function () {
+
+        $("#project_id").chosen();
+        $("#project_id_chosen").width(260);
+
+        $("#date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#date').removeAttr("data-val-date");
+
+        $("#total_amount").blur(function () {
+            CalculateGSTTotalAmount();
+        });
+        $("#gst_percentage").blur(function () {
+            CalculateGSTTotalAmount();
+        });
+
+        $("#gst_percentage").keydown(function () {
+            CalculateGSTTotalAmount();
+        });
+        $("#gst_percentage").keyup(function () {
+            CalculateGSTTotalAmount();
+        });
+
+    });
+    function CalculateGSTTotalAmount() {
+        //var camount = $("#amount").val();
+
+        //$("#total_amount").val(camount);
+        //var gstp = $("#gst_percentage").val();
+        //if (String(camount).length > 0 && String(gstp).length > 0) {
+        //    var GST = parseFloat((camount * gstp) / 100).toFixed(2);
+        //    $("#gst_amount").val(GST);
+        //    var totalamt = (parseFloat(camount) + parseFloat(GST)).toFixed(2);
+        //    $("#total_amount").val(totalamt);
+        //}
+
+
+        var tolalamount = parseFloat($("#total_amount").val());
+
+        var gPer = 0;
+        if ($("#gst_percentage").val() > 0) {
+            gPer = parseFloat($("#gst_percentage").val());
+        }
+
+        var gstp = parseFloat(gPer / 100) + 1;
+        if (String(tolalamount).length > 0 && String(gstp).length > 0) {
+            var CAmount = parseFloat(tolalamount / gstp).toFixed(2);
+            var GST = parseFloat(tolalamount - CAmount).toFixed(2);
+            if (String(GST) == "NaN") {
+                GST = "0.00";
+            }
+            if (String(CAmount) == "NaN") {
+                CAmount = "0.00";
+            }
+            $("#gst_amount").val(GST);
+            $("#amount").val(CAmount)
+        }
+    }
+</script>
+

@@ -1,0 +1,52 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Users</h3>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+            <a href="/Account/Edit" class='btn btn-primary pull-right'>
+                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="well">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Name" id="uname" name="uname"
+                                   data-mvcgrid-type="filter" data-mvcgrid-option="uname" />
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email" id="email" name="email"
+                                   data-mvcgrid-type="filter" data-mvcgrid-option="email" />
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" data-mvcgrid-type="filter" data-mvcgrid-option="is_active">
+                                <option value=""></option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" data-mvcgrid-apply-filter="click"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="responsive-table">
+                    @Html.MVCGrid("Users")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

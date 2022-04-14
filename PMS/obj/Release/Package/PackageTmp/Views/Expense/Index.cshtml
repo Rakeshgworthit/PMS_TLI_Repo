@@ -1,0 +1,188 @@
+﻿@using MVCGrid.Web
+@model PMS.Models.ProjectViewModel
+@{
+    ViewBag.Title = "Expense";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Expenses</h3>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+            <button type="button" onclick="openModelpop('/Expense/_LoadExpense', 'id', 0);" class='btn btn-primary pull-right'>
+                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="well">
+                    @using (Html.BeginForm("Index", "Expense", FormMethod.Post, new { id = "SearchForm", name = "SearchForm" }))
+                    {
+                        <div class="form-inline ">
+                            <div class="form-group">
+                                <label class="control-label" for="from_date">Expense Date From:</label>
+                                <input id="from_date" name="from_date" class="form-control" style="width:100px" placeholder="From Date" value="@Convert.ToDateTime(Model.from_date).ToString("dd/MM/yyyy")" />
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="from_date">To:</label>
+
+                                <input id="to_date" name="to_date" class="form-control" style="width:100px" placeholder="To Date" value="@Convert.ToDateTime(Model.to_date).ToString("dd/MM/yyyy")" />
+
+                            </div>
+                            <div class="form-group" style="display:none">
+                                <label class="control-label" for="from_date">Status:</label>
+                                @Html.DropDownListFor(o => o.ProjectStatusId, Model.StatusList, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group" style="display:none">
+                                <label class="control-label" for="from_date">Salesmen:</label>
+                                @Html.DropDownListFor(o => o.ProjectSalesmenId, Model.SalesmenList, new { @class = "form-control" })
+                            </div>
+                             <div class="form-group">
+                                <label class="control-label" for="from_date">Search:</label>
+                                @Html.TextBoxFor(x => x.SearchText, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" id="BranchId" name="BranchId" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="responsive-table">
+                    <input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+                    @Html.MVCGrid("Expenses", new { hdnUID = Model.UID, brId = PMS.Common.SessionManagement.SelectedBranchID, fromdate = Model.from_date, todate = Model.to_date, searchText = Model.SearchText })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divModel">
+    <div id="myModal" class="modal fade" role="dialog" style="z-index:10000">
+        <div class="modal-dialog modal-lg modal-content-left">
+
+            <div class="modal-content" id="ModelForm">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $("#from_date").datepicker({
+        changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy",
+        onSelect: function (date) {
+            var dt2 = $('#to_date');
+            var startDate = $(this).datepicker('getDate');
+            var minDate = $(this).datepicker('getDate');
+            dt2.datepicker('option', 'minDate', minDate);
+        }
+    });
+    $("#to_date").datepicker({
+        changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy",
+        onSelect: function (date) {
+            var dt1 = $('#from_date');
+            var startDate = $(this).datepicker('getDate');
+            var maxDate = $(this).datepicker('getDate');
+            dt1.datepicker('option', 'maxDate', maxDate);
+        }
+    });
+
+    $('#from_date').removeAttr("data-val-date");
+    $('#to_date').removeAttr("data-val-date");
+
+
+    function SaveExpense() {
+        var form = $('#frmExpense');
+        $.validator.unobtrusive.parse(form);
+        if (form.valid()) {
+
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Expense/SaveExpense", // the URL of the controller action method
+                data: {
+                    id: $('#frmExpense').find("#id").val(),
+                    Expense_Date: $('#frmExpense').find("#Expense_Date").val(),
+                    Company_Id: $('#frmExpense').find("#Company_Id").val(),
+                    Expense_Category_Id: $('#frmExpense').find("#Expense_Category_Id").val(),
+                    Expense_Item_Id: $('#frmExpense').find("#Expense_Item_Id").val(),
+                    Amount: $('#frmExpense').find("#Amount").val(),
+                    branch_id: $('#frmExpense').find("#branch_id").val(),
+                    bank_id: $('#frmExpense').find("#bank_id").val(),
+                    cheque_number: $('#frmExpense').find("#cheque_number").val(),
+                    remarks: $('#frmExpense').find("#remarks").val(),
+                    Pay_To: $('#frmExpense').find("#Pay_To").val()
+                }, // optional data
+                success: function (result) {
+                    $.loader('close');
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {
+                        $("#btnExpenseClose").click();
+                        loadGrid();
+                        notify(result.msg, result.cls);
+                    }
+                },
+                error: function (req, status, error) {
+                    $.loader('close');
+                    notify(error, "error");
+                }
+            });
+        }
+    }
+
+    function loadGrid() {
+        MVCGrid.reloadGrid('Expenses');
+    }
+
+    function ShowCustomerModel(obj)
+    {
+        $("#ModelForm").html("");
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+
+            $.ajax({
+                type: "POST",
+                url: "/Customer/_LoadCustomer", // the URL of the controller action method
+                data: {
+                    Id: obj
+                }, // optional data
+                success: function (result) {
+                    $("#ModelForm").html(result);
+                    $.loader('close');
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                }
+            });
+
+
+            $("#myModal").modal('show');
+
+    }
+
+    function FillCustomerDropdown(obj) {
+        $("#customer_id").html("");
+        var options = $("#customer_id");
+        $.getJSON("/Home/GetCustomerList/", function (response) {
+            $.each(response, function () {
+                options.append($("<option />").val(this.Value).text(this.Text));
+            });
+
+            $("#customer_id").val(obj);
+            GetCustomerInfo(obj)
+        });
+    }
+
+</script>

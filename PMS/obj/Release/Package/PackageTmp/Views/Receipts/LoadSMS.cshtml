@@ -1,0 +1,115 @@
+﻿
+@model PMS.Models.PaymentsReceived
+
+@{
+    ViewBag.Title = "SendSMS";
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Thank you for the payment made to TLI</h4>
+</div>
+
+<div class="modal-body">
+    <form class="form-horizontal" id="frmSMS" name="frmSMS">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="form-group">
+                    <label class="col-sm-6">PAYMENTS RECEIVED :</label>
+                    <div class="col-sm-8">
+
+                        @foreach (var customer in Model.PaymentReceived)
+                        {
+                            @Html.DisplayFor(m => customer.date_amount)
+                            <br />
+                                @Html.DisplayFor(m => customer.cheque_details)
+                                <br />
+                        }
+
+                        @*<input type="text" style="border:none" readonly value="XYZ" id="PAYMENTSRECEIVED">*@
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Total Payment Received as of :</label>
+                    <div class="col-sm-8">
+                        @for (int i = 0; i <= 0; i++)
+                        {
+                            @Html.DisplayFor(m => m.PaymentReceived[0].totalPayment);
+
+                        }
+                    </div>
+                    <div class="col-sm-12">
+                        (*This include payment mode via cheque/transfer, amount which is still pending by bank)
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-12">Kindly contact us at 87499919/63859919 if there is any discrepancy.</label>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-12">Cash payment MUST be acknowledged with our company official receipt. Bank transfer payment should only be made to our corporate bank account: TLI -
+                        @for (int i = 0; i <= 0; i++)
+                        {
+                            @Html.DisplayFor(m => m.PaymentReceived[0].accountNo);
+
+                        } </label>
+
+                </div>
+                <div class="form-group">
+                    <span class="col-sm-6">Accounts</span><br />
+                    <span class="col-sm-6">
+                        @for (int i = 0; i <= 0; i++)
+                        {
+                            @Html.DisplayFor(m => m.PaymentReceived[0].branchAddress);
+
+                        }</span><br />
+                    <span class="col-sm-6">TLI Pte Ltd</span><br />
+                    <span class="col-sm-12">< THIS IS AN AUTO-GENERATED PAYMENT UPDATE ></span><br />
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="button" name="btnSave" class="btn btn-primary" onclick="SendSMS();">Send SMS</button>
+        <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+</div>
+<script>
+    //$(document).ready(function () {
+    //    var x = $("#frmSMS").html();
+    //    alert((x));
+    //});
+    function SendSMS() {
+        debugger;
+        //var sms_html = new Object();
+       //var total = $("#Total").val();
+       // var payments_received = $("#PAYMENTSRECEIVED").val();
+        $.ajax({
+            type: "POST",
+            url: '/Receipts/SendSMS',
+            // data: JSON.stringify({ payments_received: payments_received, total: total }),
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                debugger;
+                $("#btnClose").click();
+                //loadGrid();
+                notify(response.msg, response.cls);
+            },
+            error: function (req, status, error) {
+                notify(response.msg, response.cls);
+        }
+
+        });
+    }
+</script>

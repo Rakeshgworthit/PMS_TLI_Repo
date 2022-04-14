@@ -1,0 +1,110 @@
+﻿@using MVCGrid.Web
+@model PMS.Models.ReportViewModel
+@{
+    ViewBag.Title = "Project Listing Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Project Listing Report</h3>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="well">
+                    @using (Html.BeginForm("ProjectListingReport", "Report", FormMethod.Post, new { id = "SearchForm", name = "SearchForm" }))
+                    {
+                        <div class="form-inline">
+                           
+                            <div class="form-group ">
+                                <label class="control-label" for="from_date">From:</label>
+                                <input id="from_date" name="from_date" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.from_date).ToString("dd/MM/yyyy")" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="from_date">To:</label>
+                                <input id="to_date" name="to_date" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.to_date).ToString("dd/MM/yyyy")" />
+                            </div>
+
+                            @*<div class="form-group">
+                                <label class="control-label" for="from_date">Year:</label>
+                                @Html.DropDownListFor(o => o.ReportYear, Model.YearList, new { @class = "form-control" })
+                            </div>*@
+                            <input type="hidden" id="BranchId" name="BranchId" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+                            @*<div class="form-group">
+                                @Html.DropDownListFor(o => o.BranchId, Model.BranchList, new { @class = "form-control" })
+                            </div>*@
+                            <div class="form-group">
+                                @Html.DropDownListFor(o => o.SearchSalesmenStatus, Model.SalesmenStatusList, new { @class = "form-control", id = "ddlStatus" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(o => o.SalesmenId, Model.SalesmenAndUserList, new { @class = "form-control", id = "ddlSalesmen", style = "width:200px" })
+                            </div>
+                            @*<div class="form-group">
+                                @Html.DropDownListFor(o => o.SalesmenId, Model.SalenmenList, new { @class = "form-control" })
+                            </div>*@
+                            <button type="submit" class="btn btn-primary" onclick="SubmitAs('form');"><i class="fa fa-search" aria-hidden="true"></i></button>
+
+                            <button type="submit" class="btn btn-success pull-right" onclick="SubmitAs('export');"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Export</button>
+
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="responsive-table">
+                    @Html.Raw(Model.GridData)
+                    @*@Html.MVCGrid("ProjectListingReport", new { ReportYear = Model.ReportYear, Uid = Model.Uid, BranchId = Model.BranchId, SalesmenId = Model.SalesmenId })*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SubmitAs(obj) {
+        if (obj == 'form') {
+            $("#SearchForm").attr('action', "ProjectListingReport").submit();
+        } else {
+            $('#SearchForm').attr('action', "ExportProjectListingReport").submit();
+        }
+    }
+        
+    $(function () {
+        $("#from_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#from_date').removeAttr("data-val-date");
+
+        $("#to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#to_date').removeAttr("data-val-date");
+    });
+    $("#ddlStatus").change(function () {
+
+        var Id = $('#ddlStatus').val();
+        $.ajax({
+            type: 'POST',
+
+            url: "/Report/GetSalesmen",
+            data: { salesmenStatus: Id },
+            dataType: "json",
+            success: function (Model) {
+                {
+                    $("#ddlSalesmen").empty();
+                    $.each(Model.SalesmenAndUserList, function () {
+                        $("#ddlSalesmen").append($("<option/>").val(this.Value).text(this.Text));
+                    });
+                }
+            },
+            error: function () {
+
+            }
+
+        })
+    });
+
+</script>
+

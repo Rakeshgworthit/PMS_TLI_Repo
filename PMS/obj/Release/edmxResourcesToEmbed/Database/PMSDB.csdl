@@ -1,0 +1,1839 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="PMSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="PMSModel.C__MigrationHistory" />
+    <EntitySet Name="additions_omissions" EntityType="PMSModel.additions_omissions" />
+    <EntitySet Name="AspNetRoles" EntityType="PMSModel.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="PMSModel.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="PMSModel.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="PMSModel.AspNetUser" />
+    <EntitySet Name="banks" EntityType="PMSModel.bank" />
+    <EntitySet Name="branches" EntityType="PMSModel.branch" />
+    <EntitySet Name="companies" EntityType="PMSModel.company" />
+    <EntitySet Name="countries" EntityType="PMSModel.country" />
+    <EntitySet Name="customers" EntityType="PMSModel.customer" />
+    <EntitySet Name="designer_receipt_detail" EntityType="PMSModel.designer_receipt_detail" />
+    <EntitySet Name="expenses" EntityType="PMSModel.expense" />
+    <EntitySet Name="ExpenseCategories" EntityType="PMSModel.ExpenseCategory" />
+    <EntitySet Name="loans" EntityType="PMSModel.loan" />
+    <EntitySet Name="loansDetails" EntityType="PMSModel.loansDetail" />
+    <EntitySet Name="mode_of_payment" EntityType="PMSModel.mode_of_payment" />
+    <EntitySet Name="payment_detail" EntityType="PMSModel.payment_detail" />
+    <EntitySet Name="payments" EntityType="PMSModel.payment" />
+    <EntitySet Name="project_status" EntityType="PMSModel.project_status" />
+    <EntitySet Name="projects" EntityType="PMSModel.project" />
+    <EntitySet Name="receipt_detail" EntityType="PMSModel.receipt_detail" />
+    <EntitySet Name="receipts" EntityType="PMSModel.receipt" />
+    <EntitySet Name="status" EntityType="PMSModel.status" />
+    <EntitySet Name="suppliers" EntityType="PMSModel.supplier" />
+    <EntitySet Name="tbl_contract_types" EntityType="PMSModel.tbl_contract_types" />
+    <EntitySet Name="tbl_designerinvoice_items" EntityType="PMSModel.tbl_designerinvoice_items" />
+    <EntitySet Name="tbl_invoice" EntityType="PMSModel.tbl_invoice" />
+    <EntitySet Name="tbl_payment_terms" EntityType="PMSModel.tbl_payment_terms" />
+    <EntitySet Name="tbl_supplier_invoice" EntityType="PMSModel.tbl_supplier_invoice" />
+    <EntitySet Name="tbl_supplierinvoice_items" EntityType="PMSModel.tbl_supplierinvoice_items" />
+    <EntitySet Name="user_access_rights" EntityType="PMSModel.user_access_rights" />
+    <EntitySet Name="user_detail" EntityType="PMSModel.user_detail" />
+    <EntitySet Name="tbl_invoice_items" EntityType="PMSModel.tbl_invoice_items" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="PMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="PMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_loansDetails_loans" Association="PMSModel.FK_loansDetails_loans">
+      <End Role="loan" EntitySet="loans" />
+      <End Role="loansDetail" EntitySet="loansDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Salesman_Project" Association="PMSModel.FK_Salesman_Project">
+      <End Role="project" EntitySet="projects" />
+      <End Role="project1" EntitySet="projects" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="PMSModel.AspNetUserRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <FunctionImport Name="SSP_Add_DesignerInvoice_Items">
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="item_description" Mode="In" Type="String" />
+      <Parameter Name="item_amount" Mode="In" Type="Decimal" />
+      <Parameter Name="contract_number" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Add_DesignerReceipt_Detail">
+      <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+      <Parameter Name="amount" Mode="In" Type="Decimal" />
+      <Parameter Name="gst_percentage" Mode="In" Type="Decimal" />
+      <Parameter Name="gst_amount" Mode="In" Type="Decimal" />
+      <Parameter Name="total_amount" Mode="In" Type="Decimal" />
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Add_Invoice_Items">
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="item_description" Mode="In" Type="String" />
+      <Parameter Name="item_amount" Mode="In" Type="Decimal" />
+      <Parameter Name="contract_number" Mode="In" Type="String" />
+      <Parameter Name="project_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Add_Payment_Detail">
+      <Parameter Name="payment_id" Mode="In" Type="Int32" />
+      <Parameter Name="supplierinvoice_item_id" Mode="In" Type="Int32" />
+      <Parameter Name="payment_amount" Mode="In" Type="Decimal" />
+      <Parameter Name="agreed_amount" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Add_Receipt_Detail">
+      <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+      <Parameter Name="amount" Mode="In" Type="Decimal" />
+      <Parameter Name="gst_percentage" Mode="In" Type="Decimal" />
+      <Parameter Name="gst_amount" Mode="In" Type="Decimal" />
+      <Parameter Name="total_amount" Mode="In" Type="Decimal" />
+      <Parameter Name="project_id" Mode="In" Type="Int64" />
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Add_SupplierInvoice_Items">
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="salesperson_id" Mode="In" Type="Int32" />
+      <Parameter Name="project_id" Mode="In" Type="Int32" />
+      <Parameter Name="invoice_number" Mode="In" Type="String" />
+      <Parameter Name="gst" Mode="In" Type="Decimal" />
+      <Parameter Name="invoice_amt_without_gst" Mode="In" Type="Decimal" />
+      <Parameter Name="invoice_amt_with_gst" Mode="In" Type="Decimal" />
+      <Parameter Name="agreed_amt_without_gst" Mode="In" Type="Decimal" />
+      <Parameter Name="agreed_amt" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_BankChequeReport" ReturnType="Collection(PMSModel.SSP_BankChequeReport_Result)">
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="branchId" Mode="In" Type="Int32" />
+      <Parameter Name="bankId" Mode="In" Type="Int32" />
+      <Parameter Name="ChqFrom" Mode="In" Type="Int32" />
+      <Parameter Name="ChqTo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Banks" ReturnType="Collection(PMSModel.SSP_Banks_Result)">
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Branches" ReturnType="Collection(PMSModel.SSP_Branches_Result)">
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Company" ReturnType="Collection(PMSModel.SSP_Company_Result)">
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Customer" ReturnType="Collection(PMSModel.SSP_Customer_Result)">
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="CustomerSearch" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_CustomerInvoiceReport" ReturnType="Collection(PMSModel.SSP_CustomerInvoiceReport_Result)">
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_DeleteInvoiceItem">
+      <Parameter Name="Invoice_Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_DesignerReceiptById" ReturnType="Collection(PMSModel.SSP_DesignerReceiptById_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_DesignerReceiptDetailByReceiptId" ReturnType="Collection(PMSModel.SSP_DesignerReceiptDetailByReceiptId_Result)">
+      <Parameter Name="ReceiptId" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_EXCategory" ReturnType="Collection(PMSModel.SSP_EXCategory_Result)">
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Expense" ReturnType="Collection(PMSModel.SSP_Expense_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+      <Parameter Name="branchId" Mode="In" Type="Int32" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="fromdate" Mode="In" Type="DateTime" />
+      <Parameter Name="todate" Mode="In" Type="DateTime" />
+      <Parameter Name="searchText" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_ExpenseReport" ReturnType="Collection(PMSModel.SSP_ExpenseReport_Result)">
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="Company_Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_GetAllBank" ReturnType="Collection(PMSModel.SSP_GetAllBank_Result)" />
+    <FunctionImport Name="SSP_GetCustomerInvoicesByProject" ReturnType="Collection(PMSModel.SSP_GetCustomerInvoicesByProject_Result)">
+      <Parameter Name="project_id" Mode="In" Type="Int32" />
+      <Parameter Name="Bill_to" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_GetLoanProjectsDetailsByLoanId" ReturnType="Collection(PMSModel.SSP_GetLoanProjectsDetailsByLoanId_Result)">
+      <Parameter Name="loan_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Invoices" ReturnType="Collection(PMSModel.SSP_Invoices_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+      <Parameter Name="companyId" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="BillToId" Mode="In" Type="Int32" />
+      <Parameter Name="salesMenId" Mode="In" Type="Int32" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="IsTax" Mode="In" Type="Boolean" />
+      <Parameter Name="searchText" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Loan" ReturnType="Collection(PMSModel.SSP_Loan_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+      <Parameter Name="branchId" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_LoanReport" ReturnType="Collection(PMSModel.SSP_LoanReport_Result)">
+      <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+      <Parameter Name="EmployeeType" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_PaymentById" ReturnType="Collection(PMSModel.SSP_PaymentById_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_PaymentReport" ReturnType="Collection(PMSModel.SSP_PaymentReport_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="fromdate" Mode="In" Type="DateTime" />
+      <Parameter Name="todate" Mode="In" Type="DateTime" />
+      <Parameter Name="branchid" Mode="In" Type="Int32" />
+      <Parameter Name="bankID" Mode="In" Type="Int32" />
+      <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+      <Parameter Name="SalesmanID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Payments" ReturnType="Collection(PMSModel.SSP_Payments_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+      <Parameter Name="branchId" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ProjectId" Mode="In" Type="Int32" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="salesMenId" Mode="In" Type="Int32" />
+      <Parameter Name="searchText" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Print_DesignerInvoices" ReturnType="Collection(PMSModel.SSP_Print_DesignerInvoices_Result)">
+      <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_PrintInvoices" ReturnType="Collection(PMSModel.SSP_PrintInvoices_Result)">
+      <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_PrintLoan" ReturnType="Collection(PMSModel.SSP_PrintLoan_Result)">
+      <Parameter Name="RecID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_ProjectCostingReport" ReturnType="Collection(PMSModel.SSP_ProjectCostingReport_Result)">
+      <Parameter Name="project_id" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_ProjectListingStatusByBranch" ReturnType="Collection(PMSModel.SSP_ProjectListingStatusByBranch_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+      <Parameter Name="branchid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Projects" ReturnType="Collection(PMSModel.SSP_Projects_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+      <Parameter Name="branchId" Mode="In" Type="Int32" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="fromdate" Mode="In" Type="DateTime" />
+      <Parameter Name="todate" Mode="In" Type="DateTime" />
+      <Parameter Name="projectStatus" Mode="In" Type="Int32" />
+      <Parameter Name="salesMenId" Mode="In" Type="Int32" />
+      <Parameter Name="searchText" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_ProjectsBySalesman" ReturnType="Collection(PMSModel.SSP_ProjectsBySalesman_Result)">
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="SalesmenId" Mode="In" Type="Int32" />
+      <Parameter Name="BranchId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_ProjectsBySalesmanReport" ReturnType="Collection(PMSModel.SSP_ProjectsBySalesmanReport_Result)">
+      <Parameter Name="salesmen_id" Mode="In" Type="Int32" />
+      <Parameter Name="project_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_ProjectSummeryReport" ReturnType="Collection(PMSModel.SSP_ProjectSummeryReport_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="fromdate" Mode="In" Type="DateTime" />
+      <Parameter Name="todate" Mode="In" Type="DateTime" />
+      <Parameter Name="branchid" Mode="In" Type="Int32" />
+      <Parameter Name="SalesmanID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_ReceiptDetailByReceiptId" ReturnType="Collection(PMSModel.SSP_ReceiptDetailByReceiptId_Result)">
+      <Parameter Name="ReceiptId" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Receipts" ReturnType="Collection(PMSModel.SSP_Receipts_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+      <Parameter Name="branchId" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ProjectId" Mode="In" Type="Int32" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="salesMenId" Mode="In" Type="Int32" />
+      <Parameter Name="searchText" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_ReceiptsById" ReturnType="Collection(PMSModel.SSP_ReceiptsById_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_ReceiptsDetailById" ReturnType="Collection(PMSModel.SSP_ReceiptsDetailById_Result)">
+      <Parameter Name="receiptId" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Remove_DesignerInvoice_Items">
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Remove_DesignerReceipt_Detail">
+      <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Remove_Invoice_Items">
+      <Parameter Name="invoice_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Remove_LoanProjectsDetailsByLoanId">
+      <Parameter Name="loan_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Remove_LoanLoanDetailsFromSupplierPayment">
+      <Parameter Name="loan_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Remove_Payment_Detail">
+      <Parameter Name="payment_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Remove_Receipt_Detail">
+      <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Remove_SupplierInvoice_Items">
+      <Parameter Name="invoice_item_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_CHECK_SUPPLIER_PAYMENT">
+      <Parameter Name="SUPPLIER_INVOICE_ID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_SaleIndividualReport" ReturnType="Collection(PMSModel.SSP_SaleIndividualReport_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="SalesmenId" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Salesmen" ReturnType="Collection(PMSModel.SSP_Salesmen_Result)">
+      <Parameter Name="BranchID" Mode="In" Type="Int32" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="Search_Text" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_SaleSummeryReport" ReturnType="Collection(PMSModel.SSP_SaleSummeryReport_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="BranchId" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Supplier" ReturnType="Collection(PMSModel.SSP_Supplier_Result)">
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_SupplierLoanDetailbyPaymentId" ReturnType="Collection(PMSModel.SSP_SupplierLoanDetailbyPaymentId_Result)">
+      <Parameter Name="supplier_payment_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_SupplierReport" ReturnType="Collection(PMSModel.SSP_SupplierReport_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+      <Parameter Name="branchid" Mode="In" Type="Int32" />
+      <Parameter Name="SalesmanID" Mode="In" Type="Int32" />
+      <Parameter Name="StartWith" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_UserBranches" ReturnType="Collection(PMSModel.SSP_UserBranches_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Users" ReturnType="Collection(PMSModel.SSP_Users_Result)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="EmailID" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="Boolean" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_UsersRoles" ReturnType="Collection(PMSModel.SSP_UsersRoles_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_UsersRolesById" ReturnType="Collection(PMSModel.SSP_UsersRolesById_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_SupplierInvoices" ReturnType="Collection(PMSModel.SSP_SupplierInvoices_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+      <Parameter Name="companyId" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="supplierId" Mode="In" Type="Int32" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="IsTax" Mode="In" Type="Boolean" />
+      <Parameter Name="searchText" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_DesignerReceiptsDetailById" ReturnType="Collection(PMSModel.SSP_DesignerReceiptsDetailById_Result)">
+      <Parameter Name="receiptId" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_DesignerReceipts" ReturnType="Collection(PMSModel.SSP_DesignerReceipts_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+      <Parameter Name="branchId" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="searchText" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_DesignerInvoices" ReturnType="Collection(PMSModel.SSP_DesignerInvoices_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+      <Parameter Name="companyId" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="IsTax" Mode="In" Type="Boolean" />
+      <Parameter Name="searchText" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="tbl_designer_invoice" EntityType="PMSModel.tbl_designer_invoice" />
+    <EntitySet Name="designer_receipts" EntityType="PMSModel.designer_receipts" />
+    <FunctionImport Name="SSP_InvoiceWithAndWithoutPayment" ReturnType="Collection(PMSModel.SSP_InvoiceWithAndWithoutPayment_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="BranchId" Mode="In" Type="Int32" />
+      <Parameter Name="fromdate" Mode="In" Type="DateTime" />
+      <Parameter Name="todate" Mode="In" Type="DateTime" />
+      <Parameter Name="bankid" Mode="In" Type="Int32" />
+      <Parameter Name="projectid" Mode="In" Type="Int32" />
+      <Parameter Name="salemenid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_ReceiptReport" ReturnType="Collection(PMSModel.SSP_ReceiptReport_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="BranchId" Mode="In" Type="Int32" />
+      <Parameter Name="fromdate" Mode="In" Type="DateTime" />
+      <Parameter Name="todate" Mode="In" Type="DateTime" />
+      <Parameter Name="bankid" Mode="In" Type="Int32" />
+      <Parameter Name="projectid" Mode="In" Type="Int32" />
+      <Parameter Name="salemenid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_DesignerInvoiceReport" ReturnType="Collection(PMSModel.SSP_DesignerInvoiceReport_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="BranchId" Mode="In" Type="Int32" />
+      <Parameter Name="fromdate" Mode="In" Type="DateTime" />
+      <Parameter Name="todate" Mode="In" Type="DateTime" />
+      <Parameter Name="bankid" Mode="In" Type="Int32" />
+      <Parameter Name="designername" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_DesignerInvoiceWithAndWithoutPayment" ReturnType="Collection(PMSModel.SSP_DesignerInvoiceWithAndWithoutPayment_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="BranchId" Mode="In" Type="Int32" />
+      <Parameter Name="fromdate" Mode="In" Type="DateTime" />
+      <Parameter Name="todate" Mode="In" Type="DateTime" />
+      <Parameter Name="bankid" Mode="In" Type="Int32" />
+      <Parameter Name="designername" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_Project_additions" ReturnType="Collection(PMSModel.SSP_Project_additions_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Guid" />
+      <Parameter Name="branchId" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ProjectId" Mode="In" Type="Int32" />
+      <Parameter Name="startRowIndex" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="ColSort" Mode="In" Type="String" />
+      <Parameter Name="OrderBy" Mode="In" Type="String" />
+      <Parameter Name="salesMenId" Mode="In" Type="Int32" />
+      <Parameter Name="searchText" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_GetInvoiceList" ReturnType="Collection(PMSModel.SSP_GetInvoiceList_Result)">
+      <Parameter Name="SupplierId" Mode="In" Type="Int32" />
+      <Parameter Name="branchId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_GetPaymentDetails" ReturnType="Collection(PMSModel.SSP_GetPaymentDetails_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <EntitySet Name="salesmen" EntityType="PMSModel.salesman" />
+    <FunctionImport Name="SSP_PaymentDetailsForSMS" ReturnType="Collection(PMSModel.SSP_PaymentDetailsForSMS_Result)">
+      <Parameter Name="project_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_GetSalesmenAndUser" ReturnType="Collection(PMSModel.SSP_GetSalesmenAndUser_Result)">
+      <Parameter Name="BranchId" Mode="In" Type="Int32" />
+      <Parameter Name="status" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SSP_SupplierPaymentAndAssignedInvoices" ReturnType="Collection(PMSModel.SSP_SupplierPaymentAndAssignedInvoices_Result)">
+      <Parameter Name="projectId" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="additions_omissions">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="project_id" Type="Int64" Nullable="false" />
+    <Property Name="record_type" Type="Int32" />
+    <Property Name="addition_omissioni_description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="gst_percentage" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="gst_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="total_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="modified_by" Type="Guid" Nullable="false" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="PMSModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="PMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="PMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="PMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="PMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+    <NavigationProperty Name="AspNetRoles" Relationship="PMSModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+  </EntityType>
+  <EntityType Name="bank">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="bank_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="account_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="branch_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="bank_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="swif_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="payment_instructions" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="additional_remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address3" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address4" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="zip_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="contact_person" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+    <Property Name="branch_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="branch">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="company_id" Type="Int64" Nullable="false" />
+    <Property Name="branch_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="company_initial" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="address1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address3" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address4" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="zip_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="fax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="contact_person" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="country_id" Type="Int64" />
+    <Property Name="company_reg_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="gst_reg_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="company">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="company_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="company_initial" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="address1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address3" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address4" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="zip_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="fax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="contact_person" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="reg_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="gst_reg_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="country">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="name2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="nric1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="nric2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="block_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="job_site" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="contact_person" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="gst_registered" Type="Boolean" />
+    <Property Name="gst_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="designer_receipt_detail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="receipt_id" Type="Int64" />
+    <Property Name="invoice_id" Type="Int32" />
+    <Property Name="amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="gst_percentage" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="gst_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="total_amount" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="expense">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Expense_Date" Type="DateTime" Precision="0" />
+    <Property Name="Branch_Id" Type="Int32" />
+    <Property Name="Company_Id" Type="Int32" />
+    <Property Name="Expense_Category_Id" Type="Int32" />
+    <Property Name="Expense_Item_Id" Type="Int32" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Created_Date" Type="DateTime" Precision="3" />
+    <Property Name="Created_By" Type="Guid" />
+    <Property Name="Modified_Date" Type="DateTime" Precision="3" />
+    <Property Name="Modified_By" Type="Guid" />
+    <Property Name="bank_id" Type="Int32" />
+    <Property Name="cheque_number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="remarks" Type="String" MaxLength="7500" FixedLength="false" Unicode="false" />
+    <Property Name="Pay_To" Type="String" MaxLength="7500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ExpenseCategory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExpenseCategory1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Parent" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="loan">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="branch_Id" Type="Int32" Nullable="false" />
+    <Property Name="LoanDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="rec_type" Type="Int32" Nullable="false" />
+    <Property Name="person_id" Type="Int64" Nullable="false" />
+    <Property Name="person_type" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="purpose" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="payment_mode" Type="Int32" Nullable="false" />
+    <Property Name="bank_id" Type="Int32" />
+    <Property Name="cheque_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" Nullable="false" />
+    <Property Name="updated_on" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+    <Property Name="supplier_payment_Id" Type="Int32" />
+    <NavigationProperty Name="loansDetails" Relationship="PMSModel.FK_loansDetails_loans" FromRole="loan" ToRole="loansDetail" />
+  </EntityType>
+  <EntityType Name="loansDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="loan_Id" Type="Int32" Nullable="false" />
+    <Property Name="project_id" Type="Int32" Nullable="false" />
+    <Property Name="amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" Nullable="false" />
+    <Property Name="updated_on" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+    <Property Name="supplierinvoice_item_id" Type="Int32" />
+    <NavigationProperty Name="loan" Relationship="PMSModel.FK_loansDetails_loans" FromRole="loansDetail" ToRole="loan" />
+  </EntityType>
+  <EntityType Name="mode_of_payment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="mode_of_payment1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="payment_detail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="payment_id" Type="Int32" Nullable="false" />
+    <Property Name="supplierinvoice_item_id" Type="Int32" Nullable="false" />
+    <Property Name="agreed_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="payment_amount" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="payment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="payment_date" Type="DateTime" Precision="3" />
+    <Property Name="supplier_id" Type="Int64" Nullable="false" />
+    <Property Name="bank_id" Type="Int32" Nullable="false" />
+    <Property Name="cheque_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="rebate_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="paid_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+    <Property Name="payment_mode" Type="Int32" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+    <Property Name="collection_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="project_status">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="project_status1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="project">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="contract_date" Type="DateTime" Precision="3" />
+    <Property Name="project_number" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="project_name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="project_start_date" Type="DateTime" Precision="3" />
+    <Property Name="salesmen_id" Type="Int64" />
+    <Property Name="branch_id" Type="Int64" />
+    <Property Name="customer_id" Type="Int64" Nullable="false" />
+    <Property Name="contract_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="gst_percentage" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="gst_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="total_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="bank_id" Type="Int32" Nullable="false" />
+    <Property Name="status_id" Type="Int32" Nullable="false" />
+    <Property Name="remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+    <Property Name="saleman_commission" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="projects1" Relationship="PMSModel.FK_Salesman_Project" FromRole="project" ToRole="project1" />
+    <NavigationProperty Name="project1" Relationship="PMSModel.FK_Salesman_Project" FromRole="project1" ToRole="project" />
+  </EntityType>
+  <EntityType Name="receipt_detail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="receipt_id" Type="Int64" />
+    <Property Name="project_id" Type="Int64" />
+    <Property Name="invoice_id" Type="Int32" />
+    <Property Name="amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="gst_percentage" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="gst_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="total_amount" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="receipt">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="receipt_date" Type="DateTime" Precision="3" />
+    <Property Name="customer_id" Type="Int32" />
+    <Property Name="mode_of_payment_id" Type="Int32" />
+    <Property Name="bank_id" Type="Int32" />
+    <Property Name="cheque_details" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="sales_man_id" Type="Int64" />
+    <Property Name="branch_id" Type="Int64" />
+    <Property Name="remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="status">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="status1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="supplier">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="supplier_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="address1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address3" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address4" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="zip_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="contact_person" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="nric_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="gst_registered" Type="Boolean" />
+    <Property Name="gst_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+    <Property Name="rebate_per" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="tbl_contract_types">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="contract_type" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_designerinvoice_items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="invoice_id" Type="Int32" Nullable="false" />
+    <Property Name="Contract_number" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="item_description" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="false" />
+    <Property Name="item_amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="tbl_invoice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Company_id" Type="Int32" />
+    <Property Name="Bill_to" Type="Int32" Nullable="false" />
+    <Property Name="Invoice_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Invoice_number" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Sales_person" Type="Int32" Nullable="false" />
+    <Property Name="Payment_terms" Type="Int32" Nullable="false" />
+    <Property Name="Contract_type" Type="Int32" />
+    <Property Name="is_tax" Type="Boolean" />
+    <Property Name="tax" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="modification_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modification_by" Type="Guid" Nullable="false" />
+    <Property Name="tax_amount" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="tbl_payment_terms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="payment_term" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="payment_days" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tbl_supplier_invoice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Company_id" Type="Int32" />
+    <Property Name="invoice_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="supplier_id" Type="Int32" Nullable="false" />
+    <Property Name="creation_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="modification_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_supplierinvoice_items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="invoice_id" Type="Int32" Nullable="false" />
+    <Property Name="salesperson_id" Type="Int32" Nullable="false" />
+    <Property Name="project_id" Type="Int32" Nullable="false" />
+    <Property Name="invoice_number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="gst" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="invoice_amt_without_gst" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="invoice_amt_with_gst" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="agreed_amt_without_gst" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="agreed_amt" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="user_access_rights">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Guid" Nullable="false" />
+    <Property Name="branch_id" Type="Int64" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" Nullable="false" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="user_detail">
+    <Key>
+      <PropertyRef Name="did" />
+    </Key>
+    <Property Name="did" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Guid" Nullable="false" />
+    <Property Name="company_id" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="address1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="address2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="address3" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="address4" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="zip_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="website" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="country_id" Type="Int32" />
+    <Property Name="is_active" Type="Boolean" />
+    <Property Name="created_date" Type="DateTime" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+  </EntityType>
+  <EntityType Name="tbl_invoice_items">
+    <Key>
+      <PropertyRef Name="invoice_id" />
+      <PropertyRef Name="item_description" />
+      <PropertyRef Name="item_amount" />
+    </Key>
+    <Property Name="invoice_id" Type="Int32" Nullable="false" />
+    <Property Name="project_id" Type="Int32" />
+    <Property Name="Contract_number" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="item_description" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="false" />
+    <Property Name="item_amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="PMSModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="PMSModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="PMSModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="PMSModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_loansDetails_loans">
+    <End Type="PMSModel.loan" Role="loan" Multiplicity="1" />
+    <End Type="PMSModel.loansDetail" Role="loansDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="loan">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="loansDetail">
+        <PropertyRef Name="loan_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Salesman_Project">
+    <End Type="PMSModel.project" Role="project" Multiplicity="1" />
+    <End Type="PMSModel.project" Role="project1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="project">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="project1">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="PMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+    <End Type="PMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+  <ComplexType Name="SSP_BankChequeReport_Result">
+    <Property Type="String" Name="payment_date" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="cheque_number" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="rebate_amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="PaymentAmount" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="String" Name="supplier_name" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="paid_amount" Nullable="true" Precision="18" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_Banks_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="bank_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="account_number" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="branch_code" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="branch_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="zip_code" Nullable="true" MaxLength="10" />
+    <Property Type="Boolean" Name="isactive" Nullable="false" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_Branches_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="branch_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="gst_reg_no" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="company_name" Nullable="false" MaxLength="100" />
+    <Property Type="Boolean" Name="isactive" Nullable="false" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_Company_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="company_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="reg_no" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="isactive" Nullable="false" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_Customer_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="name1" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="nric1" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="block_no" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="job_site" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="gst_no" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="isactive" Nullable="false" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_CustomerInvoiceReport_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="DateTime" Name="Invoice_date" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Invoice_number" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="customer_name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="company_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="salesmen_name" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="tax" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="is_tax" Nullable="true" />
+    <Property Type="String" Name="Total" Nullable="true" />
+    <Property Type="String" Name="Items" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_DesignerReceiptById_Result">
+    <Property Type="DateTime" Name="receipt_date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="mode_of_payment" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="branch_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="branch_address" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="branch_zip_code" Nullable="false" MaxLength="10" />
+    <Property Type="Decimal" Name="total_amount" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_DesignerReceiptDetailByReceiptId_Result">
+    <Property Type="String" Name="invoice_number" Nullable="true" MaxLength="25" />
+    <Property Type="Decimal" Name="total_amount" Nullable="false" Precision="18" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_EXCategory_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="ExpenseCategory" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="Parentname" Nullable="true" MaxLength="250" />
+    <Property Type="Int32" Name="Parent" Nullable="false" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SSP_Expense_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="ExpenseCategory" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="Expense_Date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="company_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="CreatedUpdated" Nullable="true" MaxLength="186" />
+    <Property Type="String" Name="BankName" Nullable="false" MaxLength="108" />
+    <Property Type="String" Name="ChequeNumber" Nullable="false" MaxLength="15" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_ExpenseReport_Result">
+    <Property Type="Int32" Name="year" Nullable="true" />
+    <Property Type="String" Name="Category" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="CategoryItem" Nullable="true" MaxLength="250" />
+    <Property Type="Int32" Name="categoryId" Nullable="false" />
+    <Property Type="Decimal" Name="jan" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="feb" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="mar" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="apr" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="may" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="jun" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="jul" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="aug" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="sep" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="oct" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="nov" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="dec" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_GetAllBank_Result">
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="Bank_Name" Nullable="false" MaxLength="108" />
+  </ComplexType>
+  <ComplexType Name="SSP_GetCustomerInvoicesByProject_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Invoice_number" Nullable="false" MaxLength="25" />
+    <Property Type="Decimal" Name="tax_amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="is_tax" Nullable="true" />
+    <Property Type="Decimal" Name="tax" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="item_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="project_id" Nullable="true" />
+    <Property Type="String" Name="PaymentAmount" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_GetLoanProjectsDetailsByLoanId_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="Int32" Name="loan_Id" Nullable="false" />
+    <Property Type="Decimal" Name="amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="project_id" Nullable="false" />
+    <Property Type="String" Name="project_name" Nullable="true" MaxLength="250" />
+  </ComplexType>
+  <ComplexType Name="SSP_Invoices_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Invoice_number" Nullable="false" MaxLength="25" />
+    <Property Type="Decimal" Name="tax_amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="Invoicedate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Invoice_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="salesmen_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="customer_name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CreatedUpdated" Nullable="true" MaxLength="186" />
+    <Property Type="String" Name="company_name" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="tax" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="is_tax" Nullable="true" />
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+    <Property Type="String" Name="address" Nullable="true" />
+    <Property Type="String" Name="Total" Nullable="true" />
+    <Property Type="String" Name="Items" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_Loan_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="loan_date" Nullable="true" MaxLength="20" />
+    <Property Type="DateTime" Name="LoanDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="person_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="mode_of_payment" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="rec_type" Nullable="false" />
+    <Property Type="String" Name="bank_name" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="String" Name="CreatedUpdated" Nullable="true" MaxLength="186" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_LoanReport_Result">
+    <Property Type="DateTime" Name="LoanDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="purpose" Nullable="true" MaxLength="500" />
+    <Property Type="Decimal" Name="amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="rec_type" Nullable="false" />
+    <Property Type="Decimal" Name="TotalBalance" Nullable="false" Precision="38" Scale="2" />
+    <Property Type="String" Name="supplier_name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="mode_of_payment" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="bank_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="cheque_number" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="ProjectsDetail" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_PaymentById_Result">
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="DateTime" Name="payment_date" Nullable="true" Precision="23" />
+    <Property Type="Int64" Name="supplier_id" Nullable="false" />
+    <Property Type="Int32" Name="bank_id" Nullable="false" />
+    <Property Type="String" Name="cheque_number" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="rebate_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="paid_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="remarks" Nullable="true" MaxLength="500" />
+    <Property Type="DateTime" Name="created_date" Nullable="false" Precision="23" />
+    <Property Type="Guid" Name="created_by" Nullable="true" />
+    <Property Type="DateTime" Name="modified_date" Nullable="false" Precision="23" />
+    <Property Type="Guid" Name="modified_by" Nullable="true" />
+    <Property Type="Int32" Name="payment_mode" Nullable="true" />
+    <Property Type="Boolean" Name="isactive" Nullable="false" />
+    <Property Type="String" Name="supplier_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Paymode" Nullable="true" MaxLength="121" />
+    <Property Type="String" Name="branch_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="address1" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="zip_code" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="bank_name" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="SSP_PaymentReport_Result">
+    <Property Type="String" Name="payment_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="bank" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="rebate_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="payment_amount" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="cheque_number" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="paid_amount" Nullable="true" Precision="18" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_Payments_Result">
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="payment_date" Nullable="true" MaxLength="20" />
+    <Property Type="DateTime" Name="paymentdate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="project_name" Nullable="false" />
+    <Property Type="String" Name="supplier_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="cheque_number" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="remarks" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="CreatedUpdated" Nullable="true" MaxLength="186" />
+    <Property Type="String" Name="PaymentDetailItem" Nullable="true" />
+    <Property Type="String" Name="PaymentDetailItemSearch" Nullable="true" />
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_Print_DesignerInvoices_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="DateTime" Name="Invoice_date" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Designer_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="payment_term" Nullable="true" MaxLength="25" />
+    <Property Type="Int32" Name="payment_days" Nullable="true" />
+    <Property Type="String" Name="contract_type" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="Invoice_number" Nullable="false" MaxLength="25" />
+    <Property Type="Decimal" Name="tax" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="is_tax" Nullable="true" />
+    <Property Type="String" Name="company_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="address1" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="reg_no" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fax" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="bank_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="bank_address" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="account_number" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="branch_code" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="bank_code" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="swif_code" Nullable="true" MaxLength="10" />
+    <Property Type="Decimal" Name="tax_amount" Nullable="true" Precision="18" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_PrintInvoices_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="DateTime" Name="Invoice_date" Nullable="false" Precision="23" />
+    <Property Type="String" Name="salesmen_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="customer_name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="customer_email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="contract_phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="job_site" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="payment_term" Nullable="true" MaxLength="25" />
+    <Property Type="Int32" Name="payment_days" Nullable="true" />
+    <Property Type="String" Name="contract_type" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="Invoice_number" Nullable="false" MaxLength="25" />
+    <Property Type="Decimal" Name="tax" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="is_tax" Nullable="true" />
+    <Property Type="String" Name="company_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="address1" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="reg_no" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fax" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="bank_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="bank_address" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="account_number" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="branch_code" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="bank_code" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="swif_code" Nullable="true" MaxLength="10" />
+    <Property Type="Decimal" Name="tax_amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="String" Name="company_reg_no" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="gst_reg_no" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="Contract_number" Nullable="true" MaxLength="250" />
+  </ComplexType>
+  <ComplexType Name="SSP_PrintLoan_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="loan_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="person_name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="mode_of_payment" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="rec_type" Nullable="false" />
+    <Property Type="String" Name="bank_name" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="String" Name="home_address" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="cheque_number" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="zip_code" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="purpose" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="branch_name" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="address1" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="brphone" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="SSP_ProjectCostingReport_Result">
+    <Property Type="String" Name="contract_date" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="project_number" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="salesmen_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="customer_name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="nric1" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Name2" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Nric2" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="address" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="contact_no" Nullable="true" MaxLength="20" />
+    <Property Type="Decimal" Name="contract_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="gst_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="total_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="saleman_commission" Nullable="false" Precision="18" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_ProjectListingStatusByBranch_Result">
+    <Property Type="String" Name="project_name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="job_sites" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="contact_no" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="customer" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="id_in_charge" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="contract_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="tiles" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="m_bldg_products" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="project_closed" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="SSP_Projects_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="project_number" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="project_name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="contract_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="name1" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="salesmen_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="branch_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="CreatedUpdated" Nullable="true" MaxLength="186" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_ProjectsBySalesman_Result">
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="project_number" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="project_name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="contract_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="closing_date" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="salesmen_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="branch_name" Nullable="false" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="SSP_ProjectsBySalesmanReport_Result">
+    <Property Type="DateTime" Name="LoanDate" Nullable="true" Precision="23" />
+    <Property Type="Decimal" Name="amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="rec_type" Nullable="true" />
+    <Property Type="Int32" Name="payment_mode" Nullable="true" />
+    <Property Type="String" Name="mode_of_payment" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="purpose" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="SSP_ProjectSummeryReport_Result">
+    <Property Type="Int64" Name="ID" Nullable="false" />
+    <Property Type="String" Name="project_name" Nullable="true" MaxLength="250" />
+    <Property Type="Decimal" Name="contract_value" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="String" Name="receipt_date" Nullable="true" MaxLength="10" />
+    <Property Type="Int32" Name="contract_date" Nullable="true" />
+    <Property Type="Decimal" Name="progress_claim" Nullable="false" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="costing_amt" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="String" Name="remarks" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="salesmen_name" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="ProfitMargin" Nullable="false" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_ReceiptDetailByReceiptId_Result">
+    <Property Type="String" Name="project_name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="invoice_number" Nullable="true" MaxLength="25" />
+    <Property Type="Decimal" Name="total_amount" Nullable="false" Precision="18" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_Receipts_Result">
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="billTo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="salesmen_name" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="receiptdate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="receipt_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="project_name" Nullable="false" />
+    <Property Type="String" Name="receipt_detail" Nullable="true" />
+    <Property Type="String" Name="mode_of_payment" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="bank_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="cheque_details" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="remarks" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="CreatedUpdated" Nullable="true" MaxLength="186" />
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_ReceiptsById_Result">
+    <Property Type="DateTime" Name="receipt_date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="mode_of_payment" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="branch_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="branch_address" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="branch_zip_code" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="customer_address" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="customer_phone" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="customer_email" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="total_amount" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="String" Name="gst_reg_no" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="250" />
+  </ComplexType>
+  <ComplexType Name="SSP_ReceiptsDetailById_Result">
+    <Property Type="String" Name="Bank_Name" Nullable="true" />
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="DateTime" Name="receipt_date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="customer_name" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="customer_address" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="customer_phone" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="customer_email" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="job_site" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="mode_of_payment" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="bank_id" Nullable="true" />
+    <Property Type="String" Name="cheque_details" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="salesmen_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="remarks" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="branch_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="branch_address" Nullable="true" MaxLength="250" />
+    <Property Type="Decimal" Name="amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="gst_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="gst_percentage" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="total_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="Invoice_number" Nullable="true" MaxLength="25" />
+    <Property Type="Int32" Name="Payment_terms" Nullable="true" />
+    <Property Type="DateTime" Name="Invoice_date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="payment_term" Nullable="true" MaxLength="25" />
+    <Property Type="Int32" Name="payment_days" Nullable="true" />
+    <Property Type="String" Name="contract_type" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="project_name" Nullable="true" MaxLength="403" />
+  </ComplexType>
+  <ComplexType Name="SSP_SaleIndividualReport_Result">
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="receipt_date" Nullable="true" MaxLength="35" />
+    <Property Type="Decimal" Name="total_amount" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="String" Name="salesmen_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="project_number" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="project_name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="contract_date" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="SSP_Salesmen_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="salesmen_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="zip_code" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="branch_name" Nullable="false" MaxLength="100" />
+    <Property Type="Boolean" Name="isactive" Nullable="false" />
+    <Property Type="Decimal" Name="saleman_commission" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_SaleSummeryReport_Result">
+    <Property Type="Int32" Name="year" Nullable="true" />
+    <Property Type="String" Name="salesmen_name" Nullable="false" MaxLength="100" />
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="Decimal" Name="jan" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="feb" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="mar" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="apr" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="may" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="jun" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="jul" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="aug" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="sep" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="oct" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="nov" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="dec" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_Supplier_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="gst_no" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="isactive" Nullable="false" />
+    <Property Type="Decimal" Name="rebate_per" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_SupplierLoanDetailbyPaymentId_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="Int32" Name="loanId" Nullable="true" />
+    <Property Type="Int32" Name="loan_Id" Nullable="false" />
+    <Property Type="Int32" Name="project_id" Nullable="false" />
+    <Property Type="Decimal" Name="amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="supplierinvoice_item_id" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_SupplierReport_Result">
+    <Property Type="String" Name="payment_date" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="payment_month" Nullable="true" />
+    <Property Type="String" Name="supplier_inv_number" Nullable="false" MaxLength="50" />
+    <Property Type="Int64" Name="payment_id" Nullable="false" />
+    <Property Type="String" Name="project_name" Nullable="true" MaxLength="250" />
+    <Property Type="Decimal" Name="invoice_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="payment_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="gst_amount" Nullable="false" />
+    <Property Type="Decimal" Name="rebate_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="cheque_number" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="mode_of_payment" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="bank" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="branch_name" Nullable="false" MaxLength="100" />
+    <Property Type="Int64" Name="supplier_id" Nullable="false" />
+    <Property Type="String" Name="salesmen_name" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="paid_amount" Nullable="true" Precision="18" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_UserBranches_Result">
+    <Property Type="Int64" Name="Id" Nullable="false" />
+    <Property Type="String" Name="branch_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="company_name" Nullable="false" MaxLength="100" />
+    <Property Type="Boolean" Name="isactive" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SSP_Users_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="String" Name="id" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="uname" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="256" />
+    <Property Type="Boolean" Name="is_active" Nullable="true" />
+    <Property Type="String" Name="Country" Nullable="false" MaxLength="50" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_UsersRoles_Result">
+    <Property Type="String" Name="Id" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="RoleId" Nullable="false" MaxLength="128" />
+  </ComplexType>
+  <ComplexType Name="SSP_UsersRolesById_Result">
+    <Property Type="String" Name="Id" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="RoleId" Nullable="false" MaxLength="128" />
+  </ComplexType>
+  <ComplexType Name="SSP_SupplierInvoices_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="DateTime" Name="Invoicedate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Invoice_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="supplier_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="CreatedUpdated" Nullable="true" MaxLength="186" />
+    <Property Type="String" Name="company_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="SupplierInvoiceItems" Nullable="false" />
+    <Property Type="String" Name="SupplierInvoiceItemsSearch" Nullable="true" />
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int32" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_DesignerReceiptsDetailById_Result">
+    <Property Type="String" Name="Bank_Name" Nullable="true" />
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="DateTime" Name="receipt_date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="mode_of_payment" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="bank_id" Nullable="true" />
+    <Property Type="String" Name="cheque_details" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="remarks" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="branch_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="branch_address" Nullable="true" MaxLength="250" />
+    <Property Type="Decimal" Name="amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="gst_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="gst_percentage" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="total_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="Invoice_number" Nullable="true" MaxLength="25" />
+    <Property Type="Int32" Name="Payment_terms" Nullable="true" />
+    <Property Type="DateTime" Name="Invoice_date" Nullable="true" Precision="23" />
+    <Property Type="String" Name="payment_term" Nullable="true" MaxLength="25" />
+    <Property Type="Int32" Name="payment_days" Nullable="true" />
+    <Property Type="String" Name="designer_name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="contract_type" Nullable="true" MaxLength="25" />
+  </ComplexType>
+  <ComplexType Name="SSP_DesignerReceipts_Result">
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="designer_name" Nullable="true" MaxLength="250" />
+    <Property Type="DateTime" Name="receiptdate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="receipt_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="receipt_detail" Nullable="true" />
+    <Property Type="String" Name="mode_of_payment" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="bank_name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="cheque_details" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="remarks" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="CreatedUpdated" Nullable="true" MaxLength="186" />
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_DesignerInvoices_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Invoice_number" Nullable="false" MaxLength="25" />
+    <Property Type="Decimal" Name="tax_amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="Invoicedate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Invoice_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="designer_name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="CreatedUpdated" Nullable="true" MaxLength="186" />
+    <Property Type="String" Name="company_name" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="tax" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="is_tax" Nullable="true" />
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+    <Property Type="String" Name="Total" Nullable="true" />
+    <Property Type="String" Name="Items" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="tbl_designer_invoice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Company_id" Type="Int32" />
+    <Property Name="Designer_name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Invoice_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Invoice_number" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Payment_terms" Type="Int32" Nullable="false" />
+    <Property Name="Contract_type" Type="Int32" />
+    <Property Name="is_tax" Type="Boolean" />
+    <Property Name="tax" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="modification_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modification_by" Type="Guid" Nullable="false" />
+    <Property Name="tax_amount" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="designer_receipts">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="receipt_date" Type="DateTime" Precision="3" />
+    <Property Name="mode_of_payment_id" Type="Int32" />
+    <Property Name="bank_id" Type="Int32" />
+    <Property Name="cheque_details" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="designer_name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="branch_id" Type="Int64" />
+    <Property Name="remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <ComplexType Name="SSP_InvoiceWithAndWithoutPayment_Result">
+    <Property Type="String" Name="Invoice_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="salesmen_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="branch_name" Nullable="true" MaxLength="301" />
+    <Property Type="String" Name="mobile" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="name1" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="invoice_numbers" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="invoice_amount_items" Nullable="true" />
+    <Property Type="Boolean" Name="is_tax" Nullable="true" />
+    <Property Type="Decimal" Name="tax" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="tax_amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="invoiceId" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SSP_ReceiptReport_Result">
+    <Property Type="String" Name="receipt_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="cheque_details" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="salesmen_name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="branch_name" Nullable="true" MaxLength="301" />
+    <Property Type="String" Name="mobile" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="name1" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="mode_of_payment_id" Nullable="true" />
+    <Property Type="String" Name="mode_of_payment_name" Nullable="true" MaxLength="20" />
+    <Property Type="Decimal" Name="amount" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="String" Name="invoice_numbers" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="invoice_amount_items" Nullable="true" />
+    <Property Type="Boolean" Name="is_tax" Nullable="true" />
+    <Property Type="Decimal" Name="tax" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="ReceiptDate" Nullable="true" Precision="23" />
+    <Property Type="Decimal" Name="tax_amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="invoiceId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_DesignerInvoiceReport_Result">
+    <Property Type="String" Name="receipt_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="cheque_details" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="Designer_name" Nullable="true" MaxLength="250" />
+    <Property Type="Int32" Name="mode_of_payment_id" Nullable="true" />
+    <Property Type="String" Name="mode_of_payment_name" Nullable="true" MaxLength="20" />
+    <Property Type="Decimal" Name="amount" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="String" Name="invoice_numbers" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="invoice_amount_items" Nullable="true" />
+    <Property Type="Boolean" Name="is_tax" Nullable="true" />
+    <Property Type="Decimal" Name="tax" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="ReceiptDate" Nullable="true" Precision="23" />
+    <Property Type="Decimal" Name="tax_amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="invoiceId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_DesignerInvoiceWithAndWithoutPayment_Result">
+    <Property Type="String" Name="Invoice_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Designer_name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="invoice_numbers" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="invoice_amount_items" Nullable="true" />
+    <Property Type="Boolean" Name="is_tax" Nullable="true" />
+    <Property Type="Decimal" Name="tax" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="tax_amount" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="invoiceId" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SSP_Project_additions_Result">
+    <Property Type="Int64" Name="Rk" Nullable="true" />
+    <Property Type="Int64" Name="id" Nullable="false" />
+    <Property Type="String" Name="record_type" Nullable="false" MaxLength="8" />
+    <Property Type="String" Name="project_number" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="project_name" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="contract_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="addition_date" Nullable="true" MaxLength="20" />
+    <Property Type="Decimal" Name="total_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="CreatedUpdated" Nullable="true" MaxLength="186" />
+    <Property Type="Int64" Name="TotalRecords" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SSP_GetInvoiceList_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="invoice_number" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="project_id" Nullable="false" />
+    <Property Type="Decimal" Name="InvoiceAmount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="payment_amt" Nullable="false" Precision="38" Scale="2" />
+    <Property Type="Int32" Name="payment_Count" Nullable="false" />
+    <Property Type="Decimal" Name="agreed_amt" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SSP_GetPaymentDetails_Result">
+    <Property Type="Decimal" Name="payment_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="agreed_amount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="invoice_number" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="payment_date" Nullable="true" Precision="23" />
+    <Property Type="Decimal" Name="amount" Nullable="false" Precision="18" Scale="2" />
+  </ComplexType>
+  <EntityType Name="salesman">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="branch_Id" Type="Int64" Nullable="false" />
+    <Property Name="salesmen_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="address1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address3" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="address4" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="zip_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="created_by" Type="Guid" />
+    <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modified_by" Type="Guid" />
+    <Property Name="isactive" Type="Boolean" Nullable="false" />
+    <Property Name="saleman_commission" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <ComplexType Name="SSP_PaymentDetailsForSMS_Result">
+    <Property Type="String" Name="date_amount" Nullable="true" MaxLength="302" />
+    <Property Type="String" Name="cheque_details" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="mobile" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="totalPayment" Nullable="true" MaxLength="64" />
+    <Property Type="String" Name="branchAddress" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="accountNo" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="SSP_GetSalesmenAndUser_Result">
+    <Property Type="String" Name="id" Nullable="true" MaxLength="17" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="SSP_SupplierPaymentAndAssignedInvoices_Result">
+    <Property Type="String" Name="payment_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="invoice_date" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="InvNo" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="invoice_id" Nullable="false" />
+    <Property Type="Int32" Name="project_id" Nullable="false" />
+    <Property Type="Decimal" Name="Gst" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="AgreedAmountWithoutGst" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="AgreedAmount" Nullable="false" Precision="18" Scale="2" />
+  </ComplexType>
+</Schema>

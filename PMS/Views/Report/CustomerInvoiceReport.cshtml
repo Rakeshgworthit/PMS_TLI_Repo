@@ -1,0 +1,76 @@
+﻿@using MVCGrid.Web
+@model PMS.Models.ReportViewModel
+@{
+    ViewBag.Title = "Customer Invoice Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Customer Invoice Report</h3>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="well">
+                    @using (Html.BeginForm("CustomerInvoiceReport", "Report", FormMethod.Post, new { id = "SearchForm", name = "SearchForm" }))
+                    {
+                        <div class="form-inline">
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <div class="form-group ">
+                                <label class="control-label" for="from_date">From:</label>
+                                <input id="from_date" name="from_date" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.from_date).ToString("dd/MM/yyyy")" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="from_date">To:</label>
+                                <input id="to_date" name="to_date" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.to_date).ToString("dd/MM/yyyy")" />
+                            </div>
+                            @*<div class="form-group">
+                                @Html.DropDownListFor(o => o.SalesmenOrUserId, Model.SalesmenAndUserList, new { @class = "form-control" })
+                            </div>*@
+
+                            <button type="submit" class="btn btn-primary" onclick="return SubmitAs('form');"><i class="fa fa-search" aria-hidden="true"></i></button>
+
+                            <button type="submit" class="btn btn-success pull-right" onclick="return SubmitAs('export');"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Export</button>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="responsive-table">
+                    @Html.Raw(Model.GridData)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SubmitAs(obj) {
+        if ($("#SalesmenOrUserId").val() == "") {
+            notify("Please select an employee", "error");
+            return false;
+        } else {
+            if (obj == 'form') {
+                $("#SearchForm").attr('action', "CustomerInvoiceReport").submit();
+            } else {
+                $('#SearchForm').attr('action', "ExportCustomerInvoiceReport").submit();
+            }
+        }
+    }
+
+    $(function () {
+        $("#from_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#from_date').removeAttr("data-val-date");
+
+        $("#to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#to_date').removeAttr("data-val-date");
+
+    });
+</script>
+

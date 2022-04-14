@@ -1,0 +1,90 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Supplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Supplier</h3>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+            <button type="button" onclick="openModelpop('/Supplier/LoadAddEdit', 'id', 0);" class='btn btn-primary pull-right'>
+                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="responsive-table">
+                    @Html.MVCGrid("Supplier")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var che = true;
+    function myFunction() {
+        debugger;
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true) {
+            debugger;
+            che = true;
+        } else {
+            che = false;
+        }
+    }
+
+    function SaveForm() {
+        var ch = che;
+        $('#isactive').val(ch);
+
+        var form = $('#frmSupplier');
+     $.validator.unobtrusive.parse(form);
+       if (form.valid()) {
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Supplier/SaveUpdate", // the URL of the controller action method
+                data: {
+                    id: $("#id").val(),
+                    supplier_name: $("#supplier_name").val(),
+                    address1: $("#address1").val(),
+                    address2: $("#address2").val(),
+                    address3: $("#address3").val(),
+                    address4: $("#address4").val(),
+                    zip_code: $("#zip_code").val(),
+                    website: $("#website").val(),
+                    contact_person: $("#contact_person").val(),
+                    nric_no: $("#nric_no").val(),                   
+                    email: $("#email").val(),
+                    phone: $("#phone").val(),
+                    mobile: $("#mobile").val(),
+                    gst_registered: $("#gst_registered").val(),
+                    gst_no: $("#gst_no").val(),
+                    isactive: $("#isactive").val(),
+                    rebate_per: $("#rebate_per").val()
+                }, // optional data
+                success: function (result) {
+                    $.loader('close');
+                    $("#btnClose").click();
+                    notify(result.msg, result.cls);
+                    reloadGrid('Supplier');
+                    //notify(result.msg, "info");
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                }
+            });
+     }
+    }
+
+    
+
+</script>

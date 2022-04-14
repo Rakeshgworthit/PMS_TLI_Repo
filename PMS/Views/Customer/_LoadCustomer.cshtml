@@ -1,0 +1,219 @@
+﻿@model PMS.Models.CustomerViewModel
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Add/Edit Customer</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" id="frmCustomer" name="frmCustomer">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="customer_name">Name1:</label>
+                    <div class="col-sm-8">
+                        @Html.HiddenFor(o => o.id)
+                        @Html.TextBoxFor(o => o.name1, new { @class = "form-control", @tabindex = "31" })
+                        @Html.ValidationMessageFor(o => o.name1, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="customer_name">Name2:</label>
+                    <div class="col-sm-8">
+
+                        @Html.TextBoxFor(o => o.name2, new { @class = "form-control", @tabindex = "32" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Block No:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.block_no, new { @class = "form-control", @tabindex = "33" })
+                        @Html.ValidationMessageFor(o => o.block_no, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Job Site:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.job_site, new { @class = "form-control", @tabindex = "34" })
+                        @Html.ValidationMessageFor(o => o.job_site, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Address:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.address, new { @class = "form-control", @tabindex = "35" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Contact Person:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.contact_person, new { @class = "form-control", @tabindex = "36" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">IsActive:</label>
+                    <div class="col-sm-8">
+                        @if (Model.isactive == true)
+                        {
+                            <input type="checkbox" id="myCheck" onclick="myFunction()" checked>
+                        }
+                        else if (Model.isactive == false)
+                        {
+                            <input type="checkbox" id="myCheck" onclick="myFunction()">
+
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="myCheck" onclick="myFunction()" checked>
+                        }
+
+                        @*@Html.CheckBoxFor(o => o.isactive,new { @checked = "checked" })*@
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="email">NRIC:</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(o => o.nric1, new { @class = "form-control", @tabindex = "37" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="email">NRIC:</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(o => o.nric2, new { @class = "form-control", @tabindex = "38" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="email">Email:</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(o => o.email, new { @class = "form-control", @tabindex = "39" })
+                    @Html.ValidationMessageFor(o => o.email, "", new { @class = "text-error" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="email">Phone:</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(o => o.phone, new { @class = "form-control", @tabindex = "40" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="email">Mobile:</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(o => o.mobile, new { @class = "form-control", @tabindex = "41" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="email">GST Registered:</label>
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(o => o.gst_registered, Model.GSTRegisterList, new { @class = "form-control", @tabindex = "42" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="email">GSTNo:</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(o => o.gst_no, new { @class = "form-control", @tabindex = "43" })
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    @Html.HiddenFor(o => o.isactive)
+
+</form>
+</div>
+<div class="modal-footer">
+    <button id="btnSelect" name="btnSelect" type="button" class="btn btn-primary" onclick="SaveForm();">Save</button>
+    <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+    var che = true;
+    function myFunction() {
+        debugger;
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true) {
+            debugger;
+            che = true;
+        } else {
+            che = false;
+        }
+    }
+
+    function SaveForm() {
+        debugger;
+        var ch = che;
+        $('#isactive').val(ch);
+
+        var form = $('#frmCustomer');
+        $.validator.unobtrusive.parse(form);
+        if (form.valid()) {
+
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Customer/SaveCustomer", // the URL of the controller action method
+                data: {
+                    id: $('#frmCustomer').find("#id").val(),
+                    name1: $('#frmCustomer').find("#name1").val(),
+                    name2: $('#frmCustomer').find("#name2").val(),
+                    nric1: $('#frmCustomer').find("#nric1").val(),
+                    nric2: $('#frmCustomer').find("#nric2").val(),
+                    block_no: $('#frmCustomer').find("#block_no").val(),
+                    job_site: $('#frmCustomer').find("#job_site").val(),
+                    address: $('#frmCustomer').find("#address").val(),
+                    contact_person: $('#frmCustomer').find("#contact_person").val(),
+                    email: $('#frmCustomer').find("#email").val(),
+                    phone: $('#frmCustomer').find("#phone").val(),
+                    mobile: $('#frmCustomer').find("#mobile").val(),
+                    gst_registered: $('#frmCustomer').find("#gst_registered").val(),
+                    gst_no: $('#frmCustomer').find("#gst_no").val(),
+                    isactive: $('#frmCustomer').find("#isactive").val()
+                }, // optional data
+                success: function (result) {
+                    $.loader('close');
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {
+                        $("#btnClose").click();
+
+                        if ($('#frmProject').length) {
+                            FillCustomerDropdown(result.id);
+                        } else {
+                            loadGrid();
+                            notify(result.msg, result.cls);
+                        }                       
+                    }
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                }
+            });
+        }
+    }
+
+</script>

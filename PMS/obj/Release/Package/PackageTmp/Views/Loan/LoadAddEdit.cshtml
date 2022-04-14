@@ -1,0 +1,265 @@
+﻿@model PMS.Models.LoanViewModel
+@using PMS.Common
+@{
+    Layout = null;
+}
+<style>
+    .modal-footer {
+        background-color: #ffffff !important;
+        border-top: 0px !important;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Add/Edit Loan</h4>
+</div>
+
+<div class="modal-body">
+    <form class="form-horizontal" id="frmLoan" name="frmLoan">
+        <div class="">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="name">Date:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.LoanDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "1" })
+                        @Html.ValidationMessageFor(o => o.LoanDate, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Type:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.rec_type, Model.RecordTypeList, new { @class = "form-control", @tabindex = "3" })
+                        @*@Html.ValidationMessageFor(o => o.rec_type, "", new { @class = "text-error" })*@
+                        <span class="text-error RecordTypeListvalidation field-validation-error" style="display:none;" data-valmsg-replace="true"><span for="cheque_number" class="">Please select record type.</span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Person:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.person_id, Model.SalesmenAndUserList, new { @class = "form-control", @tabindex = "5" })
+                        @Html.ValidationMessageFor(o => o.person_id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Purpose:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.purpose, new { @class = "form-control", @tabindex = "7" })
+                    </div>
+                </div>
+                <!--Add Dynamic Project section show hide on required if rec_type value is "Advanced"-->
+                @*Code Will uncomment after Client Confirmation*@
+                @*<div class="appendProjects optionAdvanced" style="display:none;">*@
+
+                <div class="appendProjects optionAdvanced">
+                    <!--Update-->
+                    @if (Model.advanceLoanDetails.Count() > 0)
+                    {
+                        int startIndex = 0;
+                        int tabindex = 9;
+                        foreach (var projectItem in Model.advanceLoanDetails)
+                        {
+
+                            <div class="form-group ">
+                                @if (startIndex <= 0)
+                                {
+                                    <label class="control-label col-sm-4" for="Project Details">Projects:</label>
+                                }
+                                else
+                                {
+                                    <label class="control-label col-sm-4" for="Project Details"></label>
+                                }
+                                <div class="appendProjectouter">
+                                    <div class="controls">
+                                        <div class="col-md-3">
+                                            @{Model.searchProject = projectItem.Id;}
+                                            @Html.DropDownListFor(o => o.searchProject, new SelectList(Model.projectList, "Value", "Text", projectItem.Id), new { @class = "form-control chosen-select", @tabindex = tabindex + 1, style = "width:100%" })
+                                            <span class="text-error rectypeProjectvalidation field-validation-error" style="display: none;" data-valmsg-replace="true"><span for="project" class="">Project selection is required.</span></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(o => o.projectAmount, new { @class = "form-control", @tabindex = tabindex + 1, @placeholder = "Amount", @Value = projectItem.Amount, @onkeyup = "SumofRctProjectsAmount()", @onkeydown = "SumofRctProjectsAmount()" })
+                                            <span class="text-error rectypeAmountvalidation field-validation-error" style="display: none;" data-valmsg-replace="true"><span for="Amount" class="">Amount is required.</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @if (startIndex <= 0)
+                                        {
+                                            <button type="button" class="btn btn-primary pull-right" id="appendProjectAdd">
+                                                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" class="remove_this btn btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                                        }
+                                        @{startIndex = startIndex + 1;}
+                                    </div>
+                                </div>
+                            </div>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                    <!--Insert-->
+                                                <div class="form-group ">
+                                                    <label class="control-label col-sm-4" for="Project Details">Project Details:</label>
+                                                    <div class="appendProjectouter">
+                                                        <div class="controls">
+                                                            <div class="col-md-3">
+                                                                @Html.DropDownListFor(o => o.searchProject, Model.projectList, new { @class = "form-control chosen-select", @tabindex = "9", style = "width:100%" })
+                                                                <span class="text-error rectypeProjectvalidation field-validation-error" style="display: none;" data-valmsg-replace="true"><span for="project" class="">Project selection is required.</span></span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                @Html.TextBoxFor(o => o.projectAmount, new { @class = "form-control", @tabindex = "10", @placeholder = "Amount", @onkeyup = "SumofRctProjectsAmount()", @onkeydown = "SumofRctProjectsAmount()" })
+                                                                <span class="text-error rectypeAmountvalidation field-validation-error" style="display: none;" data-valmsg-replace="true"><span for="Amount" class="">Amount is required.</span></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <button type="button" class="btn btn-primary pull-right" id="appendProjectAdd">
+                                                                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">
+                                                                    Add
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                </div>
+                @*<div class="form-group rectypevalidation" style="display: none;">
+                    <label class="control-label col-sm-4 rectypevalidation" for=""></label>
+                    <div class="col-sm-8">
+                        <span class="text-error rectypevalidation field-validation-error" style="display: inline;" data-valmsg-replace="true"><span for="cheque_number" class="">Project Details are required.</span></span>
+                    </div>
+                </div>*@
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Mode of Payment:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.payment_mode, Model.mode_of_paymentList, new { @class = "form-control", @tabindex = "2" })
+                        @Html.ValidationMessageFor(o => o.payment_mode, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Bank:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.bank_id, Model.bankList, new { @class = "form-control", @tabindex = "4" })
+                        <span class="text-error bankvalidation field-validation-error" style="display:none;" data-valmsg-replace="true"><span for="bank_validation" class="">Please select bank.</span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Cheque Details:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.cheque_number, new { @class = "form-control", @tabindex = "6" })
+                        <span class="text-error chequenumbervalidation field-validation-error" style="display:none;" data-valmsg-replace="true"><span for="cheque_number" class="">Please enter valid cheque number.</span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Amount:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.amount, new { @class = "form-control", @tabindex = "8" })
+                        @Html.ValidationMessageFor(o => o.amount, "", new { @class = "text-error" })
+                    </div>
+                </div>
+            </div>
+
+            @Html.HiddenFor(o => o.isactive)
+            @Html.HiddenFor(o => o.Id)
+            @Html.HiddenFor(o => o.created_on)
+            @Html.HiddenFor(o => o.created_by)
+            @*Code Will uncomment after Client Confirmation*@
+            @Html.Hidden(CommonHelper.RecordType.ProjectAdvance.ToString(), Convert.ToInt32(CommonHelper.RecordType.ProjectAdvance))
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="SaveForm('save');">Save</button>
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="return SaveForm('saveprint');">Save & Print</button>
+    <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+    $(function () {
+        $("#LoanDate").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#LoanDate').removeAttr("data-val-date");
+    });
+    /// Add dynamic controls if rec_type selection is Advanced
+    //$('#rec_type').change(function () {
+    //    var item = $(this);
+    //    rctTypeAdvancedFlag((item.val() === $('#ProjectAdvance').val()));
+    //});
+    $(document).ready(function () {
+        //set selected if option flag is matched
+        rctTypeAdvancedFlag(($("#rec_type option:selected").val() === $('#ProjectAdvance').val()));
+        $("#appendProjectAdd").click(function (e) {
+            e.preventDefault();
+            var appendProjectControls = $('.controls').html();
+            $(".appendProjects").append('<div class="form-group "><label class="control-label col-sm-4" for="Project Details"></label>' + appendProjectControls + '<div class="col-md-2"><a href="#" class="remove_this btn btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></a></div></div>');
+            SumofRctProjectsAmount();
+            return false;
+        });
+        ///remove dynamic
+        $(document).on('click', '.remove_this', function () {
+            $(this).parent().parent().parent().hasClass('form-group') ? $(this).parent().parent().parent().remove() : $(this).parent().parent().remove();
+            SumofRctProjectsAmount();
+            return false;
+        });
+
+        ///Update amount on events key up, key down
+        //$('[name = projectAmount]').keyup(function () {
+        //    SumofRctProjectsAmount();
+        //});
+
+        //$('[name = projectAmount]').keydown(function () {
+        //    SumofRctProjectsAmount();
+        //});
+        $('#rec_type').change(function () {
+            //debugger;
+            var item = $(this);
+            rctTypeAdvancedFlag((item.val() === $('#ProjectAdvance').val()));
+
+        });
+    });
+
+    ///rctTypeAdvancedFlag /Hide/show enable/disable
+    function rctTypeAdvancedFlag(flag) {
+        //declare on index level
+        if ($("#rec_type option:selected").val() > 0) {
+            $(".RecordTypeListvalidation").hide();
+        }
+        recTypeFlag = flag ? true : false;
+        if (!recTypeFlag) {
+            //$(".rectypevalidation").hide();
+            $('[name=projectAmount]').each(function () {
+                //debugger;
+                $(this.parentNode.parentNode.firstElementChild.children).hasClass('chosen-select') ? $(this.parentNode.parentNode.firstElementChild.children[1]).hide() : $(this.parentNode.parentNode.firstElementChild.nextElementSibling.children[1]).hide();
+                $(this.parentNode.children[1]).hide();
+            });
+        }
+        //Code Will uncomment after Client Confirmation
+        //True
+        //if (flag) {
+        //    $('.optionAdvanced').show();
+        //    $("#amount").attr("disabled", "disabled");
+        //    SumofRctProjectsAmount();
+        //}
+        //else {
+        //    $('.optionAdvanced').hide();
+        //    $("#amount").removeAttr("disabled");
+        //}
+    }
+    //sum of amount
+    function SumofRctProjectsAmount() {
+        var total = 0;
+        $('[name=projectAmount]').each(function () {
+            total = parseFloat(total) + parseFloat($(this).val());
+        });
+        $("#amount").val(parseFloat(total));
+    }
+
+
+
+</script>

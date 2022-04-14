@@ -1,0 +1,1177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="additions_omissions">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="project_id" Type="bigint" Nullable="false" />
+    <Property Name="record_type" Type="int" />
+    <Property Name="addition_omissioni_description" Type="varchar" MaxLength="500" />
+    <Property Name="amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="gst_percentage" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="gst_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="total_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="remarks" Type="varchar" MaxLength="500" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="banks">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="bank_name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="account_number" Type="varchar" MaxLength="50" />
+    <Property Name="branch_code" Type="varchar" MaxLength="10" />
+    <Property Name="bank_code" Type="varchar" MaxLength="10" />
+    <Property Name="swif_code" Type="varchar" MaxLength="10" />
+    <Property Name="payment_instructions" Type="varchar" MaxLength="250" />
+    <Property Name="additional_remarks" Type="varchar" MaxLength="250" />
+    <Property Name="address1" Type="varchar" MaxLength="250" />
+    <Property Name="address2" Type="varchar" MaxLength="250" />
+    <Property Name="address3" Type="varchar" MaxLength="250" />
+    <Property Name="address4" Type="varchar" MaxLength="250" />
+    <Property Name="zip_code" Type="varchar" MaxLength="10" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="website" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="varchar" MaxLength="20" />
+    <Property Name="mobile" Type="varchar" MaxLength="20" />
+    <Property Name="contact_person" Type="varchar" MaxLength="50" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+    <Property Name="branch_id" Type="int" />
+  </EntityType>
+  <EntityType Name="branches">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="company_id" Type="bigint" Nullable="false" />
+    <Property Name="branch_name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="company_initial" Type="varchar" MaxLength="5" />
+    <Property Name="address1" Type="varchar" MaxLength="250" />
+    <Property Name="address2" Type="varchar" MaxLength="250" />
+    <Property Name="address3" Type="varchar" MaxLength="250" />
+    <Property Name="address4" Type="varchar" MaxLength="250" />
+    <Property Name="zip_code" Type="varchar" MaxLength="10" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="website" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="varchar" MaxLength="20" />
+    <Property Name="mobile" Type="varchar" MaxLength="20" />
+    <Property Name="fax" Type="varchar" MaxLength="20" />
+    <Property Name="contact_person" Type="varchar" MaxLength="50" />
+    <Property Name="country_id" Type="bigint" />
+    <Property Name="company_reg_no" Type="varchar" MaxLength="50" />
+    <Property Name="gst_reg_no" Type="varchar" MaxLength="50" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="company">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="company_name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="company_initial" Type="varchar" MaxLength="5" />
+    <Property Name="address1" Type="varchar" MaxLength="250" />
+    <Property Name="address2" Type="varchar" MaxLength="250" />
+    <Property Name="address3" Type="varchar" MaxLength="250" />
+    <Property Name="address4" Type="varchar" MaxLength="250" />
+    <Property Name="zip_code" Type="varchar" MaxLength="10" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="website" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="varchar" MaxLength="20" />
+    <Property Name="mobile" Type="varchar" MaxLength="20" />
+    <Property Name="fax" Type="varchar" MaxLength="20" />
+    <Property Name="contact_person" Type="varchar" MaxLength="50" />
+    <Property Name="reg_no" Type="varchar" MaxLength="50" />
+    <Property Name="gst_reg_no" Type="varchar" MaxLength="50" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="country">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="code" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name1" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="name2" Type="varchar" MaxLength="50" />
+    <Property Name="nric1" Type="varchar" MaxLength="50" />
+    <Property Name="nric2" Type="varchar" MaxLength="50" />
+    <Property Name="block_no" Type="varchar" MaxLength="50" />
+    <Property Name="job_site" Type="varchar" MaxLength="250" />
+    <Property Name="address" Type="varchar" MaxLength="250" />
+    <Property Name="contact_person" Type="varchar" MaxLength="50" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="varchar" MaxLength="20" />
+    <Property Name="mobile" Type="varchar" MaxLength="20" />
+    <Property Name="gst_registered" Type="bit" />
+    <Property Name="gst_no" Type="varchar" MaxLength="50" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="designer_receipt_detail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="receipt_id" Type="bigint" />
+    <Property Name="invoice_id" Type="int" />
+    <Property Name="amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="gst_percentage" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="gst_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="total_amount" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="designer_receipts">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="receipt_date" Type="datetime" />
+    <Property Name="mode_of_payment_id" Type="int" />
+    <Property Name="bank_id" Type="int" />
+    <Property Name="cheque_details" Type="varchar" MaxLength="250" />
+    <Property Name="designer_name" Type="varchar" MaxLength="250" />
+    <Property Name="branch_id" Type="bigint" />
+    <Property Name="remarks" Type="varchar" MaxLength="500" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="expense">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Expense_Date" Type="date" />
+    <Property Name="Branch_Id" Type="int" />
+    <Property Name="Company_Id" Type="int" />
+    <Property Name="Expense_Category_Id" Type="int" />
+    <Property Name="Expense_Item_Id" Type="int" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Created_Date" Type="datetime" />
+    <Property Name="Created_By" Type="uniqueidentifier" />
+    <Property Name="Modified_Date" Type="datetime" />
+    <Property Name="Modified_By" Type="uniqueidentifier" />
+    <Property Name="bank_id" Type="int" />
+    <Property Name="cheque_number" Type="varchar" MaxLength="15" />
+    <Property Name="remarks" Type="varchar" MaxLength="7500" />
+    <Property Name="Pay_To" Type="varchar" MaxLength="7500" />
+  </EntityType>
+  <EntityType Name="ExpenseCategory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExpenseCategory" Type="nvarchar" MaxLength="250" />
+    <Property Name="Parent" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="loans">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="branch_Id" Type="int" Nullable="false" />
+    <Property Name="LoanDate" Type="datetime" Nullable="false" />
+    <Property Name="rec_type" Type="int" Nullable="false" />
+    <Property Name="person_id" Type="bigint" Nullable="false" />
+    <Property Name="person_type" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="purpose" Type="varchar" MaxLength="500" />
+    <Property Name="payment_mode" Type="int" Nullable="false" />
+    <Property Name="bank_id" Type="int" />
+    <Property Name="cheque_number" Type="varchar" MaxLength="50" />
+    <Property Name="amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="created_on" Type="datetime" Nullable="false" />
+    <Property Name="updated_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="updated_on" Type="datetime" Nullable="false" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+    <Property Name="supplier_payment_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="loansDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="loan_Id" Type="int" Nullable="false" />
+    <Property Name="project_id" Type="int" Nullable="false" />
+    <Property Name="amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="created_on" Type="datetime" Nullable="false" />
+    <Property Name="updated_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="updated_on" Type="datetime" Nullable="false" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+    <Property Name="supplierinvoice_item_id" Type="int" />
+  </EntityType>
+  <EntityType Name="mode_of_payment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="mode_of_payment" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="payment_detail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="payment_id" Type="int" Nullable="false" />
+    <Property Name="supplierinvoice_item_id" Type="int" Nullable="false" />
+    <Property Name="agreed_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="payment_amount" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="payments">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="payment_date" Type="datetime" />
+    <Property Name="supplier_id" Type="bigint" Nullable="false" />
+    <Property Name="bank_id" Type="int" Nullable="false" />
+    <Property Name="cheque_number" Type="varchar" MaxLength="50" />
+    <Property Name="rebate_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="paid_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="remarks" Type="varchar" MaxLength="500" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+    <Property Name="payment_mode" Type="int" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+    <Property Name="collection_date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="project_status">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="project_status" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="projects">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="contract_date" Type="datetime" />
+    <Property Name="project_number" Type="varchar" MaxLength="150" />
+    <Property Name="project_name" Type="varchar" MaxLength="250" />
+    <Property Name="project_start_date" Type="datetime" />
+    <Property Name="salesmen_id" Type="bigint" />
+    <Property Name="branch_id" Type="bigint" />
+    <Property Name="customer_id" Type="bigint" Nullable="false" />
+    <Property Name="contract_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="gst_percentage" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="gst_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="total_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="bank_id" Type="int" Nullable="false" />
+    <Property Name="status_id" Type="int" Nullable="false" />
+    <Property Name="remarks" Type="varchar" MaxLength="500" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+    <Property Name="saleman_commission" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="receipt_detail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="receipt_id" Type="bigint" />
+    <Property Name="project_id" Type="bigint" />
+    <Property Name="invoice_id" Type="int" />
+    <Property Name="amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="gst_percentage" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="gst_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="total_amount" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="receipts">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="receipt_date" Type="datetime" />
+    <Property Name="customer_id" Type="int" />
+    <Property Name="mode_of_payment_id" Type="int" />
+    <Property Name="bank_id" Type="int" />
+    <Property Name="cheque_details" Type="varchar" MaxLength="250" />
+    <Property Name="sales_man_id" Type="bigint" />
+    <Property Name="branch_id" Type="bigint" />
+    <Property Name="remarks" Type="varchar" MaxLength="500" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="salesmen">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="branch_Id" Type="bigint" Nullable="false" />
+    <Property Name="salesmen_name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="address1" Type="varchar" MaxLength="250" />
+    <Property Name="address2" Type="varchar" MaxLength="250" />
+    <Property Name="address3" Type="varchar" MaxLength="250" />
+    <Property Name="address4" Type="varchar" MaxLength="250" />
+    <Property Name="zip_code" Type="varchar" MaxLength="10" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="website" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="varchar" MaxLength="20" />
+    <Property Name="mobile" Type="varchar" MaxLength="20" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+    <Property Name="saleman_commission" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="remarks" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="status">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="status" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="supplier">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="supplier_name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="address1" Type="varchar" MaxLength="250" />
+    <Property Name="address2" Type="varchar" MaxLength="250" />
+    <Property Name="address3" Type="varchar" MaxLength="250" />
+    <Property Name="address4" Type="varchar" MaxLength="250" />
+    <Property Name="zip_code" Type="varchar" MaxLength="10" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="website" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="varchar" MaxLength="20" />
+    <Property Name="mobile" Type="varchar" MaxLength="20" />
+    <Property Name="contact_person" Type="varchar" MaxLength="50" />
+    <Property Name="nric_no" Type="varchar" MaxLength="50" />
+    <Property Name="gst_registered" Type="bit" />
+    <Property Name="gst_no" Type="varchar" MaxLength="50" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+    <Property Name="rebate_per" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="tbl_contract_types">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="contract_type" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_designer_invoice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_id" Type="int" />
+    <Property Name="Designer_name" Type="varchar" MaxLength="250" />
+    <Property Name="Invoice_date" Type="datetime" Nullable="false" />
+    <Property Name="Invoice_number" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Payment_terms" Type="int" Nullable="false" />
+    <Property Name="Contract_type" Type="int" />
+    <Property Name="is_tax" Type="bit" />
+    <Property Name="tax" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="modification_date" Type="datetime" Nullable="false" />
+    <Property Name="modification_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="tax_amount" Type="numeric" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="tbl_designerinvoice_items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="invoice_id" Type="int" Nullable="false" />
+    <Property Name="Contract_number" Type="varchar" MaxLength="25" />
+    <Property Name="item_description" Type="varchar" MaxLength="450" Nullable="false" />
+    <Property Name="item_amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_invoice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_id" Type="int" />
+    <Property Name="Bill_to" Type="int" Nullable="false" />
+    <Property Name="Invoice_date" Type="datetime" Nullable="false" />
+    <Property Name="Invoice_number" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Sales_person" Type="int" Nullable="false" />
+    <Property Name="Payment_terms" Type="int" Nullable="false" />
+    <Property Name="Contract_type" Type="int" />
+    <Property Name="is_tax" Type="bit" />
+    <Property Name="tax" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="modification_date" Type="datetime" Nullable="false" />
+    <Property Name="modification_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="tax_amount" Type="numeric" Precision="18" Scale="2" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PMS_TLI_210903.dbo.tbl_invoice_items' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tbl_invoice_items">
+    <Key>
+      <PropertyRef Name="invoice_id" />
+      <PropertyRef Name="item_description" />
+      <PropertyRef Name="item_amount" />
+    </Key>
+    <Property Name="invoice_id" Type="int" Nullable="false" />
+    <Property Name="project_id" Type="int" />
+    <Property Name="Contract_number" Type="varchar" MaxLength="25" />
+    <Property Name="item_description" Type="varchar" MaxLength="450" Nullable="false" />
+    <Property Name="item_amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_payment_terms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="payment_term" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="payment_days" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_supplier_invoice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_id" Type="int" />
+    <Property Name="invoice_date" Type="datetime" Nullable="false" />
+    <Property Name="supplier_id" Type="int" Nullable="false" />
+    <Property Name="creation_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="modification_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_supplierinvoice_items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="invoice_id" Type="int" Nullable="false" />
+    <Property Name="salesperson_id" Type="int" Nullable="false" />
+    <Property Name="project_id" Type="int" Nullable="false" />
+    <Property Name="invoice_number" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="gst" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="invoice_amt_without_gst" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="invoice_amt_with_gst" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="agreed_amt" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="agreed_amt_without_gst" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="user_access_rights">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="branch_id" Type="bigint" Nullable="false" />
+    <Property Name="created_date" Type="datetime" Nullable="false" />
+    <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="modified_date" Type="datetime" Nullable="false" />
+    <Property Name="modified_by" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="isactive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="user_detail">
+    <Key>
+      <PropertyRef Name="did" />
+    </Key>
+    <Property Name="did" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="company_id" Type="int" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="address1" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="address2" Type="varchar" MaxLength="500" />
+    <Property Name="address3" Type="varchar" MaxLength="500" />
+    <Property Name="address4" Type="varchar" MaxLength="500" />
+    <Property Name="zip_code" Type="varchar" MaxLength="10" />
+    <Property Name="website" Type="varchar" MaxLength="150" />
+    <Property Name="mobile" Type="varchar" MaxLength="50" />
+    <Property Name="phone" Type="varchar" MaxLength="50" />
+    <Property Name="country_id" Type="int" />
+    <Property Name="is_active" Type="bit" />
+    <Property Name="created_date" Type="datetime" />
+    <Property Name="created_by" Type="uniqueidentifier" />
+    <Property Name="modified_date" Type="datetime" />
+    <Property Name="modified_by" Type="uniqueidentifier" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_loansDetails_loans">
+    <End Role="loans" Type="Self.loans" Multiplicity="1" />
+    <End Role="loansDetails" Type="Self.loansDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="loans">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="loansDetails">
+        <PropertyRef Name="loan_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Salesman_Project">
+    <End Role="projects" Type="Self.projects" Multiplicity="1" />
+    <End Role="projects1" Type="Self.projects" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="projects">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="projects1">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="SSP_Add_DesignerInvoice_Items" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+    <Parameter Name="item_description" Type="varchar" Mode="In" />
+    <Parameter Name="item_amount" Type="decimal" Mode="In" />
+    <Parameter Name="contract_number" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SSP_Add_DesignerReceipt_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="receipt_id" Type="int" Mode="In" />
+    <Parameter Name="amount" Type="decimal" Mode="In" />
+    <Parameter Name="gst_percentage" Type="decimal" Mode="In" />
+    <Parameter Name="gst_amount" Type="decimal" Mode="In" />
+    <Parameter Name="total_amount" Type="decimal" Mode="In" />
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Add_Invoice_Items" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+    <Parameter Name="item_description" Type="varchar" Mode="In" />
+    <Parameter Name="item_amount" Type="decimal" Mode="In" />
+    <Parameter Name="contract_number" Type="varchar" Mode="In" />
+    <Parameter Name="project_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Add_Payment_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="payment_id" Type="int" Mode="In" />
+    <Parameter Name="supplierinvoice_item_id" Type="int" Mode="In" />
+    <Parameter Name="payment_amount" Type="decimal" Mode="In" />
+    <Parameter Name="agreed_amount" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="SSP_Add_Receipt_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="receipt_id" Type="int" Mode="In" />
+    <Parameter Name="amount" Type="decimal" Mode="In" />
+    <Parameter Name="gst_percentage" Type="decimal" Mode="In" />
+    <Parameter Name="gst_amount" Type="decimal" Mode="In" />
+    <Parameter Name="total_amount" Type="decimal" Mode="In" />
+    <Parameter Name="project_id" Type="bigint" Mode="In" />
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Add_SupplierInvoice_Items" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+    <Parameter Name="salesperson_id" Type="int" Mode="In" />
+    <Parameter Name="project_id" Type="int" Mode="In" />
+    <Parameter Name="invoice_number" Type="varchar" Mode="In" />
+    <Parameter Name="gst" Type="decimal" Mode="In" />
+    <Parameter Name="invoice_amt_without_gst" Type="decimal" Mode="In" />
+    <Parameter Name="invoice_amt_with_gst" Type="decimal" Mode="In" />
+    <Parameter Name="agreed_amt_without_gst" Type="decimal" Mode="In" />
+    <Parameter Name="agreed_amt" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="SSP_BankChequeReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="branchId" Type="int" Mode="In" />
+    <Parameter Name="bankId" Type="int" Mode="In" />
+    <Parameter Name="ChqFrom" Type="int" Mode="In" />
+    <Parameter Name="ChqTo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Banks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SSP_Branches" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SSP_CHECK_SUPPLIER_PAYMENT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SUPPLIER_INVOICE_ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Company" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SSP_Customer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="CustomerSearch" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SSP_CustomerInvoiceReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SSP_DeleteInvoiceItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Invoice_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_DesignerInvoiceReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="BranchId" Type="int" Mode="In" />
+    <Parameter Name="fromdate" Type="datetime" Mode="In" />
+    <Parameter Name="todate" Type="datetime" Mode="In" />
+    <Parameter Name="bankid" Type="int" Mode="In" />
+    <Parameter Name="designername" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_DesignerInvoices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="companyId" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="IsTax" Type="bit" Mode="In" />
+    <Parameter Name="searchText" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_DesignerInvoiceWithAndWithoutPayment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="BranchId" Type="int" Mode="In" />
+    <Parameter Name="fromdate" Type="datetime" Mode="In" />
+    <Parameter Name="todate" Type="datetime" Mode="In" />
+    <Parameter Name="bankid" Type="int" Mode="In" />
+    <Parameter Name="designername" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_DesignerReceiptById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="SSP_DesignerReceiptDetailByReceiptId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReceiptId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="SSP_DesignerReceipts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="branchId" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="searchText" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_DesignerReceiptsDetailById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="receiptId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="SSP_EXCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SSP_Expense" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="branchId" Type="int" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="fromdate" Type="datetime" Mode="In" />
+    <Parameter Name="todate" Type="datetime" Mode="In" />
+    <Parameter Name="searchText" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_ExpenseReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="Company_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_GetAllBank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SSP_GetCustomerInvoicesByProject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="project_id" Type="int" Mode="In" />
+    <Parameter Name="Bill_to" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_GetInvoiceList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SupplierId" Type="int" Mode="In" />
+    <Parameter Name="branchId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_GetLoanProjectsDetailsByLoanId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loan_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_GetPaymentDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="SSP_GetSalesmenAndUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BranchId" Type="int" Mode="In" />
+    <Parameter Name="status" Type="char" Mode="In" />
+  </Function>
+  <Function Name="SSP_Invoices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="companyId" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="BillToId" Type="int" Mode="In" />
+    <Parameter Name="salesMenId" Type="int" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="IsTax" Type="bit" Mode="In" />
+    <Parameter Name="searchText" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_InvoiceWithAndWithoutPayment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="BranchId" Type="int" Mode="In" />
+    <Parameter Name="fromdate" Type="datetime" Mode="In" />
+    <Parameter Name="todate" Type="datetime" Mode="In" />
+    <Parameter Name="bankid" Type="int" Mode="In" />
+    <Parameter Name="projectid" Type="int" Mode="In" />
+    <Parameter Name="salemenid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Loan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="branchId" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SSP_LoanReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmployeeId" Type="int" Mode="In" />
+    <Parameter Name="EmployeeType" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SSP_PaymentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="SSP_PaymentDetailsForSMS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="project_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_PaymentReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="fromdate" Type="datetime" Mode="In" />
+    <Parameter Name="todate" Type="datetime" Mode="In" />
+    <Parameter Name="branchid" Type="int" Mode="In" />
+    <Parameter Name="bankID" Type="int" Mode="In" />
+    <Parameter Name="ProjectID" Type="int" Mode="In" />
+    <Parameter Name="SalesmanID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Payments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="branchId" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="ProjectId" Type="int" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="salesMenId" Type="int" Mode="In" />
+    <Parameter Name="searchText" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_Print_DesignerInvoices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="InvoiceId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_PrintInvoices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="InvoiceId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_PrintLoan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RecID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Project_additions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="branchId" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="ProjectId" Type="int" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="salesMenId" Type="int" Mode="In" />
+    <Parameter Name="searchText" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_ProjectCostingReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="project_id" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="SSP_ProjectListingStatusByBranch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="year" Type="int" Mode="In" />
+    <Parameter Name="branchid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Projects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="branchId" Type="int" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="fromdate" Type="datetime" Mode="In" />
+    <Parameter Name="todate" Type="datetime" Mode="In" />
+    <Parameter Name="projectStatus" Type="int" Mode="In" />
+    <Parameter Name="salesMenId" Type="int" Mode="In" />
+    <Parameter Name="searchText" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_ProjectsBySalesman" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="SalesmenId" Type="int" Mode="In" />
+    <Parameter Name="BranchId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_ProjectsBySalesmanReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="salesmen_id" Type="int" Mode="In" />
+    <Parameter Name="project_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_ProjectSummeryReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="fromdate" Type="datetime" Mode="In" />
+    <Parameter Name="todate" Type="datetime" Mode="In" />
+    <Parameter Name="branchid" Type="int" Mode="In" />
+    <Parameter Name="SalesmanID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_ReceiptDetailByReceiptId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReceiptId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="SSP_ReceiptReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="BranchId" Type="int" Mode="In" />
+    <Parameter Name="fromdate" Type="datetime" Mode="In" />
+    <Parameter Name="todate" Type="datetime" Mode="In" />
+    <Parameter Name="bankid" Type="int" Mode="In" />
+    <Parameter Name="projectid" Type="int" Mode="In" />
+    <Parameter Name="salemenid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Receipts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="branchId" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="ProjectId" Type="int" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="salesMenId" Type="int" Mode="In" />
+    <Parameter Name="searchText" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_ReceiptsById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="SSP_ReceiptsDetailById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="receiptId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="SSP_Remove_DesignerInvoice_Items" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Remove_DesignerReceipt_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="receipt_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Remove_Invoice_Items" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Remove_LoanLoanDetailsFromSupplierPayment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loan_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Remove_LoanProjectsDetailsByLoanId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loan_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Remove_Payment_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="payment_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Remove_Receipt_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="receipt_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Remove_SupplierInvoice_Items" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoice_item_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_SaleIndividualReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="SalesmenId" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Salesmen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BranchID" Type="int" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="Search_Text" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_SaleSummeryReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="BranchId" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_Supplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SSP_SupplierInvoices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="companyId" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="supplierId" Type="int" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+    <Parameter Name="IsTax" Type="bit" Mode="In" />
+    <Parameter Name="searchText" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SSP_SupplierLoanDetailbyPaymentId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="supplier_payment_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_SupplierPaymentAndAssignedInvoices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="projectId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SSP_SupplierReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="year" Type="int" Mode="In" />
+    <Parameter Name="branchid" Type="int" Mode="In" />
+    <Parameter Name="SalesmanID" Type="int" Mode="In" />
+    <Parameter Name="StartWith" Type="char" Mode="In" />
+  </Function>
+  <Function Name="SSP_UserBranches" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="SSP_Users" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="EmailID" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="bit" Mode="In" />
+    <Parameter Name="startRowIndex" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="ColSort" Type="varchar" Mode="In" />
+    <Parameter Name="OrderBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SSP_UsersRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SSP_UsersRolesById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="PMSModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="additions_omissions" EntityType="Self.additions_omissions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="banks" EntityType="Self.banks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="branches" EntityType="Self.branches" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="company" EntityType="Self.company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="country" EntityType="Self.country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="designer_receipt_detail" EntityType="Self.designer_receipt_detail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="designer_receipts" EntityType="Self.designer_receipts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="expense" EntityType="Self.expense" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExpenseCategory" EntityType="Self.ExpenseCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="loans" EntityType="Self.loans" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="loansDetails" EntityType="Self.loansDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="mode_of_payment" EntityType="Self.mode_of_payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="payment_detail" EntityType="Self.payment_detail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="payments" EntityType="Self.payments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="project_status" EntityType="Self.project_status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="projects" EntityType="Self.projects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="receipt_detail" EntityType="Self.receipt_detail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="receipts" EntityType="Self.receipts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="salesmen" EntityType="Self.salesmen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_contract_types" EntityType="Self.tbl_contract_types" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_designer_invoice" EntityType="Self.tbl_designer_invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_designerinvoice_items" EntityType="Self.tbl_designerinvoice_items" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_invoice" EntityType="Self.tbl_invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_payment_terms" EntityType="Self.tbl_payment_terms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_supplier_invoice" EntityType="Self.tbl_supplier_invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_supplierinvoice_items" EntityType="Self.tbl_supplierinvoice_items" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_access_rights" EntityType="Self.user_access_rights" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_detail" EntityType="Self.user_detail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_invoice_items" EntityType="Self.tbl_invoice_items" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl_invoice_items].[invoice_id] AS [invoice_id], 
+    [tbl_invoice_items].[project_id] AS [project_id], 
+    [tbl_invoice_items].[Contract_number] AS [Contract_number], 
+    [tbl_invoice_items].[item_description] AS [item_description], 
+    [tbl_invoice_items].[item_amount] AS [item_amount]
+    FROM [dbo].[tbl_invoice_items] AS [tbl_invoice_items]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_loansDetails_loans" Association="Self.FK_loansDetails_loans">
+      <End Role="loans" EntitySet="loans" />
+      <End Role="loansDetails" EntitySet="loansDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Salesman_Project" Association="Self.FK_Salesman_Project">
+      <End Role="projects" EntitySet="projects" />
+      <End Role="projects1" EntitySet="projects" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

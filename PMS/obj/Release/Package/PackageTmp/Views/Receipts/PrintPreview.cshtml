@@ -1,0 +1,411 @@
+﻿<!--Customer Payments-->
+
+@model PMS.Models.PrintReceiptViewModel
+@{
+    Layout = null;
+}
+@if (Model.ReceiptsDetail.Count() > 0)
+{
+    <style>
+        .left-pad {
+            padding-left: 5px;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+
+        .right-pad {
+            padding-right: 5px;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+
+        .printaddress {
+            font-size: 11px;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+
+        .textlabel {
+            font-size: 12px;
+            font-weight: bold;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+
+        .textlabelnormal {
+            font-size: 12px;
+            font-weight: normal;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+
+        .tablebgcolor {
+            background-color: #000000;
+            border-spacing: 1px !important;
+            border-collapse: separate !important;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+
+        .trtdbgcolor {
+            background-color: #808080;
+            color: #fff;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+
+        .trbgcolor {
+            background-color: #ffffff;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+
+        .trbgcolorextra {
+            border-bottom: solid 1px #000000;
+            background-color: #ffffff;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+
+        .trbgcolorextra {
+            border-bottom: solid 1px #000000;
+            background-color: #808080;
+            color: #fff;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+
+        .trbgcolorextratopbottom {
+            border-top: solid 1px #000000;
+            border-bottom: solid 1px #000000;
+            background-color: #ffffff;
+            font-family: "Proxima Nova";
+            text-transform: uppercase;
+        }
+    </style>
+    var reciept = Model.ReceiptsDetail.FirstOrDefault();
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Print Preview</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="frmPayment" name="frmPayment">
+            <div id="PrintElement">
+                <center>
+                    <table width="95%" border="0" style="color:#000000!important">
+                        <tr>
+                            <td align="left" valign="top" width="50%"></td>
+                            <td align="right" valign="top" width="25%"></td>
+                            <td align="left" valign="top" width="25%"></td>
+                        </tr>
+                        <tr>
+                            <td valign="top" colspan="3">
+                                <span><b style="font-size:25px;font-family:Proxima Nova;">@Model.ssp_receiptsById_result.branch_name</b></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" valign="top" class="printaddress" colspan="3">
+                                @*@Model.ssp_receiptsById_result.branch_name<br />*@
+                                @Model.ssp_receiptsById_result.branch_address &nbsp; @Model.ssp_receiptsById_result.branch_zip_code &nbsp;Tel: @Model.ssp_receiptsById_result.phone
+                            </td>
+                        </tr>
+                        @if (!string.IsNullOrWhiteSpace(Model.ssp_receiptsById_result.gst_reg_no))
+                        {
+                            <tr>
+                                <td align="left" valign="top" colspan="3" class="printaddress">
+                                    <span>GST REG NO : @Model.ssp_receiptsById_result.gst_reg_no</span>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td valign="top" align="Center" colspan="3">
+                                <b class="textlabel trbgcolor" style="font-size:16px;"> PAYMENT RECEIPT</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" colspan="3">
+                                &nbsp;
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="textlabelnormal trbgcolor left-pad">
+                                @if ((!String.IsNullOrWhiteSpace(reciept.customer_name)))
+                                {
+                                    <span> @reciept.customer_name</span>
+                                }
+                            </td>
+                            @if (reciept.receipt_date.HasValue)
+                            {
+                                <td align="right" valign="top" class="textlabel trbgcolor">
+                                    <b>RECEIPT DATE :</b>&nbsp;
+                                </td>
+                                <td align="left" valign="top" class="trbgcolor left-pad">
+                                    &nbsp;@(reciept.receipt_date.HasValue ? reciept.receipt_date.Value.ToString("dd/MM/yyyy") : "")
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="textlabelnormal trbgcolor left-pad">
+                                @reciept.customer_address
+                            </td>
+                            @if ((!String.IsNullOrWhiteSpace(reciept.Bank_Name)))
+                            {
+                                <td align="right" valign="top" class="textlabel trbgcolor">
+                                    <b>BANK NAME :</b>&nbsp;
+                                </td>
+
+                                <td align="left" valign="top" class="trbgcolor left-pad">
+                                    @reciept.Bank_Name
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="textlabelnormal trbgcolor left-pad">
+                                @if ((!String.IsNullOrWhiteSpace(reciept.customer_phone)))
+                                {
+                                    <span> @reciept.customer_phone</span>
+                                }
+                            </td>
+                            @if ((!String.IsNullOrWhiteSpace(reciept.mode_of_payment)))
+                            {
+                                <td align="right" valign="top" class="textlabel trbgcolor">
+                                    <b>PAYMENT MODE :</b>&nbsp;
+                                </td>
+
+                                <td align="left" valign="top" class="trbgcolor left-pad">
+                                    @reciept.mode_of_payment
+                                </td>
+                            }
+
+                        </tr>
+
+                        <!--EMAIL & CEQUE NOT EMPTY + DESIGNER IN-CHARGE-->
+
+                        @if ((!String.IsNullOrWhiteSpace(reciept.customer_email)) && (!String.IsNullOrWhiteSpace(reciept.cheque_details)))
+                        {
+                            <tr>
+                                <td class="textlabelnormal trbgcolor left-pad">
+                                    <span>  @reciept.customer_email</span>
+                                </td>
+
+                                <td align="right" valign="top" class="textlabel trbgcolor">
+                                    <b>CHEQUE DETAIL :</b>&nbsp;
+                                </td>
+
+                                <td align="left" valign="top" class="trbgcolor left-pad">
+                                    @reciept.cheque_details
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td class="textlabelnormal trbgcolor left-pad">
+                                    &nbsp;
+                                </td>
+                                @if ((!String.IsNullOrWhiteSpace(reciept.salesmen_name)))
+                                {
+
+                                    <td align="right" valign="top" class="textlabel trbgcolor">
+                                        <b>DESIGNER IN-CHARGE :</b>&nbsp;
+                                    </td>
+
+                                    <td align="left" valign="top" class="trbgcolor left-pad">
+                                        @reciept.salesmen_name
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                        else if ((!String.IsNullOrWhiteSpace(reciept.customer_email)) && (String.IsNullOrWhiteSpace(reciept.cheque_details)))
+                        {
+                            <!--EMAIL NOT EMPTY & CEQUE EMPTY  BUT DESIGNER IN-CHARGE REPLAY-->
+                            <tr>
+                                <td class="textlabelnormal trbgcolor left-pad">
+                                    <span>  @reciept.customer_email</span>
+                                </td>
+                                @if ((!String.IsNullOrWhiteSpace(reciept.salesmen_name)))
+                                {
+
+                                    <td align="right" valign="top" class="textlabel trbgcolor">
+                                        <b>DESIGNER IN-CHARGE :</b>&nbsp;
+                                    </td>
+
+                                    <td align="left" valign="top" class="trbgcolor left-pad">
+                                        @reciept.salesmen_name
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+
+                        else if ((String.IsNullOrWhiteSpace(reciept.customer_email)) && (!String.IsNullOrWhiteSpace(reciept.cheque_details)))
+                        {
+                            <!--EMAIL EMPTY & CEQUE NOT EMPTY  BUT DESIGNER IN-CHARGE COME-->
+                            <tr>
+                                <td class="textlabelnormal trbgcolor left-pad">
+                                    &nbsp;
+                                </td>
+
+                                <td align="right" valign="top" class="textlabel trbgcolor">
+                                    <b>CHEQUE DETAIL :</b>&nbsp;
+                                </td>
+
+                                <td align="left" valign="top" class="trbgcolor left-pad">
+                                    @reciept.cheque_details
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="textlabelnormal trbgcolor left-pad">
+                                    &nbsp;
+                                </td>
+                                @if ((!String.IsNullOrWhiteSpace(reciept.salesmen_name)))
+                                {
+
+                                    <td align="right" valign="top" class="textlabel trbgcolor">
+                                        <b>DESIGNER IN-CHARGE :</b>&nbsp;
+                                    </td>
+
+                                    <td align="left" valign="top" class="trbgcolor left-pad">
+                                        @reciept.salesmen_name
+                                    </td>
+                                }
+
+                            </tr>
+
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="textlabelnormal trbgcolor left-pad">
+                                    &nbsp;
+                                </td>
+                                @if ((!String.IsNullOrWhiteSpace(reciept.salesmen_name)))
+                                {
+
+                                    <td align="right" valign="top" class="textlabel trbgcolor">
+                                        <b>DESIGNER IN-CHARGE :</b>&nbsp;
+                                    </td>
+
+                                    <td align="left" valign="top" class="trbgcolor left-pad">
+                                        @reciept.salesmen_name
+                                    </td>
+                                }
+
+                            </tr>
+
+                        }
+                        <tr>
+                            <td align="left" class="trbgcolor" valign="top" colspan="3">
+                                &nbsp;
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="left" class="trbgcolor" valign="top" colspan="3">
+                                <b>REMARKS : </b> @reciept.remarks
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" class="trbgcolor" valign="top" colspan="3">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <table width="100%" border="0" class="tablebgcolor" cellpadding="1" cellspacing="1">
+                                    <tr>
+                                        <td valign="top" class="textlabel " width="5%"></td>
+                                        <td valign="top" class="textlabel " width="25%"></td>
+                                        <td valign="top" class="textlabel " width="15%"></td>
+                                        <td valign="top" class="textlabel " width="16%"></td>
+                                        <td valign="top" class="textlabel " width="12%"></td>
+                                        <td valign="top" class="textlabel " width="12%"></td>
+                                        <td valign="top" class="textlabel " width="15%"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="center" valign="top" class="textlabel trbgcolorextra"><b>NO.</b></td>
+                                        <td align="left" valign="top" class="textlabel trbgcolorextra" ><b style="margin-left:15px">Address/Site</b></td>
+                                        <td align="center" valign="top" class="textlabel trbgcolorextra"><b>Invoice Number</b></td>
+                                        <td align="right" valign="top" class="textlabel trbgcolorextra"><b>Invoice Amt without GST</b></td>
+                                        <td align="right" valign="top" class="textlabel trbgcolorextra"><b>GST %</b></td>
+                                        <td align="right" valign="top" class="textlabel trbgcolorextra"><b>GST Amt</b></td>
+                                        <td align="right" valign="top" class="textlabel trbgcolorextra"><b>Amount</b></td>
+                                    </tr>
+
+                                    @{ int i = 0; }
+                                    @foreach (var _items in Model.ReceiptsDetail)
+                                    {
+                                        i = i + 1;
+                                        <tr>
+                                            <td align="center" class="trbgcolor">@i</td>
+                                            <td align="left" class="trbgcolor left-pad">@_items.project_name</td>
+                                            <td align="left" class="trbgcolor left-pad">@_items.Invoice_number</td>
+                                            <td align="right" class="trbgcolor right-pad">$@Convert.ToDecimal(_items.amount).ToString("#,##0.00")</td>
+                                            <td align="right" class="trbgcolor right-pad">
+                                                <span>@_items.gst_percentage %</span>
+                                            </td>
+                                            <td align="right" class="trbgcolor right-pad">
+                                                <span>$@Convert.ToDecimal(_items.gst_amount).ToString("#,##0.00")</span>
+                                            </td>
+                                            <td align="right" class="trbgcolor right-pad">
+                                                <span>$@Convert.ToDecimal(_items.total_amount).ToString("#,##0.00")</span>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                    <tr>
+                                        <td align="left" class="trbgcolor">&nbsp;</td>
+                                        <td align="right" class="trbgcolor" valign="top" colspan="5">&nbsp;</td>
+                                        <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="right" valign="top" class="textlabel trbgcolorextratopbottom" colspan="6">
+                                            <b style="margin-right:2%">GRAND TOTAL</b>
+                                        </td>
+                                        <td align="right" class="trbgcolorextratopbottom" valign="top">
+                                            <div class="right-pad" style="float:right;">$@Convert.ToDecimal(Model.ReceiptsDetail.Sum(o => o.total_amount)).ToString("#,##0.00")</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" class="trbgcolorextratopbottom right-pad" colspan="7">This is a computer-generated document. No signature is required.</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="PrintElem();">Print</button>
+        <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+    <script>
+
+        function PrintElem() {
+            debugger;
+            //06
+            var elem = "PrintElement";
+            var mywindow = window.open('', 'PRINT', 'height=400,width=700');
+
+            if (mywindow != null) {
+                mywindow.document.write('<html><head><title></title>');
+                mywindow.document.write('<style>body{font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;} .printaddress { font-size: 11px;font-family: "Proxima Nova";text-transform: uppercase;} .textlabel { font-size: 12px;font-weight: bold; font-family: "Proxima Nova";text-transform: uppercase;} .textlabelnormal{ font-size: 12px;font-weight: normal; font-family: "Proxima Nova";text-transform: uppercase;} .tablebgcolor {font-size: 12px;background-color:#000000; border-spacing:0px!important;border-collapse: separate!important;font-family: "Proxima Nova";text-transform: uppercase;} .trbgcolor { font-size: 12px;background-color:#ffffff;font-family: "Proxima Nova";text-transform: uppercase;} .trbgcolorextra { border-bottom:solid 1px #000000; background-color:#ffffff; font-family: "Proxima Nova";text-transform: uppercase;} .trbgcolorextratopbottom { border-top:solid 1px #000000;border-bottom:solid 1px #000000; background-color:#ffffff; font-family: "Proxima Nova";text-transform: uppercase;} </style>');
+                mywindow.document.write('</head><body >');
+                mywindow.document.write(document.getElementById(elem).innerHTML);
+                mywindow.document.write('</body></html>');
+                mywindow.document.close(); // necessary for IE >= 10
+                mywindow.focus(); // necessary for IE >= 10*/
+                mywindow.print();
+                mywindow.close();
+            }
+            return false;
+        }
+
+    </script>
+}

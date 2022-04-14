@@ -1,0 +1,317 @@
+﻿@model PMS.Models.InvoiceViewModel
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Add/Edit Invoice</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" id="frmInvoice" name="frmInvoice">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Sales Person:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.Sales_person, Model.SalesPersonList, new { @class = "form-control", @tabindex = "3", @onchange = "LoadSalesmenCustomer();" })
+                        @Html.ValidationMessageFor(o => o.Sales_person, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Company:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.Company_id, Model.CompanyList, new { @class = "form-control", @tabindex = "3", onchange = "GetInvoiceNumber();" })
+                        @Html.ValidationMessageFor(o => o.Company_id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Bill To:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.Bill_to, Model.BillToList, new { @class = "form-control", @tabindex = "1", onchange = "GetCustomerProjects();" })
+                        @Html.ValidationMessageFor(o => o.Bill_to, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Tax Invoice :</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.is_tax, Model.IsTaxList, new { @class = "form-control", @tabindex = "5" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Payment Terms:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.Payment_terms, Model.PaymentTermList, new { @class = "form-control", @tabindex = "5" })
+                        @Html.ValidationMessageFor(o => o.Payment_terms, "", new { @class = "text-error" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="name">Invoice Date:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.Invoice_date, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "2" })
+                        @Html.ValidationMessageFor(o => o.Invoice_date, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Invoice Number:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.Invoice_number, new { @class = "form-control", @tabindex = "6", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Contract Type:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.Contract_type, Model.ContractTypeList, new { @class = "form-control", @tabindex = "6" })
+                        @Html.ValidationMessageFor(o => o.Contract_type, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Tax (%):</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.tax, new { @class = "form-control", @tabindex = "5", onblur = "CalculateAmount()" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Tax Amount:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.tax_amount, new { @class = "form-control", @tabindex = "8" })
+                    </div>
+                </div>
+
+                @Html.DropDownListFor(o => o.hdnProjectId, Model.hdnProjectList, new { @class = "item_project", @style = "display:none;" })
+
+                @*<div class="form-group">
+                        <label class="control-label col-sm-4" for="email">
+                            Contract Number:
+                        </label>
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(o => o.Contract_number, new { @class = "form-control", @tabindex = "4" })
+                        </div>
+                    </div>*@
+
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <table class="table table-responsive table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="7%">SNo</th>
+                            <th width="25%">Project</th>
+                            <th width="26%">Item Description</th>
+                            <th width="14%">Contract Number</th>
+                            <th width="13%">Amount</th>
+                            <th width="5%">
+                                <a href="javascript:void(0);" onclick="AddNew();"><i class="more-less glyphicon glyphicon-plus" style="color:#ffffff;"></i></a>
+                                <input type="hidden" id="maintainID" name="maintainID" value="@Model.InvoiceItemList.Count()" />
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tblbody">
+                        @if (Model.InvoiceItemList.Count == 0)
+                        {
+                            <tr>
+                                <td><span class="span_ids">1</span></td>
+                                <td><select id="item_project1" name="item_project1" class="item_project form-control" onchange="GetProjectDescription(this,event)"></select></td>
+                                <td><input id="item_description1" name="item_description1" class="item_description form-control" /></td>
+                                <td><input id="item_Contractnumber1" name="item_Contractnumber1" class="item_Contractnumber form-control" /></td>
+                                <td><input id="item_amount1" name="item_amount1" class="item_amount form-control amount" onblur = "CalculateAmount()"/></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            int i = 1;
+                            foreach (var pdlist in Model.InvoiceItemList)
+                            {
+                                <tr id="tr@(i)">
+                                    <td><span class="span_ids">@(i)</span></td>
+                                    <td>@Html.DropDownList("item_project", new SelectList(Model.hdnProjectList, "Value", "Text", pdlist.project_id), new { @id = String.Format("item_project{0}", i), @name = String.Format("item_project{0}", i), @class = "item_project form-control", @onchange = "GetProjectDescription(this,event)" })</td>
+                                    <td>
+                                        <input id="item_description@(i)" name="item_description@(i)" class="item_description form-control" value="@pdlist.item_description" />
+                                    </td>
+                                    <td>
+                                        <input id="item_Contractnumber@(i)" name="item_Contractnumber@(i)" class="item_Contractnumber form-control" value="@pdlist.Contract_number" />
+                                    </td>
+                                    <td>
+                                        <input id="item_amount@(i)" name="item_amount@(i)" class="item_amount form-control amount" value="@pdlist.item_amount" onblur = "CalculateAmount()" />
+                                    </td>
+                                    <td>
+                                        <a href='javascript:void(0);' onclick=RemoveElement(@i)><i class='more-less glyphicon glyphicon-minus' style='color:#ff0000;'></i></a>
+                                    </td>
+                                </tr>
+                                i = i + 1;
+                            }
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        @Html.HiddenFor(o => o.Id)
+        @Html.HiddenFor(o => o.created_date)
+        @Html.HiddenFor(o => o.created_by)
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="return SavePaymentForm('save');">Save</button>
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="return SavePaymentForm('saveprint');">Save & Print</button>
+    <button id="btnClosePayment" name="btnClosePayment" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+<script>
+    $(function () {
+        if (String($("#maintainID").val()) == "0") {
+            $("#maintainID").val("1");
+        }
+
+        $("#Invoice_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#Invoice_date').removeAttr("data-val-date");
+    });
+    $(document).ready(function () {
+        //CalculateTotalAmtAfterDiscount();
+        if ($('#frmInvoice').find("#Id").val() != "0") {
+            $('#frmInvoice').find("#Company_id").attr('disabled', 'disabled');
+            $('#frmInvoice').find("#Bill_to").attr('disabled', 'disabled');
+        }
+
+        //$(".item_project").change(function () {
+        //    GetProjectDescription(this)
+        //});
+    });
+
+    function AddNew() {
+        var projectDropDownHTML = String($("#paymentdet_project_id").html());
+        var idval = $("#maintainID").val();
+        var idnum = parseInt(idval) + 1;
+        var addnewHtML = "";
+        var gstpercentagevalue = String($("#hdngst_percentage").val());
+        addnewHtML = "<tr id='tr" + idnum + "'>";
+        addnewHtML = addnewHtML + "<td><span class='span_ids'>" + idnum + "</span></td>";
+        addnewHtML = addnewHtML + "<td><select id='item_project" + idnum + "'  name='item_project" + idnum + "' class='item_project form-control' onchange='GetProjectDescription(this,event)'></select></td>";
+        addnewHtML = addnewHtML + "<td><input id='item_description" + idnum + "'  name='item_description" + idnum + "' class='item_description form-control' /></td>";
+        addnewHtML = addnewHtML + "<td><input id='item_Contractnumber" + idnum + "'  name='item_Contractnumber" + idnum + "' class='item_Contractnumber form-control' /></td>";
+        addnewHtML = addnewHtML + "<td><input  id='item_amount" + idnum + "' name='item_amount" + idnum + "' class='item_amount form-control amount' onblur = 'CalculateAmount()'/></td>";
+        addnewHtML = addnewHtML + "<td><a href='javascript:void(0);' onclick='RemoveElement(" + idnum + ")'><i class='more-less glyphicon glyphicon-minus' style='color:#ff0000;'></i></a></td></tr>";
+        $("#tblbody").append(addnewHtML);
+        addnewHtML = "";
+        $("#maintainID").val(idnum);
+        idnum = "";
+        UpdateSNO();
+        UpdateProjects($("#maintainID").val());
+    }
+    function RemoveElement(idnum) {
+        $("#tr" + idnum).remove();
+        UpdateSNO();
+        CalculateAmount();
+    }
+
+    function UpdateProjects(rec) {
+        $("#item_project" + rec).html($("#hdnProjectId").html());
+    }
+
+    function UpdateSNO() {
+        var sno = 0;
+        $(".span_ids").each(function () {
+            // ...
+            sno = parseInt(sno) + 1;
+            $(this).html(sno);
+        });
+    }
+
+    function GetInvoiceNumber() {
+        $.ajax({
+            type: "POST",
+            url: "/Invoice/GetInvoiceNumber", // the URL of the controller action method
+            data: {
+                company_id: $("#Company_id").val()
+            }, // optional data
+            success: function (result) {
+                $("#Invoice_number").val(result);
+            },
+            error: function (req, status, error) {
+
+            }
+        }).done(function () {
+
+        });
+    }
+
+    function GetCustomerProjects() {
+        var _val = "";
+        var _txt = "";
+        $(".item_project").each(function () {
+            $(this).html("");
+        });
+
+        $.getJSON("/Invoice/GetCustomerProjectsByName?customer_id=" + $("#Bill_to").val() + "", function (response) {
+            $.each(response, function () {
+                _val = this.Value;
+                _txt = this.Text;
+
+                $(".item_project").each(function () {
+                    $(this).append($("<option />").val(_val).text(_txt));
+                });
+            });
+        });
+    }
+
+    function GetProjectDescription(T, event) {
+        //debugger;
+        //alert($(event).val());
+        $.ajax({
+            type: "GET",
+            url: "/Invoice/GetProjectDescriptionByProject", // the URL of the controller action method
+            data: {
+                project_id: $(T).val()
+            }, // optional data
+            success: function (result) {
+                //debugger;
+                // $(T.parentNode.nextElementSibling.children).val(result);
+                $(T.closest('tr')).find('.item_Contractnumber').val(result);
+
+            },
+            error: function (req, status, error) {
+
+            }
+        }).done(function () {
+
+        });
+    }
+
+    function CalculateAmount() {
+       
+        var tax = $("#tax").val();
+        var calculated_total_sum = 0;
+        $("#tblbody .item_amount").each(function () {
+            var get_textbox_value = $(this).val();
+            if ($.isNumeric(get_textbox_value)) {
+                calculated_total_sum += parseFloat((get_textbox_value * tax)/100);               
+            }
+        });
+        $("#tax_amount").val(calculated_total_sum.toFixed(2));
+        }
+
+  
+</script>
+
+
+<style>
+    .errorCls {
+        border: solid 1px #ff0000;
+    }
+
+    .chosen-container {
+        width: 210px !important;
+    }
+</style>

@@ -1,0 +1,174 @@
+﻿@model PMS.Models.SupplierViewModel
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Add/Edit Supplier</h4>
+</div>
+
+
+
+<div class="modal-body">
+    <form class="form-horizontal" id="frmSupplier" name="frmSupplier">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="name">Name:</label>
+                    <div class="col-sm-8">
+
+                        @Html.TextBoxFor(o => o.supplier_name, new { @class = "form-control", @tabindex = "31" })
+                        @Html.ValidationMessageFor(o => o.supplier_name, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Address 2:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.address2, new { @class = "form-control", @tabindex = "33" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Address 4:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.address4, new { @class = "form-control", @tabindex = "35" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Email:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(o => o.email, "", new { @class = "text-error", @tabindex = "37" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Phone:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.phone, new { @class = "form-control", @tabindex = "39" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Contact Person:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.contact_person, new { @class = "form-control", @tabindex = "41" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">GST Registered:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.gst_registered, Model.GSTRegisteredList, new { @class = "form-control", @tabindex = "43" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Rebate(%):</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.rebate_per, new { @class = "form-control", @tabindex = "45" })
+                        @Html.ValidationMessageFor(o => o.rebate_per, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Is Active:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.isactive, Model.StatusList, new { @class = "form-control", @tabindex = "15" })
+                    </div>
+                </div>*@
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="address1">Address 1:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.address1, new { @class = "form-control", @tabindex = "32" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="address3">Address 3:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.address3, new { @class = "form-control", @tabindex = "34" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="zip_code">ZipCode:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.zip_code, new { @class = "form-control", @tabindex = "36" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Website:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.website, new { @class = "form-control", @tabindex = "38" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Mobile:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.mobile, new { @class = "form-control", @tabindex = "40" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">NRIC No:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.nric_no, new { @class = "form-control", @tabindex = "42" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">GSTNo:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.gst_no, new { @class = "form-control", @tabindex = "44" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">IsActive:</label>
+                    <div class="col-sm-8">
+                        @if (Model.isactive == true)
+                        {
+                            <input type="checkbox" id="myCheck" onclick="myFunction()" checked>
+                        }
+                        else if (Model.isactive == false)
+                        {
+                            <input type="checkbox" id="myCheck" onclick="myFunction()">
+
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="myCheck" onclick="myFunction()" checked>
+                        }
+                        @*@Html.CheckBoxFor(model => model.isactive, htmlAttributes: new { @checked = true })*@
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        @Html.HiddenFor(o => o.isactive)
+        @Html.HiddenFor(o => o.id)
+        @Html.HiddenFor(o => o.created_date)
+        @Html.HiddenFor(o => o.created_by)
+    </form>
+</div>
+<div class="modal-footer">
+
+
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary"  onclick="SaveForm();">Save</button>
+    <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+
+
+

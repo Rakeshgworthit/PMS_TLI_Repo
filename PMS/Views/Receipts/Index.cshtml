@@ -1,0 +1,222 @@
+﻿@using MVCGrid.Web
+@model PMS.Models.ReceiptsViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Customer Payments</h3>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+            <button type="button" onclick="openModelpop('/Receipts/LoadAddEdit', 'id', 0);" class='btn btn-primary pull-right'>
+                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="well">
+                    @using (Html.BeginForm("Index", "Receipts", FormMethod.Post, new { id = "SearchForm", name = "SearchForm" }))
+                    {
+                        <div class="form-inline">
+                            <div class="form-group ">
+                                <input id="SearchFrom" name="SearchFrom" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.SearchFrom).ToString("dd/MM/yyyy")" />
+                            </div>
+                            <div class="form-group">
+                                <input id="SearchTo" name="SearchTo" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.SearchTo).ToString("dd/MM/yyyy")" />
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(o => o.SearchProject, Model.projectList, new { @class = "form-control chosen-select", @tabindex = "3", style = "width:200px" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(o => o.ProjectSalesmenId, Model.salesmanList, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="from_date">Search:</label>
+                                @Html.TextBoxFor(x => x.SearchText, new { @class = "form-control" })
+                            </div>
+                            <input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </div>
+                    }
+                </div>
+                <div class="responsive-table">
+                    <input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+
+                    @Html.MVCGrid("Receipts", new { hdnUID = Model.UID, brId = PMS.Common.SessionManagement.SelectedBranchID, SearchFrom = Model.SearchFrom, SearchTo = Model.SearchTo, SearchProject = Model.SearchProject, ProjectSalesmenId = Model.ProjectSalesmenId, searchText = Model.SearchText })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function SaveForm(actiontype) {
+        debugger;
+        var ddlproject_val;
+        var form = $('#frmReceipt');
+        var chval = false;
+        if (String($("#mode_of_payment_id").val()) == "4" && $("#cheque_details").val() == "" && ($("#bank_id").val() == "" || $("#bank_id").val() == "0")) {
+            $(".chequenumbervalidation").show();
+            $(".bankvalidation").show();
+            chval = true;
+        }
+        else if (String($("#mode_of_payment_id").val()) == "4" && $("#cheque_details").val() == "")
+        {
+            $(".chequenumbervalidation").show();
+            $(".bankvalidation").hide();
+            chval = true;
+        } else if (String($("#mode_of_payment_id").val()) == "4" && ($("#bank_id").val() == "" || $("#bank_id").val() == "0")) {
+            $(".bankvalidation").show();
+            $(".chequenumbervalidation").hide();
+            chval = true;
+        } else {
+            chval = false;
+            $(".chequenumbervalidation").hide();
+            $(".bankvalidation").hide();
+        }
+        $.validator.unobtrusive.parse(form);
+
+        $(".ddlproject_id").each(function () {
+            if ($(this).val() == "" || $(this).val() == "null" || $(this).val() == null) {
+                alert($(this).val());
+                $(this).addClass("errorCls");
+                chval = true;
+               // return false;
+            } else {
+                $(this).removeClass("errorCls");
+            }
+        });
+
+        
+
+        $(".project_invoice").each(function () {
+            if ($(this).val() == "" || $(this).val() == "null" || $(this).val() == null) {                
+                $(this).addClass("errorCls");
+                chval = true;
+               // return false;
+            }
+        });
+
+       // $("#project_id_chosen").next(".field-validation-valid").html('');
+        //if ($("#project_id").val() <= 0) {
+        //    $("#project_id_chosen").next(".field-validation-valid").html('Please select a project');
+        //    form.valid();
+        //    return false;
+        //}
+        //else {
+        var jsonData = {
+           
+                id: $("#id").val(),
+                receipt_date: $("#receipt_date").val(),
+                mode_of_payment_id: $("#mode_of_payment_id").val(),
+                cheque_details: $("#cheque_details").val(),
+                remarks: $("#remarks").val(),
+                project_id: $("#project_id").val(),
+                bank_id: $("#bank_id").val(),
+                isactive: $("#isactive").val(),
+                customer_id: $("#customer_id").val(),
+                sales_man_id: $("#sales_man_id").val(),
+                receipt_details: []
+            };
+            $("#tblbody tr").each(function () {
+                 ddlproject_val = $(this).find(".ddlproject_id").val();
+                var ddlinvoice_val = $(this).find(".project_invoice").val();
+                var payment_amount_val = $(this).find(".payment_amount").val();
+                var gst_percentage_val = $(this).find(".gst_percentage").val();
+                var gst_amount_val = $(this).find(".gst_amount").val();
+                var invoice_amount_val = $(this).find(".invoice_amount").val();
+                jsonData.receipt_details.push({
+                    project_id: ddlproject_val,
+                    total_amount: payment_amount_val,
+                    gst_percentage: gst_percentage_val,
+                    gst_amount: gst_amount_val,
+                    amount: invoice_amount_val,
+                    invoice_id: ddlinvoice_val
+                });
+
+            });
+
+      //  }
+
+
+        if (form.valid() && chval == false) {
+            var receiptReturnID = "";
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Receipts/SaveUpdate", // the URL of the controller action method
+                data: "receiptobj=" + JSON.stringify(jsonData), // optional data
+                //data: "receiptobj=" + jsonData, // optional data
+                //data: "receiptobj=" encodeURIComponent ( "{" + jsonData + "}") , // optional data
+                success: function (result) {
+                    $.loader('close');
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {
+                       // $("#btnClose").click();
+                        // loadGrid();
+                        debugger;
+                        receiptReturnID = String(result.id);
+                        if (actiontype == "save")
+                        openModelpop('/Receipts/LoadSMS', 'projectId', ddlproject_val);
+                        notify(result.msg, result.cls);
+                    }
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                    notify(error, "error");
+                }
+            }).done(function () {
+
+                if (actiontype == "saveprint" && receiptReturnID != "") {
+                    setTimeout(function () {
+                        openModelpop('/Receipts/PrintPreview', 'id', receiptReturnID);
+                    }, 600);
+
+                }
+            });
+        }
+    }
+
+    function loadGrid() {
+        MVCGrid.reloadGrid('Receipts');
+    }
+
+    $(function () {
+        $("#SearchProject").chosen();
+
+        $("#SearchFrom").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#SearchFrom').removeAttr("data-val-date");
+
+        $("#SearchTo").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#SearchTo').removeAttr("data-val-date");
+    });
+
+    function LoadSalesmenCustomer() {
+        if ($("#sales_man_id").val() != "0") {
+            var _val = "";
+            var _txt = "";
+            $("#customer_id").html("");
+
+            $.getJSON("/Invoice/GetCustomerBySalesmen?id=" + $("#sales_man_id").val() + "", function (response) {
+                $.each(response, function () {
+                    _val = this.Value;
+                    _txt = this.Text;
+
+                    $("#customer_id").each(function () {
+                        $(this).append($("<option />").val(_val).text(_txt));
+                    });
+                });
+            });
+        }
+    }
+
+</script>

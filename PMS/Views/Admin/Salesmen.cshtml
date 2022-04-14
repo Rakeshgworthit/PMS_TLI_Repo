@@ -1,0 +1,131 @@
+﻿@using MVCGrid.Web
+@model PMS.Models.SalesmenViewModel
+@{
+    ViewBag.Title = "Salesmen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Salesmen</h3>
+        </div>
+       
+            <div class="col-md-6" style="margin-top:10px;">               
+                <button type="button" onclick="openModelpop('/Admin/SalesmenLoadAddEdit', 'id', 0);" class='btn btn-primary pull-right'>
+                    <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+                </button>             
+            </div>      
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="well">
+                    @using (Html.BeginForm("Salesmen", "Admin", FormMethod.Post, new { id = "SearchForm", name = "SearchForm" }))
+                    {
+                        <div class="form-inline ">
+                            <div class="form-group">
+                                <label class="control-label" for="from_date">Search:&nbsp;</label>
+                                <input id="Search_Text" name="Search_Text" class="form-control" value="@Model.Search_Text" placeholder="Search" />
+
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="responsive-table">
+                    @Html.MVCGrid("Salesmen", new { brId = PMS.Common.SessionManagement.SelectedBranchID, Search_Text = Model.Search_Text })
+                    @*@if (User.IsInRole("SuperAdmin"))
+                {
+                                    @Html.MVCGrid("Salesmen", new { brId = PMS.Common.SessionManagement.SelectedBranchID })
+
+                }else {
+                                    @Html.MVCGrid("SalesmenView", new { brId = PMS.Common.SessionManagement.SelectedBranchID })
+                }*@
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+
+<script> 
+    var che = true;
+    
+    function myFunction() {
+        debugger;
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true) {
+            debugger;
+            che = true;
+        } else {
+            che = false;
+        }
+    }
+
+    function SaveSalesmenForm() {
+        debugger;
+        var ch = che;
+        $('#isactive').val(ch);
+                            var form = $('#frmSalesmen');
+        $.validator.unobtrusive.parse(form);
+                            if (form.valid()) {
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                                    type: "POST",
+                url: "/Admin/SalesmenSaveUpdate", // the URL of the controller action method
+                data: {
+                                        id: $('#frmSalesmen').find("#id").val(),
+                    branch_Id: $('#frmSalesmen').find("#branch_Id").val(),
+                    salesmen_name: $('#frmSalesmen').find("#salesmen_name").val(),
+                    saleman_commission: $('#frmSalesmen').find("#saleman_commission").val(),
+                    address1: $('#frmSalesmen').find("#address1").val(),
+                    address2: $('#frmSalesmen').find("#address2").val(),
+                    address3: $('#frmSalesmen').find("#address3").val(),
+                    address4: $('#frmSalesmen').find("#address4").val(),
+                    zip_code: $('#frmSalesmen').find("#zip_code").val(),
+                    website: $('#frmSalesmen').find("#website").val(),
+                    email: $('#frmSalesmen').find("#email").val(),
+                    phone: $('#frmSalesmen').find("#phone").val(),
+                    mobile: $('#frmSalesmen').find("#mobile").val(),
+                    isactive: $('#frmSalesmen').find("#isactive").val(),
+                    remarks: $('#frmSalesmen').find("#remarks").val(),
+                }, // optional data
+                success: function (result) {
+                    $.loader('close');
+                                        if (result.cls == "error") {
+                                            notify(result.msg, result.cls);
+                                        } else {
+                        $("#btnClose").click();
+                                            loadGrid();
+                                            notify(result.msg, result.cls);
+                                        }
+                                    },
+                error: function (req, status, error) {
+                                        // do something with error
+                                    }
+                                });
+                            }
+                        }
+                        function loadGrid() {
+                            MVCGrid.reloadGrid('Salesmen');
+                            //if ($("#MVCGridContainer_SalesmenView").length > 0) {
+                            //    MVCGrid.reloadGrid('SalesmenView');
+                            //} else {
+                            //    MVCGrid.reloadGrid('Salesmen');
+                            //}
+                        }
+
+
+                       
+</script>
+
+
+

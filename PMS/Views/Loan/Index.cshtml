@@ -1,0 +1,202 @@
+﻿@using MVCGrid.Web
+@model PMS.Models.LoanViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Loan</h3>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+            <button type="button" onclick="openModelpop('/loan/LoadAddEdit', 'id', 0);" class='btn btn-primary pull-right'>
+                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="well">
+                    @using (Html.BeginForm("Index", "Loan", FormMethod.Post, new { id = "SearchForm", name = "SearchForm" }))
+                    {
+                        <div class="form-inline">
+                            <div class="form-group ">
+                                <input id="SearchFrom" name="SearchFrom" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.SearchFrom).ToString("dd/MM/yyyy")" />
+                            </div>
+                            <div class="form-group">
+                                <input id="SearchTo" name="SearchTo" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.SearchTo).ToString("dd/MM/yyyy")" />
+                            </div>
+
+                            <input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </div>
+                    }
+                </div>
+                <div class="responsive-table">
+                    <input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+
+                    @Html.MVCGrid("LoanGrid", new { hdnUID = Model.UID, brId = PMS.Common.SessionManagement.SelectedBranchID, SearchFrom = Model.SearchFrom, SearchTo = Model.SearchTo })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var recTypeFlag = false;
+    function SaveForm(actiontype) {        
+        var ProjectAdvance = $('#ProjectAdvance').val();
+        var form = $('#frmLoan');
+        var LoanDetails = [];
+        $('[name=projectAmount]').each(function () {
+            var item = {};
+            item.Id = $(this.parentNode.parentNode.firstElementChild.children).hasClass('chosen-select') ? $(this.parentNode.parentNode.firstElementChild.children).val() : $(this.parentNode.parentNode.firstElementChild.nextElementSibling.children).val(),
+            item.Amount = $(this).val();
+            LoanDetails.push(item);
+        });
+        var chval = false;
+        if ($("#rec_type option:selected").val() <= 0)
+        {
+            $(".RecordTypeListvalidation").show();
+            chval = true;
+        }
+        else
+        {
+            $(".RecordTypeListvalidation").hide();
+            chval = false;
+        }
+               
+        if (String($("#payment_mode").val()) == "4" && $("#cheque_number").val() == "" && ($("#bank_id").val() == "" || $("#bank_id").val() == "0")) {
+            $(".chequenumbervalidation").show();
+            $(".bankvalidation").show();
+            chval = true;
+        }
+        else if (String($("#payment_mode").val()) == "4" && $("#cheque_number").val() == "") {
+            $(".chequenumbervalidation").show();
+            $(".bankvalidation").hide();
+            chval = true;
+        } else if (String($("#payment_mode").val()) == "4" && ($("#bank_id").val() == "" || $("#bank_id").val() == "0")) {
+            $(".bankvalidation").show();
+            $(".chequenumbervalidation").hide();
+            chval = true;
+        }
+        else if ($("#cheque_number").val() != "") {
+            if (isNumber($("#cheque_number").val()) == false) {
+                $(".chequenumbervalidation").show();
+                chval = true;
+            } else {
+                chval = false;
+                $(".chequenumbervalidation").hide();
+                $(".bankvalidation").hide();
+            }
+        }
+        else {
+            chval = false;
+            $(".chequenumbervalidation").hide();
+            $(".bankvalidation").hide();
+        }
+
+        if (recTypeFlag) {
+            $('[name=projectAmount]').each(function () {
+                debugger;
+                var isAnyValidationOccured = false;
+                var projectId = $(this.parentNode.parentNode.firstElementChild.children).hasClass('chosen-select') ? $(this.parentNode.parentNode.firstElementChild.children).val() : $(this.parentNode.parentNode.firstElementChild.nextElementSibling.children).val();
+                if(projectId<=0)
+                {
+                    $(this.parentNode.parentNode.firstElementChild.children).hasClass('chosen-select') ? $(this.parentNode.parentNode.firstElementChild.children[1]).show() : $(this.parentNode.parentNode.firstElementChild.nextElementSibling.children[1]).show();               
+                    isAnyValidationOccured = true;
+                }
+                else
+                {
+                    $(this.parentNode.parentNode.firstElementChild.children).hasClass('chosen-select') ? $(this.parentNode.parentNode.firstElementChild.children[1]).hide() : $(this.parentNode.parentNode.firstElementChild.nextElementSibling.children[1]).hide();
+                }
+                if ($(this).val()<=0)
+                {
+                    $(this.parentNode.children[1]).show();
+                    isAnyValidationOccured = true;
+                }
+                else {
+                    $(this.parentNode.children[1]).hide();
+                }
+                if(isAnyValidationOccured)
+                {
+                    chval = true;
+                }                
+            });            
+        }
+        var paymentReturnID = "";
+        $.validator.unobtrusive.parse(form);
+        if (form.valid() && chval == false) {
+
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Loan/SaveUpdate", // the URL of the controller action method
+                data: {
+                    Id: $("#Id").val(),
+                    branch_Id: $("#branch_Id").val(),
+                    LoanDate: $("#LoanDate").val(),
+                    rec_type: $("#rec_type").val(),
+
+                    person_id: $("#person_id").val(),
+
+                    purpose: $("#purpose").val(),
+                    payment_mode: $("#payment_mode").val(),
+                    bank_id: $("#bank_id").val(),
+                    cheque_number: $("#cheque_number").val(),
+
+                    amount: $("#amount").val(),
+                    created_by: $("#created_by").val(),
+                    created_on: $("#created_on").val(),
+                    updated_by: $("#updated_by").val(),
+                    updated_on: $("#updated_on").val(),
+                    isactive: $("#isactive").val(),
+                    advanceLoanDetails: LoanDetails,
+                }, // optional data
+                success: function (result) {
+                    $.loader('close');
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {
+                        $("#btnClose").click();
+                        loadGrid();
+                        paymentReturnID = String(result.id);
+                        notify(result.msg, result.cls);
+                    }
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                    notify(error, "error");
+                }
+            }).done(function () {
+                if (actiontype == "saveprint" && paymentReturnID != "") {
+                    setTimeout(function () {
+                        openModelpop('/Loan/PrintPreview', 'id', paymentReturnID);
+                    }, 600);
+                }
+            });
+        }
+    }
+
+    function loadGrid() {
+        MVCGrid.reloadGrid('LoanGrid');
+    }
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+    $(function () {
+        $("#SearchFrom").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#SearchFrom').removeAttr("data-val-date");
+
+        $("#SearchTo").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#SearchTo').removeAttr("data-val-date");
+    });
+
+
+</script>

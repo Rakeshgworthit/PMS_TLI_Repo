@@ -1,0 +1,432 @@
+﻿@model PMS.Models.PrintPaymentViewModel
+@{
+    Layout = null;
+}
+<style>
+    .printaddress {
+        font-size: 11px;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .textlabel {
+        font-size: 13px;
+        font-weight: bold;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .textlabelnormal {
+        font-size: 13px;
+        font-weight: normal;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .tablebgcolor {
+        background-color: #000000;
+        border-spacing: 1px !important;
+        border-collapse: separate !important;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .trtdbgcolor {
+        background-color: #808080;
+        color: #fff;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .trbgcolor {
+        background-color: #ffffff;
+        text-transform: uppercase;
+        font-family: "Proxima Nova";
+    }
+
+    .trbgcolorextra {
+        border-bottom: solid 1px #000000;
+        background-color: #ffffff;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .trbgcolorextra {
+        border-bottom: solid 1px #000000;
+        background-color: #808080;
+        color: #fff;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .trbgcolorextratopbottom {
+        border-top: solid 1px #000000;
+        border-bottom: solid 1px #000000;
+        background-color: #ffffff;
+        text-transform: uppercase;
+        font-family: "Proxima Nova";
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Print Preview</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" id="frmPayment" name="frmPayment">
+        <div id="PrintElement">
+            <center>
+                <table width="95%" border="0" style="color:#000000!important">
+                    <tr>
+                        <td align="left" valign="top" width="60%"></td>
+                        <td align="right" valign="top" width="20%"></td>
+                        <td align="left" valign="top" width="20%"></td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" colspan="2">
+                            <span><b style="font-size:25px;font-family:Proxima Nova;">@Model.Designer_Invoice.company_name.ToUpper()</b></span>
+                        </td>
+                        <td align="right" valign="top" class="printaddress" colspan="2">
+                            @Model.Designer_Invoice.address1
+                            <br />
+                            @if (!string.IsNullOrWhiteSpace(Model.Designer_Invoice.reg_no))
+                            {
+                                <span> Co.Reg.No. : Model.Designer_Invoice.reg_no < br /> </span>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(Model.Designer_Invoice.phone) && !string.IsNullOrWhiteSpace(Model.Designer_Invoice.fax))
+                            {
+                                <span> Tel : @Model.Designer_Invoice.phone   F : @Model.Designer_Invoice.fax </span>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(Model.Designer_Invoice.phone))
+                            {
+                                <span> Tel : @Model.Designer_Invoice.phone </span>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(Model.Designer_Invoice.fax))
+                            {
+                                <span> F : @Model.Designer_Invoice.fax </span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" colspan="3">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <table width="100%" border="0" class="tablebgcolor" cellpadding="1" cellspacing="1">
+                                <tr>
+                                    <td align="center" valign="top" width="100%" class="textlabel trtdbgcolor" colspan="3">
+                                        @if (Convert.ToBoolean(Model.Designer_Invoice.is_tax))
+                                        {
+                                            <b style="font-size:25px;">TAX DESIGNER INVOICE</b>
+                                        }
+                                        else
+                                        {
+                                            <b style="font-size:25px;">DESIGNER INVOICE</b>
+                                        }
+                                    </td>
+                                </tr>
+                                @*<tr>
+                                    <td class="textlabelnormal trbgcolor" width="63%">
+                                        @Model.Designer_Invoice.job_site.ToUpper()
+                                    </td>
+                                    <td align="right" valign="top" class="textlabel trbgcolor" width="20%">
+                                        <b>INVOICE DATE:</b>&nbsp;
+                                    </td>
+                                    <td align="left" valign="top" class="trbgcolor" width="17%">
+                                        &nbsp;@Model.Designer_Invoice.Invoice_date.ToString("dd/MM/yyyy")
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="textlabelnormal trbgcolor">
+                                        @Model.Designer_Invoice.customer_name
+                                    </td>
+                                    <td align="right" valign="top" class="textlabel trbgcolor">
+                                        <b>INVOICE NUMBER:</b>&nbsp;
+                                    </td>
+
+                                    <td align="left" valign="top" class="trbgcolor">
+                                        &nbsp;@Model.Designer_Invoice.Invoice_number
+                                    </td>
+                                </tr>*@
+
+                                <tr>
+                                    <td align="center" class="textlabelnormal trtdbgcolor" width="50%">
+                                        <b>INVOICE DATE:</b>
+                                    </td>
+                                    <td align="center" valign="top" class="textlabel trtdbgcolor" width="50%">
+                                        <b>INVOICE NUMBER:</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" class="textlabelnormal trbgcolor">
+                                     @Model.Designer_Invoice.Invoice_date.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td align="center" valign="top" class="textlabelnormal trbgcolor">
+                                        &nbsp;@Model.Designer_Invoice.Invoice_number
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="textlabelnormal trbgcolor">
+                                        &nbsp;
+                                    </td>
+                                    <td align="right" valign="top" class="textlabel trbgcolor"></td>
+
+                                    <td align="left" valign="top" class="trbgcolor"></td>
+                                </tr>
+                                <tr>
+                                    <td class="textlabelnormal trbgcolor"></td>
+                                    <td align="right" valign="top" class="textlabel trbgcolor">
+                                        &nbsp;
+                                    </td>
+
+                                    <td align="left" valign="top" class="trbgcolor"></td>
+                                </tr>
+                            </table>
+                            <table width="100%" border="0" class="tablebgcolor" cellpadding="1" cellspacing="1">
+                                <tr>
+                                    <td align="center" class="textlabelnormal trtdbgcolor" width="63%">
+                                        <b>DESIGNER IN-CHARGE</b>
+                                    </td>
+                                    <td align="center" valign="top" class="textlabel trtdbgcolor" width="20%">
+                                        <b>PAYMENT TERMS</b>
+                                    </td>
+
+                                    <td align="center" valign="top" class="trtdbgcolor" width="17%">
+                                        <b>DUE DATE</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" class="textlabelnormal trbgcolor">
+                                        @Model.Designer_Invoice.Designer_name
+                                </td>
+                                <td align="center" valign="top" class="textlabel trbgcolor">
+                                    @Model.Designer_Invoice.payment_term.ToUpper()
+                                </td>
+
+                                <td align="center" valign="top" class="trbgcolor">
+                                    @Model.Designer_Invoice.Invoice_date.AddDays(Convert.ToInt32(Model.Designer_Invoice.payment_days)).ToString("dd/MM/yyyy")
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="center" class="textlabelnormal trtdbgcolor">
+                                    <b>CONTRACT NUMBER</b>
+                                </td>
+                                <td align="center" valign="top" class="textlabel trtdbgcolor">
+                                    <b>TYPE</b>
+                                </td>
+                                <td align="center" valign="top" class="trtdbgcolor"></td>
+                            </tr>
+                            <tr>
+                                <td align="center" class="textlabelnormal trbgcolor">
+                                    @foreach (var _rec in Model.Designer_Invoice_Items)
+                                    {
+                                        <span>@_rec.Contract_number</span><span>,</span>
+                                    }
+                                </td>
+                                <td align="center" valign="top" class="textlabel trbgcolor">
+                                    @Model.Designer_Invoice.contract_type.ToUpper()
+                                </td>
+
+                                <td align="center" valign="top" class="trbgcolor"></td>
+                            </tr>
+                            <tr>
+                                <td align="center" class="textlabelnormal trbgcolor">
+                                    &nbsp;
+                                </td>
+                                <td align="center" valign="top" class="textlabel trbgcolor"></td>
+                                <td align="center" valign="top" class="trbgcolor"></td>
+                            </tr>
+                        </table>
+                        <table width="100%" border="0" class="tablebgcolor" cellpadding="1" cellspacing="1">
+                            <tr>
+                                <td align="center" valign="top" class="textlabel " width="7%"></td>
+                                <td align="center" valign="top" class="textlabel " width="20%"></td>
+                                <td align="center" valign="top" class="textlabel " width="38%"></td>
+                                <td align="right" valign="top" width="18%"></td>
+                                <td align="center" valign="top" class="textlabel " width="17%"></td>
+                            </tr>
+
+                            <tr>
+                                <td align="center" valign="top" class="textlabel trbgcolorextra"><b>SNO.</b></td>
+                                <td align="center" valign="top" class="textlabel trbgcolorextra" colspan="2"><b>DESCRIPTION</b></td>
+                                <td align="right" class="trbgcolorextra" valign="top"></td>
+                                <td align="center" valign="top" class="textlabel trbgcolorextra"><b>Amount</b></td>
+                            </tr>
+
+                            @{ int i = 0; }
+                            @foreach (var _items in Model.Designer_Invoice_Items)
+                            {
+                                i = i + 1;
+                                <tr>
+                                    <td align="center" class="trbgcolor">@i</td>
+                                    <td align="left" class="trbgcolor" colspan="3">@_items.item_description</td>
+                                    <td align="right" class="trbgcolor" valign="top">
+                                        <div style="float:left;margin-left:5px;">$</div>
+                                        <div style="float:right;margin-right:5px;">@_items.item_amount</div>
+                                    </td>
+                                </tr>
+                            }
+
+                            <tr>
+                                <td align="left" class="trbgcolor">&nbsp;</td>
+                                <td align="right" class="trbgcolor" valign="top" colspan="3">&nbsp;</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td align="left" class="trbgcolorextratopbottom" colspan="3">This is a computer-generated document. No signature is required.</td>
+                                <td align="right" valign="top" class="textlabel trbgcolorextratopbottom">
+                                    <b>SUB-TOTAL :&nbsp;</b>
+                                </td>
+                                <td align="right" class="trbgcolorextratopbottom" valign="top">
+                                    <div style="float:left;margin-left:5px;">$</div>
+                                    <div style="float:right;margin-right:5px;">@Model.Designer_Invoice_Items.Sum(o => o.item_amount)</div>
+                                </td>
+                            </tr>
+                            @{ decimal _tax = 0;
+                                decimal itemTotal = Model.Designer_Invoice_Items.Sum(o => o.item_amount); }
+                            @if (Convert.ToBoolean(Model.Designer_Invoice.is_tax))
+                            {
+                                _tax = Model.Designer_Invoice.tax_amount; //Convert.ToDecimal(itemTotal * Model.Designer_Invoice.tax) / 100;
+                                <tr>
+                                    <td align="left" class="trbgcolorextratopbottom" colspan="3"></td>
+                                    <td align="right" valign="top" class="textlabel trbgcolorextratopbottom">
+                                        <b>@Model.Designer_Invoice.tax% GST :&nbsp;</b>
+                                    </td>
+
+                                    <td align="right" class="trbgcolorextratopbottom" valign="top">
+                                        <div style="float:left;margin-left:5px;">$</div>
+                                        <div style="float:right;margin-right:5px;">
+                                            @*@Math.Round(_tax, 2)*@
+                                            @_tax
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td align="left" class="trbgcolorextratopbottom" colspan="3"></td>
+                                <td align="right" valign="top" class="textlabel trbgcolorextratopbottom">
+                                    <b>GRAND TOTAL :&nbsp;</b>
+                                </td>
+
+                                <td align="right" class="trbgcolorextratopbottom" valign="top">
+                                    <div style="float:left;margin-left:5px;">$</div>
+                                    <div style="float:right;margin-right:5px;">
+                                        @*@Math.Round((itemTotal + _tax),2)*@
+                                        @(itemTotal + _tax)
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="left" class="trbgcolor">&nbsp;</td>
+                                <td align="right" class="trbgcolor" valign="top" colspan="3">&nbsp;</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+
+
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="3"></td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="3">HOW TO MAKE PAYMENT?</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="3">&nbsp;</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="3">By Bank Transfer</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="2">Beneficiary Name:&nbsp;</td>
+                                <td align="left" class="trbgcolor" colspan="2" valign="top">&nbsp;@Model.Designer_Invoice.company_name.ToUpper()</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="2">Bank Name:&nbsp;</td>
+                                <td align="left" class="trbgcolor" colspan="2" valign="top">&nbsp;@Model.Designer_Invoice.bank_name</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="2">Bank Address:&nbsp;</td>
+                                <td align="left" class="trbgcolor" colspan="2" valign="top">&nbsp;@Model.Designer_Invoice.bank_address</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="2">Account Number:&nbsp;</td>
+                                <td align="left" class="trbgcolor" colspan="2" valign="top">&nbsp;@Model.Designer_Invoice.account_number</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="2">Bank Code:&nbsp;</td>
+                                <td align="left" class="trbgcolor" colspan="2" valign="top">&nbsp;@Model.Designer_Invoice.bank_code</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="2">Branch Code:&nbsp;</td>
+                                <td align="left" class="trbgcolor" colspan="2" valign="top">&nbsp;@Model.Designer_Invoice.branch_code</td>
+                                <td align="left" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="2">Swift Code:&nbsp;</td>
+                                <td align="left" class="trbgcolor" colspan="2" valign="top">&nbsp;@Model.Designer_Invoice.swif_code</td>
+                                <td align="right" class="trbgcolor" valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="5">&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="5">* Please fill in the invoice number as payment reference</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="trbgcolor" colspan="5">* All Cheques should be made payable to "@Model.Designer_Invoice.company_name"</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+</form>
+</div>
+<div class="modal-footer">
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="PrintElem();">Print</button>
+    <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+<script>
+
+    function PrintElem() {
+        debugger;
+        //02
+        var elem = "PrintElement";
+        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+        mywindow.document.write('<html><head><title></title>');
+        mywindow.document.write('<style>body{font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;} .printaddress { font-size: 11px;font-family: "Proxima Nova";text-transform: uppercase;} .textlabel { font-size: 13px;font-weight: bold;font-family: "Proxima Nova";text-transform: uppercase;} .textlabelnormal{ font-size: 13px;font-weight: normal;font-family: "Proxima Nova";text-transform: uppercase;} .tablebgcolor {background-color:#000000; border-spacing:1px!important;border-collapse: separate!important;font-family: "Proxima Nova";text-transform: uppercase;} .trbgcolor { background-color:#ffffff;font-family: "Proxima Nova";text-transform: uppercase;} .trbgcolorextra { border-bottom:solid 1px #000000; background-color:#ffffff;font-family: "Proxima Nova";text-transform: uppercase; } .trbgcolorextratopbottom { border-top:solid 1px #000000;border-bottom:solid 1px #000000; background-color:#ffffff;font-family: "Proxima Nova";text-transform: uppercase; } </style>');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(document.getElementById(elem).innerHTML);
+        mywindow.document.write('</body></html>');
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+        mywindow.print();
+        mywindow.close();
+
+        return false;
+    }
+
+</script>
+

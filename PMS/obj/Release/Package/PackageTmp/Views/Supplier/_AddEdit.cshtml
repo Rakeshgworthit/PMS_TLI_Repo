@@ -1,0 +1,130 @@
+﻿@model PMS.Models.SupplierViewModel 
+@{
+    Layout = null;
+}
+
+
+<link rel="stylesheet" type="text/css" href="/Content/css/bootstrap.min.css">
+
+@*@Html.BeginForm("SaveUpdate", "Supplier", FormMethod.Post, new { @class = "my_form" })*@
+
+@Html.BeginForm("SaveUpdate", "Supplier", FormMethod.Post)
+{
+<div class="form-element">
+    <div class="col-md-12 padding-0">
+
+        <div class="panel form-element-padding">
+
+            <div class="panel-body" style="padding:4px;">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Supplier Name:</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(Model=>Model.supplier_name,new { @class= "form-control" })
+                           
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Project Name:</label>
+
+                        <div class="col-sm-7">
+                            @*@Html.TextBoxFor(Model => Model.supplier_name, new { @class = "form-control" })*@
+                        <input type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">End Date:</label>
+                        <div class="col-sm-7"><input type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Branch:</label>
+                        <div class="col-sm-7">
+                            <select class="form-control">
+                                <option>option one</option>
+                                <option>option two</option>
+                                <option>option three</option>
+                                <option>option four</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Contract Amount:</label>
+                        <div class="col-sm-7"><input type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Total Amount:</label>
+                        <div class="col-sm-7"><input type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Status:</label>
+                        <div class="col-sm-7">
+                            <select class="form-control">
+                                <option>option one</option>
+                                <option>option two</option>
+                                <option>option three</option>
+                                <option>option four</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Project#:</label>
+                        <div class="col-sm-7"><input type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Start Date:</label>
+                        <div class="col-sm-7"><input type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Salesmen:</label>
+                        <div class="col-sm-7"><input type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Customer:</label>
+                        <div class="col-sm-7"><input type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">GST Amount:</label>
+                        <div class="col-sm-7"><input type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Bank:</label>
+                        <div class="col-sm-7">
+                            <select class="form-control">
+                                <option>option one</option>
+                                <option>option two</option>
+                                <option>option three</option>
+                                <option>option four</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">Remarks:</label>
+                        <div class="col-sm-7"><input type="text" class="form-control"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-12">
+
+        <div class="form-group">
+            <label class="col-sm-5 control-label text-right"></label>
+            <div class="col-sm-7">
+                <input class="submit btn btn-danger" type="submit" value="Submit">
+                <input class="submit btn btn-cancel" type="button" value="Cancel">
+            </div>
+        </div>
+
+
+    </div>
+</div>
+}
+
+

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e465232e23084766b2f2c53deda4ba38" Name="Diagram1">
+        <EntityTypeShape EntityType="PMSModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PMSModel.additions_omissions" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PMSModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="PMSModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="PMSModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="PMSModel.AspNetUser" Width="1.5" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="PMSModel.bank" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="PMSModel.branch" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PMSModel.company" Width="1.5" PointX="9.75" PointY="7.75" />
+        <EntityTypeShape EntityType="PMSModel.country" Width="1.5" PointX="11.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PMSModel.customer" Width="1.5" PointX="11.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PMSModel.designer_receipt_detail" Width="1.5" PointX="4.75" PointY="11.75" />
+        <EntityTypeShape EntityType="PMSModel.expense" Width="1.5" PointX="11.75" PointY="9.75" />
+        <EntityTypeShape EntityType="PMSModel.ExpenseCategory" Width="1.5" PointX="13.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PMSModel.loan" Width="1.5" PointX="2.75" PointY="7" />
+        <EntityTypeShape EntityType="PMSModel.loansDetail" Width="1.5" PointX="5" PointY="7.75" />
+        <EntityTypeShape EntityType="PMSModel.mode_of_payment" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="PMSModel.payment_detail" Width="1.5" PointX="13.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PMSModel.payment" Width="1.5" PointX="13.75" PointY="6.75" />
+        <EntityTypeShape EntityType="PMSModel.project_status" Width="1.5" PointX="13.75" PointY="11.75" />
+        <EntityTypeShape EntityType="PMSModel.project" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="PMSModel.receipt_detail" Width="1.5" PointX="9.75" PointY="14.75" />
+        <EntityTypeShape EntityType="PMSModel.receipt" Width="1.5" PointX="11.75" PointY="14.75" />
+        <EntityTypeShape EntityType="PMSModel.status" Width="1.5" PointX="13.75" PointY="14.75" />
+        <EntityTypeShape EntityType="PMSModel.supplier" Width="1.5" PointX="15.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PMSModel.tbl_contract_types" Width="1.5" PointX="2.75" PointY="15.75" />
+        <EntityTypeShape EntityType="PMSModel.tbl_designerinvoice_items" Width="1.5" PointX="4.75" PointY="15.75" />
+        <EntityTypeShape EntityType="PMSModel.tbl_invoice" Width="1.5" PointX="15.75" PointY="6.75" />
+        <EntityTypeShape EntityType="PMSModel.tbl_payment_terms" Width="1.5" PointX="6.75" PointY="15.75" />
+        <EntityTypeShape EntityType="PMSModel.tbl_supplier_invoice" Width="1.5" PointX="15.75" PointY="11.75" />
+        <EntityTypeShape EntityType="PMSModel.tbl_supplierinvoice_items" Width="1.5" PointX="15.75" PointY="15.75" />
+        <EntityTypeShape EntityType="PMSModel.user_access_rights" Width="1.5" PointX="17.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PMSModel.user_detail" Width="1.5" PointX="17.75" PointY="4.75" />
+        <EntityTypeShape EntityType="PMSModel.tbl_invoice_items" Width="1.5" PointX="17.75" PointY="10.75" />
+        <AssociationConnector Association="PMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="PMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="PMSModel.FK_loansDetails_loans" />
+        <AssociationConnector Association="PMSModel.FK_Salesman_Project" />
+        <AssociationConnector Association="PMSModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="PMSModel.tbl_designer_invoice" Width="1.5" PointX="17.75" PointY="13.75" />
+        <EntityTypeShape EntityType="PMSModel.designer_receipts" Width="1.5" PointX="0.75" PointY="18.75" />
+        <EntityTypeShape EntityType="PMSModel.salesman" Width="1.5" PointX="2.75" PointY="18.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

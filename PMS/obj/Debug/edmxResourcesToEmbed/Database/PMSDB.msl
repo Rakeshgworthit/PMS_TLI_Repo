@@ -1,0 +1,1578 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PMSModelStoreContainer" CdmEntityContainer="PMSEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="PMSModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="additions_omissions">
+      <EntityTypeMapping TypeName="PMSModel.additions_omissions">
+        <MappingFragment StoreEntitySet="additions_omissions">
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+          <ScalarProperty Name="gst_amount" ColumnName="gst_amount" />
+          <ScalarProperty Name="gst_percentage" ColumnName="gst_percentage" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="addition_omissioni_description" ColumnName="addition_omissioni_description" />
+          <ScalarProperty Name="record_type" ColumnName="record_type" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="PMSModel.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="PMSModel.AspNetUserClaim">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="PMSModel.AspNetUserLogin">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="PMSModel.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="banks">
+      <EntityTypeMapping TypeName="PMSModel.bank">
+        <MappingFragment StoreEntitySet="banks">
+          <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="contact_person" ColumnName="contact_person" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="address4" ColumnName="address4" />
+          <ScalarProperty Name="address3" ColumnName="address3" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="additional_remarks" ColumnName="additional_remarks" />
+          <ScalarProperty Name="payment_instructions" ColumnName="payment_instructions" />
+          <ScalarProperty Name="swif_code" ColumnName="swif_code" />
+          <ScalarProperty Name="bank_code" ColumnName="bank_code" />
+          <ScalarProperty Name="branch_code" ColumnName="branch_code" />
+          <ScalarProperty Name="account_number" ColumnName="account_number" />
+          <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="branches">
+      <EntityTypeMapping TypeName="PMSModel.branch">
+        <MappingFragment StoreEntitySet="branches">
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="gst_reg_no" ColumnName="gst_reg_no" />
+          <ScalarProperty Name="company_reg_no" ColumnName="company_reg_no" />
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="contact_person" ColumnName="contact_person" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="address4" ColumnName="address4" />
+          <ScalarProperty Name="address3" ColumnName="address3" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="company_initial" ColumnName="company_initial" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="company_id" ColumnName="company_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="companies">
+      <EntityTypeMapping TypeName="PMSModel.company">
+        <MappingFragment StoreEntitySet="company">
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="gst_reg_no" ColumnName="gst_reg_no" />
+          <ScalarProperty Name="reg_no" ColumnName="reg_no" />
+          <ScalarProperty Name="contact_person" ColumnName="contact_person" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="address4" ColumnName="address4" />
+          <ScalarProperty Name="address3" ColumnName="address3" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="company_initial" ColumnName="company_initial" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="countries">
+      <EntityTypeMapping TypeName="PMSModel.country">
+        <MappingFragment StoreEntitySet="country">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="customers">
+      <EntityTypeMapping TypeName="PMSModel.customer">
+        <MappingFragment StoreEntitySet="customer">
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="gst_no" ColumnName="gst_no" />
+          <ScalarProperty Name="gst_registered" ColumnName="gst_registered" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="contact_person" ColumnName="contact_person" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="job_site" ColumnName="job_site" />
+          <ScalarProperty Name="block_no" ColumnName="block_no" />
+          <ScalarProperty Name="nric2" ColumnName="nric2" />
+          <ScalarProperty Name="nric1" ColumnName="nric1" />
+          <ScalarProperty Name="name2" ColumnName="name2" />
+          <ScalarProperty Name="name1" ColumnName="name1" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="designer_receipt_detail">
+      <EntityTypeMapping TypeName="PMSModel.designer_receipt_detail">
+        <MappingFragment StoreEntitySet="designer_receipt_detail">
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+          <ScalarProperty Name="gst_amount" ColumnName="gst_amount" />
+          <ScalarProperty Name="gst_percentage" ColumnName="gst_percentage" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+          <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="expenses">
+      <EntityTypeMapping TypeName="PMSModel.expense">
+        <MappingFragment StoreEntitySet="expense">
+          <ScalarProperty Name="Pay_To" ColumnName="Pay_To" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="cheque_number" ColumnName="cheque_number" />
+          <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+          <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+          <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+          <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Expense_Item_Id" ColumnName="Expense_Item_Id" />
+          <ScalarProperty Name="Expense_Category_Id" ColumnName="Expense_Category_Id" />
+          <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+          <ScalarProperty Name="Branch_Id" ColumnName="Branch_Id" />
+          <ScalarProperty Name="Expense_Date" ColumnName="Expense_Date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExpenseCategories">
+      <EntityTypeMapping TypeName="PMSModel.ExpenseCategory">
+        <MappingFragment StoreEntitySet="ExpenseCategory">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="ExpenseCategory1" ColumnName="ExpenseCategory" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="loans">
+      <EntityTypeMapping TypeName="PMSModel.loan">
+        <MappingFragment StoreEntitySet="loans">
+          <ScalarProperty Name="supplier_payment_Id" ColumnName="supplier_payment_Id" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="updated_on" ColumnName="updated_on" />
+          <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+          <ScalarProperty Name="created_on" ColumnName="created_on" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="cheque_number" ColumnName="cheque_number" />
+          <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+          <ScalarProperty Name="payment_mode" ColumnName="payment_mode" />
+          <ScalarProperty Name="purpose" ColumnName="purpose" />
+          <ScalarProperty Name="person_type" ColumnName="person_type" />
+          <ScalarProperty Name="person_id" ColumnName="person_id" />
+          <ScalarProperty Name="rec_type" ColumnName="rec_type" />
+          <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+          <ScalarProperty Name="branch_Id" ColumnName="branch_Id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="loansDetails">
+      <EntityTypeMapping TypeName="PMSModel.loansDetail">
+        <MappingFragment StoreEntitySet="loansDetails">
+          <ScalarProperty Name="supplierinvoice_item_id" ColumnName="supplierinvoice_item_id" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="updated_on" ColumnName="updated_on" />
+          <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+          <ScalarProperty Name="created_on" ColumnName="created_on" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="loan_Id" ColumnName="loan_Id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="mode_of_payment">
+      <EntityTypeMapping TypeName="PMSModel.mode_of_payment">
+        <MappingFragment StoreEntitySet="mode_of_payment">
+          <ScalarProperty Name="mode_of_payment1" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="payment_detail">
+      <EntityTypeMapping TypeName="PMSModel.payment_detail">
+        <MappingFragment StoreEntitySet="payment_detail">
+          <ScalarProperty Name="payment_amount" ColumnName="payment_amount" />
+          <ScalarProperty Name="agreed_amount" ColumnName="agreed_amount" />
+          <ScalarProperty Name="supplierinvoice_item_id" ColumnName="supplierinvoice_item_id" />
+          <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="payments">
+      <EntityTypeMapping TypeName="PMSModel.payment">
+        <MappingFragment StoreEntitySet="payments">
+          <ScalarProperty Name="collection_date" ColumnName="collection_date" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="payment_mode" ColumnName="payment_mode" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="paid_amount" ColumnName="paid_amount" />
+          <ScalarProperty Name="rebate_amount" ColumnName="rebate_amount" />
+          <ScalarProperty Name="cheque_number" ColumnName="cheque_number" />
+          <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+          <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="project_status">
+      <EntityTypeMapping TypeName="PMSModel.project_status">
+        <MappingFragment StoreEntitySet="project_status">
+          <ScalarProperty Name="project_status1" ColumnName="project_status" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="projects">
+      <EntityTypeMapping TypeName="PMSModel.project">
+        <MappingFragment StoreEntitySet="projects">
+          <ScalarProperty Name="saleman_commission" ColumnName="saleman_commission" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="status_id" ColumnName="status_id" />
+          <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+          <ScalarProperty Name="gst_amount" ColumnName="gst_amount" />
+          <ScalarProperty Name="gst_percentage" ColumnName="gst_percentage" />
+          <ScalarProperty Name="contract_amount" ColumnName="contract_amount" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+          <ScalarProperty Name="salesmen_id" ColumnName="salesmen_id" />
+          <ScalarProperty Name="project_start_date" ColumnName="project_start_date" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="project_number" ColumnName="project_number" />
+          <ScalarProperty Name="contract_date" ColumnName="contract_date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="receipt_detail">
+      <EntityTypeMapping TypeName="PMSModel.receipt_detail">
+        <MappingFragment StoreEntitySet="receipt_detail">
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+          <ScalarProperty Name="gst_amount" ColumnName="gst_amount" />
+          <ScalarProperty Name="gst_percentage" ColumnName="gst_percentage" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="receipts">
+      <EntityTypeMapping TypeName="PMSModel.receipt">
+        <MappingFragment StoreEntitySet="receipts">
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+          <ScalarProperty Name="sales_man_id" ColumnName="sales_man_id" />
+          <ScalarProperty Name="cheque_details" ColumnName="cheque_details" />
+          <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+          <ScalarProperty Name="mode_of_payment_id" ColumnName="mode_of_payment_id" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="status">
+      <EntityTypeMapping TypeName="PMSModel.status">
+        <MappingFragment StoreEntitySet="status">
+          <ScalarProperty Name="status1" ColumnName="status" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="suppliers">
+      <EntityTypeMapping TypeName="PMSModel.supplier">
+        <MappingFragment StoreEntitySet="supplier">
+          <ScalarProperty Name="rebate_per" ColumnName="rebate_per" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="gst_no" ColumnName="gst_no" />
+          <ScalarProperty Name="gst_registered" ColumnName="gst_registered" />
+          <ScalarProperty Name="nric_no" ColumnName="nric_no" />
+          <ScalarProperty Name="contact_person" ColumnName="contact_person" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="address4" ColumnName="address4" />
+          <ScalarProperty Name="address3" ColumnName="address3" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_contract_types">
+      <EntityTypeMapping TypeName="PMSModel.tbl_contract_types">
+        <MappingFragment StoreEntitySet="tbl_contract_types">
+          <ScalarProperty Name="contract_type" ColumnName="contract_type" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_designerinvoice_items">
+      <EntityTypeMapping TypeName="PMSModel.tbl_designerinvoice_items">
+        <MappingFragment StoreEntitySet="tbl_designerinvoice_items">
+          <ScalarProperty Name="item_amount" ColumnName="item_amount" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="Contract_number" ColumnName="Contract_number" />
+          <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_invoice">
+      <EntityTypeMapping TypeName="PMSModel.tbl_invoice">
+        <MappingFragment StoreEntitySet="tbl_invoice">
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+          <ScalarProperty Name="modification_by" ColumnName="modification_by" />
+          <ScalarProperty Name="modification_date" ColumnName="modification_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="Contract_type" ColumnName="Contract_type" />
+          <ScalarProperty Name="Payment_terms" ColumnName="Payment_terms" />
+          <ScalarProperty Name="Sales_person" ColumnName="Sales_person" />
+          <ScalarProperty Name="Invoice_number" ColumnName="Invoice_number" />
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="Bill_to" ColumnName="Bill_to" />
+          <ScalarProperty Name="Company_id" ColumnName="Company_id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_payment_terms">
+      <EntityTypeMapping TypeName="PMSModel.tbl_payment_terms">
+        <MappingFragment StoreEntitySet="tbl_payment_terms">
+          <ScalarProperty Name="payment_days" ColumnName="payment_days" />
+          <ScalarProperty Name="payment_term" ColumnName="payment_term" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_supplier_invoice">
+      <EntityTypeMapping TypeName="PMSModel.tbl_supplier_invoice">
+        <MappingFragment StoreEntitySet="tbl_supplier_invoice">
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modification_date" ColumnName="modification_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+          <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+          <ScalarProperty Name="invoice_date" ColumnName="invoice_date" />
+          <ScalarProperty Name="Company_id" ColumnName="Company_id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_supplierinvoice_items">
+      <EntityTypeMapping TypeName="PMSModel.tbl_supplierinvoice_items">
+        <MappingFragment StoreEntitySet="tbl_supplierinvoice_items">
+          <ScalarProperty Name="agreed_amt" ColumnName="agreed_amt" />
+          <ScalarProperty Name="agreed_amt_without_gst" ColumnName="agreed_amt_without_gst" />
+          <ScalarProperty Name="invoice_amt_with_gst" ColumnName="invoice_amt_with_gst" />
+          <ScalarProperty Name="invoice_amt_without_gst" ColumnName="invoice_amt_without_gst" />
+          <ScalarProperty Name="gst" ColumnName="gst" />
+          <ScalarProperty Name="invoice_number" ColumnName="invoice_number" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="salesperson_id" ColumnName="salesperson_id" />
+          <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_access_rights">
+      <EntityTypeMapping TypeName="PMSModel.user_access_rights">
+        <MappingFragment StoreEntitySet="user_access_rights">
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_detail">
+      <EntityTypeMapping TypeName="PMSModel.user_detail">
+        <MappingFragment StoreEntitySet="user_detail">
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="is_active" ColumnName="is_active" />
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="address4" ColumnName="address4" />
+          <ScalarProperty Name="address3" ColumnName="address3" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="company_id" ColumnName="company_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="did" ColumnName="did" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_invoice_items">
+      <EntityTypeMapping TypeName="PMSModel.tbl_invoice_items">
+        <MappingFragment StoreEntitySet="tbl_invoice_items">
+          <ScalarProperty Name="item_amount" ColumnName="item_amount" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="Contract_number" ColumnName="Contract_number" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="PMSModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="AspNetRole">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Add_DesignerInvoice_Items" FunctionName="PMSModel.Store.SSP_Add_DesignerInvoice_Items" />
+    <FunctionImportMapping FunctionImportName="SSP_Add_DesignerReceipt_Detail" FunctionName="PMSModel.Store.SSP_Add_DesignerReceipt_Detail" />
+    <FunctionImportMapping FunctionImportName="SSP_Add_Invoice_Items" FunctionName="PMSModel.Store.SSP_Add_Invoice_Items" />
+    <FunctionImportMapping FunctionImportName="SSP_Add_Payment_Detail" FunctionName="PMSModel.Store.SSP_Add_Payment_Detail" />
+    <FunctionImportMapping FunctionImportName="SSP_Add_Receipt_Detail" FunctionName="PMSModel.Store.SSP_Add_Receipt_Detail" />
+    <FunctionImportMapping FunctionImportName="SSP_Add_SupplierInvoice_Items" FunctionName="PMSModel.Store.SSP_Add_SupplierInvoice_Items" />
+    <FunctionImportMapping FunctionImportName="SSP_BankChequeReport" FunctionName="PMSModel.Store.SSP_BankChequeReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_BankChequeReport_Result">
+          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+          <ScalarProperty Name="cheque_number" ColumnName="cheque_number" />
+          <ScalarProperty Name="rebate_amount" ColumnName="rebate_amount" />
+          <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+          <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+          <ScalarProperty Name="paid_amount" ColumnName="paid_amount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Banks" FunctionName="PMSModel.Store.SSP_Banks">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Banks_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+          <ScalarProperty Name="account_number" ColumnName="account_number" />
+          <ScalarProperty Name="branch_code" ColumnName="branch_code" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Branches" FunctionName="PMSModel.Store.SSP_Branches">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Branches_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="gst_reg_no" ColumnName="gst_reg_no" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Company" FunctionName="PMSModel.Store.SSP_Company">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Company_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="reg_no" ColumnName="reg_no" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Customer" FunctionName="PMSModel.Store.SSP_Customer">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Customer_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name1" ColumnName="name1" />
+          <ScalarProperty Name="nric1" ColumnName="nric1" />
+          <ScalarProperty Name="block_no" ColumnName="block_no" />
+          <ScalarProperty Name="job_site" ColumnName="job_site" />
+          <ScalarProperty Name="gst_no" ColumnName="gst_no" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_CustomerInvoiceReport" FunctionName="PMSModel.Store.SSP_CustomerInvoiceReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_CustomerInvoiceReport_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="Invoice_number" ColumnName="Invoice_number" />
+          <ScalarProperty Name="customer_name" ColumnName="customer_name" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Items" ColumnName="Items" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_DeleteInvoiceItem" FunctionName="PMSModel.Store.SSP_DeleteInvoiceItem" />
+    <FunctionImportMapping FunctionImportName="SSP_DesignerReceiptById" FunctionName="PMSModel.Store.SSP_DesignerReceiptById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_DesignerReceiptById_Result">
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="branch_address" ColumnName="branch_address" />
+          <ScalarProperty Name="branch_zip_code" ColumnName="branch_zip_code" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_DesignerReceiptDetailByReceiptId" FunctionName="PMSModel.Store.SSP_DesignerReceiptDetailByReceiptId">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_DesignerReceiptDetailByReceiptId_Result">
+          <ScalarProperty Name="invoice_number" ColumnName="invoice_number" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_EXCategory" FunctionName="PMSModel.Store.SSP_EXCategory">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_EXCategory_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ExpenseCategory" ColumnName="ExpenseCategory" />
+          <ScalarProperty Name="Parentname" ColumnName="Parentname" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Expense" FunctionName="PMSModel.Store.SSP_Expense">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Expense_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ExpenseCategory" ColumnName="ExpenseCategory" />
+          <ScalarProperty Name="Expense_Date" ColumnName="Expense_Date" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="CreatedUpdated" ColumnName="CreatedUpdated" />
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="ChequeNumber" ColumnName="ChequeNumber" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_ExpenseReport" FunctionName="PMSModel.Store.SSP_ExpenseReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_ExpenseReport_Result">
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="CategoryItem" ColumnName="CategoryItem" />
+          <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+          <ScalarProperty Name="jan" ColumnName="jan" />
+          <ScalarProperty Name="feb" ColumnName="feb" />
+          <ScalarProperty Name="mar" ColumnName="mar" />
+          <ScalarProperty Name="apr" ColumnName="apr" />
+          <ScalarProperty Name="may" ColumnName="may" />
+          <ScalarProperty Name="jun" ColumnName="jun" />
+          <ScalarProperty Name="jul" ColumnName="jul" />
+          <ScalarProperty Name="aug" ColumnName="aug" />
+          <ScalarProperty Name="sep" ColumnName="sep" />
+          <ScalarProperty Name="oct" ColumnName="oct" />
+          <ScalarProperty Name="nov" ColumnName="nov" />
+          <ScalarProperty Name="dec" ColumnName="dec" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_GetAllBank" FunctionName="PMSModel.Store.SSP_GetAllBank">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_GetAllBank_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Bank_Name" ColumnName="Bank_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_GetCustomerInvoicesByProject" FunctionName="PMSModel.Store.SSP_GetCustomerInvoicesByProject">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_GetCustomerInvoicesByProject_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Invoice_number" ColumnName="Invoice_number" />
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="item_amount" ColumnName="item_amount" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_GetLoanProjectsDetailsByLoanId" FunctionName="PMSModel.Store.SSP_GetLoanProjectsDetailsByLoanId">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_GetLoanProjectsDetailsByLoanId_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="loan_Id" ColumnName="loan_Id" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Invoices" FunctionName="PMSModel.Store.SSP_Invoices">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Invoices_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Invoice_number" ColumnName="Invoice_number" />
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+          <ScalarProperty Name="Invoicedate" ColumnName="Invoicedate" />
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="customer_name" ColumnName="customer_name" />
+          <ScalarProperty Name="CreatedUpdated" ColumnName="CreatedUpdated" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Items" ColumnName="Items" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Loan" FunctionName="PMSModel.Store.SSP_Loan">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Loan_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="loan_date" ColumnName="loan_date" />
+          <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+          <ScalarProperty Name="person_name" ColumnName="person_name" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="rec_type" ColumnName="rec_type" />
+          <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="CreatedUpdated" ColumnName="CreatedUpdated" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_LoanReport" FunctionName="PMSModel.Store.SSP_LoanReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_LoanReport_Result">
+          <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+          <ScalarProperty Name="purpose" ColumnName="purpose" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="rec_type" ColumnName="rec_type" />
+          <ScalarProperty Name="TotalBalance" ColumnName="TotalBalance" />
+          <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+          <ScalarProperty Name="cheque_number" ColumnName="cheque_number" />
+          <ScalarProperty Name="ProjectsDetail" ColumnName="ProjectsDetail" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_PaymentById" FunctionName="PMSModel.Store.SSP_PaymentById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_PaymentById_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+          <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+          <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+          <ScalarProperty Name="cheque_number" ColumnName="cheque_number" />
+          <ScalarProperty Name="rebate_amount" ColumnName="rebate_amount" />
+          <ScalarProperty Name="paid_amount" ColumnName="paid_amount" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="payment_mode" ColumnName="payment_mode" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+          <ScalarProperty Name="Paymode" ColumnName="Paymode" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_PaymentReport" FunctionName="PMSModel.Store.SSP_PaymentReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_PaymentReport_Result">
+          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+          <ScalarProperty Name="bank" ColumnName="bank" />
+          <ScalarProperty Name="rebate_amount" ColumnName="rebate_amount" />
+          <ScalarProperty Name="payment_amount" ColumnName="payment_amount" />
+          <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+          <ScalarProperty Name="cheque_number" ColumnName="cheque_number" />
+          <ScalarProperty Name="paid_amount" ColumnName="paid_amount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Payments" FunctionName="PMSModel.Store.SSP_Payments">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Payments_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+          <ScalarProperty Name="paymentdate" ColumnName="paymentdate" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+          <ScalarProperty Name="cheque_number" ColumnName="cheque_number" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="CreatedUpdated" ColumnName="CreatedUpdated" />
+          <ScalarProperty Name="PaymentDetailItem" ColumnName="PaymentDetailItem" />
+          <ScalarProperty Name="PaymentDetailItemSearch" ColumnName="PaymentDetailItemSearch" />
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Print_DesignerInvoices" FunctionName="PMSModel.Store.SSP_Print_DesignerInvoices">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Print_DesignerInvoices_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="Designer_name" ColumnName="Designer_name" />
+          <ScalarProperty Name="payment_term" ColumnName="payment_term" />
+          <ScalarProperty Name="payment_days" ColumnName="payment_days" />
+          <ScalarProperty Name="contract_type" ColumnName="contract_type" />
+          <ScalarProperty Name="Invoice_number" ColumnName="Invoice_number" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="reg_no" ColumnName="reg_no" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+          <ScalarProperty Name="bank_address" ColumnName="bank_address" />
+          <ScalarProperty Name="account_number" ColumnName="account_number" />
+          <ScalarProperty Name="branch_code" ColumnName="branch_code" />
+          <ScalarProperty Name="bank_code" ColumnName="bank_code" />
+          <ScalarProperty Name="swif_code" ColumnName="swif_code" />
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_PrintInvoices" FunctionName="PMSModel.Store.SSP_PrintInvoices">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_PrintInvoices_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="customer_name" ColumnName="customer_name" />
+          <ScalarProperty Name="customer_email" ColumnName="customer_email" />
+          <ScalarProperty Name="contract_phone" ColumnName="contract_phone" />
+          <ScalarProperty Name="job_site" ColumnName="job_site" />
+          <ScalarProperty Name="payment_term" ColumnName="payment_term" />
+          <ScalarProperty Name="payment_days" ColumnName="payment_days" />
+          <ScalarProperty Name="contract_type" ColumnName="contract_type" />
+          <ScalarProperty Name="Invoice_number" ColumnName="Invoice_number" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="reg_no" ColumnName="reg_no" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+          <ScalarProperty Name="bank_address" ColumnName="bank_address" />
+          <ScalarProperty Name="account_number" ColumnName="account_number" />
+          <ScalarProperty Name="branch_code" ColumnName="branch_code" />
+          <ScalarProperty Name="bank_code" ColumnName="bank_code" />
+          <ScalarProperty Name="swif_code" ColumnName="swif_code" />
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+          <ScalarProperty Name="company_reg_no" ColumnName="company_reg_no" />
+          <ScalarProperty Name="gst_reg_no" ColumnName="gst_reg_no" />
+          <ScalarProperty Name="Contract_number" ColumnName="Contract_number" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_PrintLoan" FunctionName="PMSModel.Store.SSP_PrintLoan">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_PrintLoan_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="loan_date" ColumnName="loan_date" />
+          <ScalarProperty Name="person_name" ColumnName="person_name" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="rec_type" ColumnName="rec_type" />
+          <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="home_address" ColumnName="home_address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="cheque_number" ColumnName="cheque_number" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="purpose" ColumnName="purpose" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="brphone" ColumnName="brphone" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_ProjectCostingReport" FunctionName="PMSModel.Store.SSP_ProjectCostingReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_ProjectCostingReport_Result">
+          <ScalarProperty Name="contract_date" ColumnName="contract_date" />
+          <ScalarProperty Name="project_number" ColumnName="project_number" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="customer_name" ColumnName="customer_name" />
+          <ScalarProperty Name="nric1" ColumnName="nric1" />
+          <ScalarProperty Name="Name2" ColumnName="Name2" />
+          <ScalarProperty Name="Nric2" ColumnName="Nric2" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="contact_no" ColumnName="contact_no" />
+          <ScalarProperty Name="contract_amount" ColumnName="contract_amount" />
+          <ScalarProperty Name="gst_amount" ColumnName="gst_amount" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+          <ScalarProperty Name="saleman_commission" ColumnName="saleman_commission" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_ProjectListingStatusByBranch" FunctionName="PMSModel.Store.SSP_ProjectListingStatusByBranch">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_ProjectListingStatusByBranch_Result">
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="job_sites" ColumnName="job_sites" />
+          <ScalarProperty Name="contact_no" ColumnName="contact_no" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="id_in_charge" ColumnName="id_in_charge" />
+          <ScalarProperty Name="contract_date" ColumnName="contract_date" />
+          <ScalarProperty Name="tiles" ColumnName="tiles" />
+          <ScalarProperty Name="m_bldg_products" ColumnName="m_bldg_products" />
+          <ScalarProperty Name="project_closed" ColumnName="project_closed" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Projects" FunctionName="PMSModel.Store.SSP_Projects">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Projects_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="project_number" ColumnName="project_number" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="contract_date" ColumnName="contract_date" />
+          <ScalarProperty Name="name1" ColumnName="name1" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="CreatedUpdated" ColumnName="CreatedUpdated" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_ProjectsBySalesman" FunctionName="PMSModel.Store.SSP_ProjectsBySalesman">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_ProjectsBySalesman_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="project_number" ColumnName="project_number" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="contract_date" ColumnName="contract_date" />
+          <ScalarProperty Name="closing_date" ColumnName="closing_date" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_ProjectsBySalesmanReport" FunctionName="PMSModel.Store.SSP_ProjectsBySalesmanReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_ProjectsBySalesmanReport_Result">
+          <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="rec_type" ColumnName="rec_type" />
+          <ScalarProperty Name="payment_mode" ColumnName="payment_mode" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="purpose" ColumnName="purpose" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_ProjectSummeryReport" FunctionName="PMSModel.Store.SSP_ProjectSummeryReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_ProjectSummeryReport_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="contract_value" ColumnName="contract_value" />
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="contract_date" ColumnName="contract_date" />
+          <ScalarProperty Name="progress_claim" ColumnName="progress_claim" />
+          <ScalarProperty Name="costing_amt" ColumnName="costing_amt" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_ReceiptDetailByReceiptId" FunctionName="PMSModel.Store.SSP_ReceiptDetailByReceiptId">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_ReceiptDetailByReceiptId_Result">
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="invoice_number" ColumnName="invoice_number" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Receipts" FunctionName="PMSModel.Store.SSP_Receipts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Receipts_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="billTo" ColumnName="billTo" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="receiptdate" ColumnName="receiptdate" />
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="receipt_detail" ColumnName="receipt_detail" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+          <ScalarProperty Name="cheque_details" ColumnName="cheque_details" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="CreatedUpdated" ColumnName="CreatedUpdated" />
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_ReceiptsById" FunctionName="PMSModel.Store.SSP_ReceiptsById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_ReceiptsById_Result">
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="branch_address" ColumnName="branch_address" />
+          <ScalarProperty Name="branch_zip_code" ColumnName="branch_zip_code" />
+          <ScalarProperty Name="customer_address" ColumnName="customer_address" />
+          <ScalarProperty Name="customer_phone" ColumnName="customer_phone" />
+          <ScalarProperty Name="customer_email" ColumnName="customer_email" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+          <ScalarProperty Name="gst_reg_no" ColumnName="gst_reg_no" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_ReceiptsDetailById" FunctionName="PMSModel.Store.SSP_ReceiptsDetailById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_ReceiptsDetailById_Result">
+          <ScalarProperty Name="Bank_Name" ColumnName="Bank_Name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="customer_name" ColumnName="customer_name" />
+          <ScalarProperty Name="customer_address" ColumnName="customer_address" />
+          <ScalarProperty Name="customer_phone" ColumnName="customer_phone" />
+          <ScalarProperty Name="customer_email" ColumnName="customer_email" />
+          <ScalarProperty Name="job_site" ColumnName="job_site" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+          <ScalarProperty Name="cheque_details" ColumnName="cheque_details" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="branch_address" ColumnName="branch_address" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="gst_amount" ColumnName="gst_amount" />
+          <ScalarProperty Name="gst_percentage" ColumnName="gst_percentage" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+          <ScalarProperty Name="Invoice_number" ColumnName="Invoice_number" />
+          <ScalarProperty Name="Payment_terms" ColumnName="Payment_terms" />
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="payment_term" ColumnName="payment_term" />
+          <ScalarProperty Name="payment_days" ColumnName="payment_days" />
+          <ScalarProperty Name="contract_type" ColumnName="contract_type" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Remove_DesignerInvoice_Items" FunctionName="PMSModel.Store.SSP_Remove_DesignerInvoice_Items" />
+    <FunctionImportMapping FunctionImportName="SSP_Remove_DesignerReceipt_Detail" FunctionName="PMSModel.Store.SSP_Remove_DesignerReceipt_Detail" />
+    <FunctionImportMapping FunctionImportName="SSP_Remove_Invoice_Items" FunctionName="PMSModel.Store.SSP_Remove_Invoice_Items" />
+    <FunctionImportMapping FunctionImportName="SSP_Remove_LoanProjectsDetailsByLoanId" FunctionName="PMSModel.Store.SSP_Remove_LoanProjectsDetailsByLoanId" />
+    <FunctionImportMapping FunctionImportName="SSP_Remove_LoanLoanDetailsFromSupplierPayment" FunctionName="PMSModel.Store.SSP_Remove_LoanLoanDetailsFromSupplierPayment" />
+    <FunctionImportMapping FunctionImportName="SSP_Remove_Payment_Detail" FunctionName="PMSModel.Store.SSP_Remove_Payment_Detail" />
+    <FunctionImportMapping FunctionImportName="SSP_Remove_Receipt_Detail" FunctionName="PMSModel.Store.SSP_Remove_Receipt_Detail" />
+    <FunctionImportMapping FunctionImportName="SSP_Remove_SupplierInvoice_Items" FunctionName="PMSModel.Store.SSP_Remove_SupplierInvoice_Items" />
+    <FunctionImportMapping FunctionImportName="SSP_CHECK_SUPPLIER_PAYMENT" FunctionName="PMSModel.Store.SSP_CHECK_SUPPLIER_PAYMENT" />
+    <FunctionImportMapping FunctionImportName="SSP_SaleIndividualReport" FunctionName="PMSModel.Store.SSP_SaleIndividualReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_SaleIndividualReport_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="project_number" ColumnName="project_number" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="contract_date" ColumnName="contract_date" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Salesmen" FunctionName="PMSModel.Store.SSP_Salesmen">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Salesmen_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="saleman_commission" ColumnName="saleman_commission" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_SaleSummeryReport" FunctionName="PMSModel.Store.SSP_SaleSummeryReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_SaleSummeryReport_Result">
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="jan" ColumnName="jan" />
+          <ScalarProperty Name="feb" ColumnName="feb" />
+          <ScalarProperty Name="mar" ColumnName="mar" />
+          <ScalarProperty Name="apr" ColumnName="apr" />
+          <ScalarProperty Name="may" ColumnName="may" />
+          <ScalarProperty Name="jun" ColumnName="jun" />
+          <ScalarProperty Name="jul" ColumnName="jul" />
+          <ScalarProperty Name="aug" ColumnName="aug" />
+          <ScalarProperty Name="sep" ColumnName="sep" />
+          <ScalarProperty Name="oct" ColumnName="oct" />
+          <ScalarProperty Name="nov" ColumnName="nov" />
+          <ScalarProperty Name="dec" ColumnName="dec" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Supplier" FunctionName="PMSModel.Store.SSP_Supplier">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Supplier_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="gst_no" ColumnName="gst_no" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="rebate_per" ColumnName="rebate_per" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_SupplierLoanDetailbyPaymentId" FunctionName="PMSModel.Store.SSP_SupplierLoanDetailbyPaymentId">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_SupplierLoanDetailbyPaymentId_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="loanId" ColumnName="loanId" />
+          <ScalarProperty Name="loan_Id" ColumnName="loan_Id" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="supplierinvoice_item_id" ColumnName="supplierinvoice_item_id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_SupplierReport" FunctionName="PMSModel.Store.SSP_SupplierReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_SupplierReport_Result">
+          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+          <ScalarProperty Name="payment_month" ColumnName="payment_month" />
+          <ScalarProperty Name="supplier_inv_number" ColumnName="supplier_inv_number" />
+          <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="invoice_amount" ColumnName="invoice_amount" />
+          <ScalarProperty Name="payment_amount" ColumnName="payment_amount" />
+          <ScalarProperty Name="gst_amount" ColumnName="gst_amount" />
+          <ScalarProperty Name="rebate_amount" ColumnName="rebate_amount" />
+          <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+          <ScalarProperty Name="cheque_number" ColumnName="cheque_number" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="bank" ColumnName="bank" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="paid_amount" ColumnName="paid_amount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_UserBranches" FunctionName="PMSModel.Store.SSP_UserBranches">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_UserBranches_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Users" FunctionName="PMSModel.Store.SSP_Users">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Users_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="uname" ColumnName="uname" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="is_active" ColumnName="is_active" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_UsersRoles" FunctionName="PMSModel.Store.SSP_UsersRoles">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_UsersRoles_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_UsersRolesById" FunctionName="PMSModel.Store.SSP_UsersRolesById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_UsersRolesById_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_SupplierInvoices" FunctionName="PMSModel.Store.SSP_SupplierInvoices">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_SupplierInvoices_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Invoicedate" ColumnName="Invoicedate" />
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+          <ScalarProperty Name="CreatedUpdated" ColumnName="CreatedUpdated" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="SupplierInvoiceItems" ColumnName="SupplierInvoiceItems" />
+          <ScalarProperty Name="SupplierInvoiceItemsSearch" ColumnName="SupplierInvoiceItemsSearch" />
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_DesignerReceiptsDetailById" FunctionName="PMSModel.Store.SSP_DesignerReceiptsDetailById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_DesignerReceiptsDetailById_Result">
+          <ScalarProperty Name="Bank_Name" ColumnName="Bank_Name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+          <ScalarProperty Name="cheque_details" ColumnName="cheque_details" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="branch_address" ColumnName="branch_address" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="gst_amount" ColumnName="gst_amount" />
+          <ScalarProperty Name="gst_percentage" ColumnName="gst_percentage" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+          <ScalarProperty Name="Invoice_number" ColumnName="Invoice_number" />
+          <ScalarProperty Name="Payment_terms" ColumnName="Payment_terms" />
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="payment_term" ColumnName="payment_term" />
+          <ScalarProperty Name="payment_days" ColumnName="payment_days" />
+          <ScalarProperty Name="designer_name" ColumnName="designer_name" />
+          <ScalarProperty Name="contract_type" ColumnName="contract_type" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_DesignerReceipts" FunctionName="PMSModel.Store.SSP_DesignerReceipts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_DesignerReceipts_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="designer_name" ColumnName="designer_name" />
+          <ScalarProperty Name="receiptdate" ColumnName="receiptdate" />
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="receipt_detail" ColumnName="receipt_detail" />
+          <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+          <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+          <ScalarProperty Name="cheque_details" ColumnName="cheque_details" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="CreatedUpdated" ColumnName="CreatedUpdated" />
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_DesignerInvoices" FunctionName="PMSModel.Store.SSP_DesignerInvoices">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_DesignerInvoices_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Invoice_number" ColumnName="Invoice_number" />
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+          <ScalarProperty Name="Invoicedate" ColumnName="Invoicedate" />
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="designer_name" ColumnName="designer_name" />
+          <ScalarProperty Name="CreatedUpdated" ColumnName="CreatedUpdated" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Items" ColumnName="Items" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="tbl_designer_invoice">
+      <EntityTypeMapping TypeName="PMSModel.tbl_designer_invoice">
+        <MappingFragment StoreEntitySet="tbl_designer_invoice">
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+          <ScalarProperty Name="modification_by" ColumnName="modification_by" />
+          <ScalarProperty Name="modification_date" ColumnName="modification_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="Contract_type" ColumnName="Contract_type" />
+          <ScalarProperty Name="Payment_terms" ColumnName="Payment_terms" />
+          <ScalarProperty Name="Invoice_number" ColumnName="Invoice_number" />
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="Designer_name" ColumnName="Designer_name" />
+          <ScalarProperty Name="Company_id" ColumnName="Company_id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="designer_receipts">
+      <EntityTypeMapping TypeName="PMSModel.designer_receipts">
+        <MappingFragment StoreEntitySet="designer_receipts">
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+          <ScalarProperty Name="designer_name" ColumnName="designer_name" />
+          <ScalarProperty Name="cheque_details" ColumnName="cheque_details" />
+          <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+          <ScalarProperty Name="mode_of_payment_id" ColumnName="mode_of_payment_id" />
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SSP_InvoiceWithAndWithoutPayment" FunctionName="PMSModel.Store.SSP_InvoiceWithAndWithoutPayment">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_InvoiceWithAndWithoutPayment_Result">
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="name1" ColumnName="name1" />
+          <ScalarProperty Name="invoice_numbers" ColumnName="invoice_numbers" />
+          <ScalarProperty Name="invoice_amount_items" ColumnName="invoice_amount_items" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+          <ScalarProperty Name="invoiceId" ColumnName="invoiceId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_ReceiptReport" FunctionName="PMSModel.Store.SSP_ReceiptReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_ReceiptReport_Result">
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="cheque_details" ColumnName="cheque_details" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="name1" ColumnName="name1" />
+          <ScalarProperty Name="mode_of_payment_id" ColumnName="mode_of_payment_id" />
+          <ScalarProperty Name="mode_of_payment_name" ColumnName="mode_of_payment_name" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="invoice_numbers" ColumnName="invoice_numbers" />
+          <ScalarProperty Name="invoice_amount_items" ColumnName="invoice_amount_items" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+          <ScalarProperty Name="invoiceId" ColumnName="invoiceId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_DesignerInvoiceReport" FunctionName="PMSModel.Store.SSP_DesignerInvoiceReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_DesignerInvoiceReport_Result">
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="cheque_details" ColumnName="cheque_details" />
+          <ScalarProperty Name="Designer_name" ColumnName="Designer_name" />
+          <ScalarProperty Name="mode_of_payment_id" ColumnName="mode_of_payment_id" />
+          <ScalarProperty Name="mode_of_payment_name" ColumnName="mode_of_payment_name" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="invoice_numbers" ColumnName="invoice_numbers" />
+          <ScalarProperty Name="invoice_amount_items" ColumnName="invoice_amount_items" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+          <ScalarProperty Name="invoiceId" ColumnName="invoiceId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_DesignerInvoiceWithAndWithoutPayment" FunctionName="PMSModel.Store.SSP_DesignerInvoiceWithAndWithoutPayment">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_DesignerInvoiceWithAndWithoutPayment_Result">
+          <ScalarProperty Name="Invoice_date" ColumnName="Invoice_date" />
+          <ScalarProperty Name="Designer_name" ColumnName="Designer_name" />
+          <ScalarProperty Name="invoice_numbers" ColumnName="invoice_numbers" />
+          <ScalarProperty Name="invoice_amount_items" ColumnName="invoice_amount_items" />
+          <ScalarProperty Name="is_tax" ColumnName="is_tax" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="tax_amount" ColumnName="tax_amount" />
+          <ScalarProperty Name="invoiceId" ColumnName="invoiceId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_Project_additions" FunctionName="PMSModel.Store.SSP_Project_additions">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_Project_additions_Result">
+          <ScalarProperty Name="Rk" ColumnName="Rk" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="record_type" ColumnName="record_type" />
+          <ScalarProperty Name="project_number" ColumnName="project_number" />
+          <ScalarProperty Name="project_name" ColumnName="project_name" />
+          <ScalarProperty Name="contract_date" ColumnName="contract_date" />
+          <ScalarProperty Name="addition_date" ColumnName="addition_date" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+          <ScalarProperty Name="CreatedUpdated" ColumnName="CreatedUpdated" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_GetInvoiceList" FunctionName="PMSModel.Store.SSP_GetInvoiceList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_GetInvoiceList_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="invoice_number" ColumnName="invoice_number" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="InvoiceAmount" ColumnName="InvoiceAmount" />
+          <ScalarProperty Name="payment_amt" ColumnName="payment_amt" />
+          <ScalarProperty Name="payment_Count" ColumnName="payment_Count" />
+          <ScalarProperty Name="agreed_amt" ColumnName="agreed_amt" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_GetPaymentDetails" FunctionName="PMSModel.Store.SSP_GetPaymentDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_GetPaymentDetails_Result">
+          <ScalarProperty Name="payment_amount" ColumnName="payment_amount" />
+          <ScalarProperty Name="agreed_amount" ColumnName="agreed_amount" />
+          <ScalarProperty Name="invoice_number" ColumnName="invoice_number" />
+          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="salesmen">
+      <EntityTypeMapping TypeName="PMSModel.salesman">
+        <MappingFragment StoreEntitySet="salesmen">
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="saleman_commission" ColumnName="saleman_commission" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+          <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+          <ScalarProperty Name="address4" ColumnName="address4" />
+          <ScalarProperty Name="address3" ColumnName="address3" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="salesmen_name" ColumnName="salesmen_name" />
+          <ScalarProperty Name="branch_Id" ColumnName="branch_Id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SSP_PaymentDetailsForSMS" FunctionName="PMSModel.Store.SSP_PaymentDetailsForSMS">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_PaymentDetailsForSMS_Result">
+          <ScalarProperty Name="date_amount" ColumnName="date_amount" />
+          <ScalarProperty Name="cheque_details" ColumnName="cheque_details" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="totalPayment" ColumnName="totalPayment" />
+          <ScalarProperty Name="branchAddress" ColumnName="branchAddress" />
+          <ScalarProperty Name="accountNo" ColumnName="accountNo" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_GetSalesmenAndUser" FunctionName="PMSModel.Store.SSP_GetSalesmenAndUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_GetSalesmenAndUser_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SSP_SupplierPaymentAndAssignedInvoices" FunctionName="PMSModel.Store.SSP_SupplierPaymentAndAssignedInvoices">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.SSP_SupplierPaymentAndAssignedInvoices_Result">
+          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+          <ScalarProperty Name="invoice_date" ColumnName="invoice_date" />
+          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+          <ScalarProperty Name="InvNo" ColumnName="InvNo" />
+          <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="Gst" ColumnName="Gst" />
+          <ScalarProperty Name="AgreedAmountWithoutGst" ColumnName="AgreedAmountWithoutGst" />
+          <ScalarProperty Name="AgreedAmount" ColumnName="AgreedAmount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Usp_Save_SalesmenRole" FunctionName="PMSModel.Store.Usp_Save_SalesmenRole">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PMSModel.Usp_Save_SalesmenRole_Result">
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="ReturnCode" ColumnName="ReturnCode" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

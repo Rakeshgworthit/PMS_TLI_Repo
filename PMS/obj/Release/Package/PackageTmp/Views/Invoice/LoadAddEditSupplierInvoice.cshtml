@@ -1,0 +1,259 @@
+﻿@model PMS.Models.SupplierInvoiceViewModel
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Add/Edit Supplier Invoice</h4>
+</div>
+<input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+<div class="modal-body">
+    <form class="form-horizontal" id="frmInvoice" name="frmInvoice" >
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="name">Invoice Date:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.Invoice_date, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "1" })
+                        @Html.ValidationMessageFor(o => o.Invoice_date, "", new { @class = "text-error" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Supplier:</label>
+                    <div class="col-sm-8"> 
+                        @Html.DropDownListFor(o => o.supplier_id, Model.SuppliersList, new { @class = "form-control", @tabindex = "2" })
+                        @Html.ValidationMessageFor(o => o.supplier_id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <table class="table table-responsive table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            @*<th width="7%">SNo</th>*@
+                            <th>Sales Person</th>
+                            <th width="21%">Site Address</th>
+                            <th width="11%">Invoice#</th>
+                            <th width="8%">GST%</th>
+                            <th width="10%">Invoice Amount Without GST</th>
+                            <th width="10%">Invoice Amount With GST</th>
+                            <th width="10%">Agreed Amount Without GST</th>
+                            <th width="10%">Agreed Amount With GST</th>
+                            <th width="5%">
+                                <a href="javascript:void(0);" onclick="AddNew();"><i class="more-less glyphicon glyphicon-plus" style="color:#ffffff;"></i></a>
+                                <input type="hidden" id="maintainID" name="maintainID" value="@Model.SupplierInvoiceItemList.Count()" />
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tblbody">
+                        @if (Model.SupplierInvoiceItemList.Count == 0)
+                        {
+                            <tr>
+                                @*<td><span class="span_ids">1</span></td>*@
+                                <td>
+                                    <input type="hidden" id="hdnId1" name="hdnId1" value="0" class="item_id" />
+                                <select id="item_salesperson1" name="item_salesperson1" class="item_salesperson form-control" onchange="GetSalespersonProjects(1);">
+                                    
+                                    @foreach (var _it in Model.SalesPersonList)
+                                    {
+                                        <option value="@_it.Value">@_it.Text</option>
+                                    }
+                                    </select></td>
+                                <td><select id="item_project1" name="item_project1" class="item_project form-control"></select></td>
+                                <td><input id="item_invoicenum1" name="item_invoicenum1" class="item_invoicenum form-control" /></td>
+                                <td><input id="item_gst1" name="item_gst1" class="item_gst form-control" onkeyup="CalAmt(1)" onkeydown="CalAmt(1)" /></td>
+                                <td><input id="item_InvoiceAmtwithoutgst1" name="item_InvoiceAmtwithoutgst1" class="item_InvoiceAmtwithoutgst form-control amount" onkeyup="CalAmt(1)" onkeydown="CalAmt(1)" /></td>
+                                <td><input id="item_InvoiceAmtwithgst1" name="item_InvoiceAmtwithgst1" class="item_InvoiceAmtwithgst form-control amount" /></td>
+                                <td><input id="item_AgreedAmtwithoutgst1" name="item_AgreedAmtwithoutgst1" class="item_AgreedAmtwithoutgst form-control amount" onkeyup="CalAmt(1)" onkeydown="CalAmt(1)" /></td>
+                                <td><input id="item_AgreedAmt1" name="item_AgreedAmt1" class="item_AgreedAmt form-control amount" /></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            int i = 1;
+                            foreach (var pdlist in Model.SupplierInvoiceItemList)
+                            {
+                                <tr id="tr@(i)">
+                                    @*<td><span class="span_ids">@(i)</span></td>*@
+                                    <td><input type="hidden" id="hdnId@(i)" name="hdnId@(i)" value="@pdlist.SupplierInvoice.Id" class="item_id" />
+                                        @Html.DropDownList("item_salesperson", new SelectList(Model.SalesPersonList, "Value", "Text", pdlist.SupplierInvoice.salesperson_id), new { @id = String.Format("item_salesperson{0}", i), @name = String.Format("item_salesperson{0}", i), @class = "item_salesperson form-control", onchange="GetSalespersonProjects("+i+");" })
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("item_project", new SelectList(pdlist.ProjectList, "Value", "Text", pdlist.SupplierInvoice.project_id), new { @id = String.Format("item_project{0}", i), @name = String.Format("item_project{0}", i), @class = "item_project form-control" })
+                                    </td>
+                                    <td>
+                                        <input id="item_invoicenum@(i)" name="item_invoicenum@(i)" class="item_invoicenum form-control" value="@pdlist.SupplierInvoice.invoice_number" />
+                                    </td>
+                                    <td>
+                                        <input id="item_gst@(i)" name="item_gst@(i)" class="item_gst form-control" value="@pdlist.SupplierInvoice.gst" onkeyup="CalAmt(@(i))" onkeydown="CalAmt(@(i))" />
+                                    </td>
+                                    <td>
+                                        <input id="item_InvoiceAmtwithoutgst@(i)" name="item_InvoiceAmtwithoutgst@(i)" class="item_InvoiceAmtwithoutgst form-control amount" value="@pdlist.SupplierInvoice.invoice_amt_without_gst" onkeyup="CalAmt(@(i))" onkeydown="CalAmt(@(i))" />
+                                    </td>
+                                    <td>
+                                        <input id="item_InvoiceAmtwithgst@(i)" name="item_InvoiceAmtwithgst@(i)" class="item_InvoiceAmtwithgst form-control amount" value="@pdlist.SupplierInvoice.invoice_amt_with_gst" />
+                                    </td>
+                                    <td>
+                                        <input id="item_AgreedAmtwithoutgst@(i)" name="item_AgreedAmtwithoutgst@(i)" class="item_AgreedAmtwithoutgst form-control amount" value="@pdlist.SupplierInvoice.agreed_amt_without_gst" onkeyup="CalAmt(@(i))" onkeydown="CalAmt(@(i))" />
+                                    </td>
+                                    <td>
+                                        <input id="item_AgreedAmt@(i)" name="item_AgreedAmt@(i)" class="item_AgreedAmt form-control amount" value="@pdlist.SupplierInvoice.agreed_amt" />
+                                    </td>
+                                    <td>
+                                        <a href='javascript:void(0);' onclick=RemoveElement(@i)><i class='more-less glyphicon glyphicon-minus' style='color:#ff0000;'></i></a>
+                                    </td>
+                                </tr>
+                                i = i + 1;
+                            }
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        @Html.HiddenFor(o => o.Id)
+        @Html.HiddenFor(o => o.creation_date)
+        @Html.HiddenFor(o => o.created_by)
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="return SavePaymentForm('save');">Save</button>
+    @*<button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="return SavePaymentForm('saveprint');">Save & Print</button>*@
+    <button id="btnClosePayment" name="btnClosePayment" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+<script>
+    $(function () {
+        if (String($("#maintainID").val()) == "0") {
+            $("#maintainID").val("1");
+        }
+
+        $("#Invoice_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#Invoice_date').removeAttr("data-val-date");
+    });
+    $(document).ready(function () {             
+
+        if ($('#frmInvoice').find("#Id").val() != "0") {
+           // $('#frmInvoice').find("#Company_id").attr('disabled', 'disabled');
+           // $('#frmInvoice').find("#Bill_to").attr('disabled', 'disabled');
+        }
+    });
+
+    function AddNew() {
+        var projectDropDownHTML = String($("#paymentdet_project_id").html());
+        var idval = $("#maintainID").val();
+        var idnum = parseInt(idval) + 1;
+        var addnewHtML = "";
+        var gstpercentagevalue = String($("#hdngst_percentage").val());
+        addnewHtML = "<tr id='tr" + idnum + "'>";
+        // addnewHtML = addnewHtML + "<td><span class='span_ids'>" + idnum + "</span></td>";
+        addnewHtML = addnewHtML + "<td><select id='item_salesperson" + idnum + "'  name='item_salesperson" + idnum + "' class='item_salesperson form-control' onchange='GetSalespersonProjects(" + idnum + ");'></select></td>";
+        addnewHtML = addnewHtML + "<td><select id='item_project" + idnum + "'  name='item_project" + idnum + "' class='item_project form-control'></select></td>";
+        addnewHtML = addnewHtML + "<td><input id='item_invoicenum" + idnum + "'  name='item_invoicenum" + idnum + "' class='item_invoicenum form-control' /></td>";
+        addnewHtML = addnewHtML + "<td><input id='item_gst" + idnum + "'  name='item_gst" + idnum + "' class='item_gst form-control' onkeyup='CalAmt(" + idnum + ")' onkeydown='CalAmt(" + idnum + ")' /></td>";
+        addnewHtML = addnewHtML + "<td><input  id='item_InvoiceAmtwithoutgst" + idnum + "' name='item_InvoiceAmtwithoutgst" + idnum + "' class='item_InvoiceAmtwithoutgst form-control amount' onkeyup='CalAmt(" + idnum + ")' onkeydown='CalAmt(" + idnum + ")' /></td>";
+        addnewHtML = addnewHtML + "<td><input  id='item_InvoiceAmtwithgst" + idnum + "' name='item_InvoiceAmtwithgst" + idnum + "' class='item_InvoiceAmtwithgst form-control amount' /></td>";
+        addnewHtML = addnewHtML + "<td><input  id='item_AgreedAmtwithoutgst" + idnum + "' name='item_AgreedAmtwithoutgst" + idnum + "' class='item_AgreedAmtwithoutgst form-control amount' onkeyup='CalAmt(" + idnum + ")' onkeydown='CalAmt(" + idnum + ")' /></td>";
+        addnewHtML = addnewHtML + "<td><input  id='item_AgreedAmt" + idnum + "' name='item_AgreedAmt" + idnum + "' class='item_AgreedAmt form-control amount' /></td>";
+        addnewHtML = addnewHtML + "<td><a href='javascript:void(0);' onclick='RemoveElement(" + idnum + ")'><i class='more-less glyphicon glyphicon-minus' style='color:#ff0000;'></i></a></td></tr>";
+        $("#tblbody").append(addnewHtML);
+        addnewHtML = "";
+        $("#maintainID").val(idnum);
+        idnum = "";
+        //UpdateSNO();
+        UpdateProjects($("#maintainID").val());
+    }
+    function RemoveElement(idnum) {
+        $("#tr" + idnum).remove();
+      //  UpdateSNO();
+       // CalculateTotalAmtAfterDiscount();
+    }
+
+    function UpdateProjects(rec) {
+        $("#item_salesperson" + rec).html($("#item_salesperson1").html());
+        $("#item_salesperson" + rec).val("0");
+    }
+
+    function CalAmt(rec){
+
+        var gst = $("#item_gst" + rec).val();
+        var amt = $("#item_InvoiceAmtwithoutgst" + rec).val();
+        var aggredAmt = $("#item_AgreedAmtwithoutgst" + rec).val();
+
+        if (isNumber(gst) && isNumber(amt)){
+            var _totalAmtToAdd=(parseFloat(amt) * parseFloat(gst))/100;
+           // alert(_totalAmtToAdd);
+            $("#item_InvoiceAmtwithgst" + rec).val(parseFloat(_totalAmtToAdd) + parseFloat(amt));
+        }
+        if (isNumber(gst) && isNumber(aggredAmt)) {
+            var _totalAmtToAdd = (parseFloat(aggredAmt) * parseFloat(gst)) / 100;
+            $("#item_AgreedAmt" + rec).val(parseFloat(_totalAmtToAdd) + parseFloat(aggredAmt));
+        }
+    }
+
+    function UpdateSNO()
+    {
+        var sno = 0;
+        $(".span_ids").each(function () {
+            // ...
+            sno = parseInt(sno) + 1;
+            $(this).html(sno);
+        });
+    }
+
+    function GetInvoiceNumber() {
+        $.ajax({
+            type: "POST",
+            url: "/Invoice/GetInvoiceNumber", // the URL of the controller action method
+            data: {
+                company_id: $("#Company_id").val()
+            }, // optional data
+            success: function (result) {
+                $("#Invoice_number").val(result);
+            },
+            error: function (req, status, error) {
+
+            }
+        }).done(function () {
+
+        });
+    }
+
+    function GetSalespersonProjects(rec) {
+        var _val = "";
+        var _txt = "";
+       // $(".item_project").each(function () {
+        $("#item_project" + rec).html("");
+        //});
+        $.getJSON("/Invoice/GetSalespersonProjects?customer_id=" + $("#item_salesperson" + rec).val() + "&branch_id=" + $("#branch_id").val(), function (response) {
+            $.each(response, function () {
+                _val = this.Value;
+                _txt = this.Text;
+
+               // $(".item_project").each(function () {
+                $("#item_project" + rec).append($("<option />").val(_val).text(_txt));
+              //  });
+            });
+        });
+    }
+
+</script>
+
+
+<style>
+    .errorCls {
+        border: solid 1px #ff0000;
+    }
+
+    .chosen-container {
+        width: 210px !important;
+    }
+</style>
+

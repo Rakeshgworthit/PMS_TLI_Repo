@@ -1,0 +1,146 @@
+﻿@model PMS.Models.ExpenseViewModel
+@{
+    Layout = null;
+}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Add/Edit Expense</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" id="frmExpense" name="frmExpense">
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="month">Month & Year:</label>
+                    <div class="col-sm-8">
+                        @Html.HiddenFor(o => o.id)
+                        @Html.TextBoxFor(o => o.Expense_Date, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "1" })
+                        @Html.ValidationMessageFor(o => o.Expense_Date, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="category">Expense Category:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.Expense_Category_Id, Model.ExpenseCategoryList, new { @class = "form-control", @tabindex = "3" })
+                        @Html.ValidationMessageFor(o => o.Expense_Category_Id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Amount:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.Amount, "{0:0.00}", new { @class = "form-control amount", @tabindex = "5" })
+                        @Html.ValidationMessageFor(o => o.Amount, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Pay To:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.Pay_To, new { @class = "form-control", @tabindex = "7" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Company:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.Company_Id, Model.CompanyList, new { @class = "form-control", @tabindex = "2" })
+                        @Html.ValidationMessageFor(o => o.Company_Id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="category">Expense Item:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.Expense_Item_Id, Model.ExpenseItemList, new { @class = "form-control", @tabindex = "4" })
+                        @Html.ValidationMessageFor(o => o.Expense_Item_Id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Bank:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.bank_id, Model.bankList, new { @class = "form-control", @tabindex = "8" })                        
+                        <span class="text-error bankvalidation field-validation-error" style="display:none;" data-valmsg-replace="true"><span for="bank_validation" class="">Please select bank.</span></span>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">
+                        Cheque Number:
+                    </label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.cheque_number, new { @class = "form-control", @tabindex = "9" })                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="email">Remarks:</label>
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(o => o.remarks, new { @class = "form-control", @tabindex = "10" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">   
+    <button id="btnSelect" name="btnSelect" type="button" class="btn btn-primary" onclick="SaveExpense();">Save</button>
+    <button id="btnExpenseClose" name="btnExpenseClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+
+
+<script>
+    $(function () {
+        $("#Expense_Date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+      
+        $('#Expense_Date').removeAttr("data-val-date");
+
+    
+    });
+
+    $(function () {
+        $("#Expense_Category_Id").change(function () {
+            
+            var categoryid = $('#Expense_Category_Id').val();
+            var options = $("#Expense_Item_Id");
+            $("#Expense_Item_Id").empty();
+            $.ajax({
+                type: "GET",
+                url: "/Expense/GetExpenseItembyCategory", // the URL of the controller action method
+                data: { categoryid: categoryid },
+                success: function (result) {
+                    $("#Expense_Item_Id").val(result);
+                    $.each(result, function () {
+                        options.append($("<option />").val(this.Value).text(this.Text));
+                    });
+                },
+                error: function (req, status, error) {
+                }
+            });
+
+        });
+    });
+
+    function clearall() {
+        $("#Expense_Date").val('');
+        $("#Company_Id").val('0');
+        $("#Expense_Category_Id").val('0');
+        $("#Expense_Item_Id").val('0');
+        $("#Amount").val('0.00');
+        $("#Pay_To").val('');
+    }
+
+</script>

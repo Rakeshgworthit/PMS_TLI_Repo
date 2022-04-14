@@ -1,0 +1,34 @@
+﻿#1)	Common\CommonFunction.cs (public static class CommonFunction > public static List<SelectListItem> GetRecordTypeList()) 
+//DONE
+#2) Views\Loan\LoadAddEdit.cshtml 
+//DONE
+#3) CommonHelper
+//DONE
+#4) PMS.Models >  LoanViewModel
+//DONE
+#5) LoanController
+//DONE
+#6) CustomProjectViewModel
+//DONE
+#7) Loan / Index.cshtml Loan
+//DONE
+#8) LoanDetailRepo
+//DONE
+#9) LoanDetailService
+//DONE
+#10) SSP_Remove_LoanProjectsDetailsByLoanId
+//DONE
+#11) Unity.config
+//DONE
+#12) PrintPaymentViewModel
+//DONE
+#13) SSP_GetLoanProjectsDetailsByLoanId
+//DONE
+#14) PrintPreview.cshtml
+//DONE
+#15) ReportsControllers
+//DONE
+#16) SSP_LoanReport
+//DONE
+#17) LoanDetail - TABLE
+//DONE

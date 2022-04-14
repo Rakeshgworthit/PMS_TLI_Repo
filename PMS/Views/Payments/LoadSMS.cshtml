@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "LoadSMS";
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Thank you for the payment made to TLI</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" id="frmSMS" name="frmSMS">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="form-group">
+                    <label class="col-sm-12">Dear Valued Supplier</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12">This is  from The Local Inn. Terior pte. ltd.</label>
+
+                </div>
+                <div class="form-group">
+                    <span class="col-sm-12">Kindly be informed that your cheque payment is ready for collection on (Collection Date) : @ViewBag.collectionDate</span><br />
+                    <span class="col-sm-12">@@140 Paya Lebar Rd #01-19 AZ Building,Singapore 409015</span><br />
+                    @Html.Hidden("hdnDate", (object)ViewBag.collectionDate.ToString())
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+    <div class="modal-footer">
+        <button id="btnSave" type="button" name="btnSave" class="btn btn-primary" onclick="SendSMS();">Send SMS</button>
+        <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+</div>
+
+<script>
+    function SendSMS() {
+        debugger;
+        var collectionDT = $("#hdnDate").val();
+        $.ajax({
+            type: "POST",
+            url: '/Payments/SendSMS',
+            data:JSON.stringify({ collectionDate: collectionDT  }),
+            //data: {},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                debugger;
+                $("#btnClose").click();
+                //loadGrid();
+                notify(response.msg, response.cls);
+            },
+            error: function (req, status, error) {
+                notify(response.msg, response.cls);
+        }
+
+        });
+    }
+</script>
+
+
+
+

@@ -1,0 +1,244 @@
+﻿<!--Expenses Print-->
+@model PMS.Models.PrintExpenseViewModel
+@{
+    Layout = null;
+}
+<style>
+    .printaddress {
+        font-size: 10px;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .textlabel {
+        font-size: 12px;
+        font-weight: bold;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .textlabelnormal {
+        font-size: 12px;
+        font-weight: normal;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .tablebgcolor {
+        background-color: #000000;
+        /*border-spacing: 1px !important;*/
+        border-collapse: separate !important;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .trbgcolor {
+        background-color: #ffffff;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .trbgcolorextra {
+        /*border-bottom: solid 1px #000000;*/
+        background-color: #ffffff;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+
+    .trbgcolorextratopbottom {
+        /*border-top: solid 1px #000000;
+        border-bottom: solid 1px #000000;*/
+        background-color: #ffffff;
+        font-family: "Proxima Nova";
+        text-transform: uppercase;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Print Preview</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" id="frmPayment" name="frmPayment">
+        <div id="PrintElement">
+            <center>
+                <table width="95%" border="0" style="color:#000000!important">
+                    <tr>
+                        <td align="left" valign="top" width="60%"></td>
+
+                        <td align="right" valign="top" width="15%"></td>
+
+                        <td align="left" valign="top" width="25%"></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" colspan="3">
+                            <b style="font-size:25px; font-family:Proxima Nova; ">@Model.BranchName.ToUpper()</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" colspan="2" class="textlabelnormal trbgcolor">
+                            @Model.Branch_Address &nbsp; @Model.Branch_ZipCode
+
+                            @if ((!String.IsNullOrWhiteSpace(Model.Branch_Phone)))
+                            {
+                                <span>Tel: @Model.Branch_Phone</span>
+                            }
+                        </td>
+                        <td align="left" valign="top" colspan="1">
+                            <b class="trbgcolor"> Expenses</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top" class="textlabel" colspan="3">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <table width="100%" border="0" class="tablebgcolor" cellpadding="1" cellspacing="1">
+                                <tr>
+                                    <td align="right" valign="top" width="15%"></td>
+
+                                    <td align="left" valign="top" width="21%"></td>
+                                    <td align="left" valign="top" width="2%"></td>
+                                    <td align="left" valign="top" width="16%"></td>
+
+                                    <td align="left" valign="top" width="20%"></td>
+
+                                    <td align="left" valign="top" width="25%"></td>
+
+                                </tr>
+
+                                <tr>
+                                    <td align="left" valign="top" class="textlabel trbgcolor">
+                                        <b>CATEGORY :</b>
+                                    </td>
+                                    <td class="textlabelnormal trbgcolor" valign="top" align="left" colspan="3">@Model.CategoryName</td>
+                                    <td align="right" valign="top" class="textlabel trbgcolor">
+                                        <b>EXPENSE DATE :</b>
+                                    </td>
+                                    <td align="left" valign="top" class="textlabelnormal trbgcolor">
+                                        @Model.ExpenseDate
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="left" valign="top" class="textlabel trbgcolor">
+                                        <b>Expense Item :</b>
+                                    </td>
+                                    <td class="textlabelnormal trbgcolor" valign="top" align="left" colspan="3">  @Model.SubCategoryName</td>
+                                    <td align="right" valign="top" class="textlabel trbgcolor">
+                                        <b>BANK NAME :</b>
+                                    </td>
+                                    <td align="left" class="textlabelnormal trbgcolor" valign="top">@Model.BankName</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="left" valign="top" class="textlabel trbgcolor" colspan="4">
+                                        &nbsp;
+                                    </td>
+                                    <td align="right" valign="top" class="textlabel trbgcolor">
+                                        <b>CHEQUE NO :</b>
+                                    </td>
+                                    <td align="left" valign="top" class="textlabelnormal trbgcolor">@Model.ChequeNumber</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="left" valign="top" class="textlabel trbgcolor">
+                                        <b>Pay To :</b>
+                                    </td>
+                                    <td class="textlabelnormal trbgcolor" valign="top" align="left" colspan="3">  @Model.Pay_To</td>
+                                    <td align="right" valign="top" class="textlabel trbgcolor">
+                                        <b>AMOUNT :</b>
+                                    </td>
+                                    <td align="left" valign="top" class="textlabelnormal trbgcolor">$&nbsp;@Convert.ToDecimal(Model.Amount).ToString("#,##0.00")</td>
+                                </tr>
+                            </table>
+                            <table width="100%" border="0" class="tablebgcolor" cellpadding="1" cellspacing="1">
+                                <tr>
+                                    <td align="left" class="textlabelnormal trbgcolor" colspan="3">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" class="textlabel trbgcolor" valign="top" width="14%" colspan="1">
+                                        <b>REMARKS : </b>
+                                    </td>
+                                    <td align="left" class="textlabelnormal trbgcolor" width="86%" colspan="2">
+                                        @Model.Remark
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" class="textlabelnormal trbgcolor" colspan="3">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" colspan="3" valign="top" class="textlabel">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" class="textlabel">
+                            <b>Approved by</b>
+                        </td>
+                        <td align="right" valign="top" class="textlabel">
+                            <b>Received by</b>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top" style="padding-left:93px">
+                            <span style="border-top:solid 1px #000000;font-size:12px; text-transform: uppercase;">
+                                <i>
+                                    &nbsp;&nbsp;  (Signature & Date)&nbsp;&nbsp;&nbsp;
+                                </i>
+                            </span>
+                        </td>
+
+                        <td align="right" valign="top" colspan="2">
+                            <span style="border-top:solid 1px #000000;font-size:12px; text-align:left; text-transform: uppercase;margin-right:40px">
+                                <i>
+                                    (Signature & Date)
+                                </i>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+
+            </center>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="PrintElem();">Print</button>
+    <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+<script>
+
+    function PrintElem() {
+        debugger;
+        //01
+        var elem = "PrintElement";
+        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+        mywindow.document.write('<html><head><title></title>');
+        mywindow.document.write('<style>body{font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;} .printaddress { font-size: 10px;font-family: "Proxima Nova";text-transform: uppercase;} .textlabel { font-size: 12px;font-weight: bold;font-family: "Proxima Nova";text-transform: uppercase;} .textlabelnormal{ font-size: 12px;font-weight: normal;font-family: "Proxima Nova";text-transform: uppercase;} .tablebgcolor {background-color:#000000; border-spacing:1px!important;border-collapse: separate!important;font-family: "Proxima Nova";text-transform: uppercase;} .trbgcolor { background-color:#ffffff;font-family: "Proxima Nova";text-transform: uppercase;} .trbgcolorextra {  background-color:#ffffff; font-family: "Proxima Nova";text-transform: uppercase;} .trbgcolorextratopbottom { background-color:#ffffff; font-family: "Proxima Nova";text-transform: uppercase;} </style>');
+        mywindow.document.write('</head><body >');
+
+        mywindow.document.write(document.getElementById(elem).innerHTML);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+
+        mywindow.print();
+        mywindow.close();
+
+        return false;
+    }
+
+</script>

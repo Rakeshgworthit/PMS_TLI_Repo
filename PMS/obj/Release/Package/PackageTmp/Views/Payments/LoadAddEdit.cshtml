@@ -1,0 +1,610 @@
+﻿@model PMS.Models.PaymentsViewModel
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Add/Edit Supplier Payment</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" id="frmPayment" name="frmPayment">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="name">Payment Date:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.payment_date, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "4" })
+                        @Html.ValidationMessageFor(o => o.payment_date, "", new { @class = "text-error" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Supplier:</label>
+                    <div class="col-sm-7">
+                        @Html.DropDownListFor(o => o.supplier_id, Model.supplierList, new { @class = "form-control", @tabindex = "6", onchange = "GetRebateAmt();" })
+                        @Html.ValidationMessageFor(o => o.supplier_id, "", new { @class = "text-error" })
+                    </div>
+                    <div class="col-sm-1">
+                        <button tabindex="20" type="button" style="margin-top:5px; padding: 2px 10px !important;" onclick="ShowSupplierModel(0);" class='btn btn-primary pull-right btn-xs'>
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="name">Collection Date:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.collection_date, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "7" })
+                        @*@Html.ValidationMessageFor(o => o.collection_date, "", new { @class = "text-error" })*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Mode of Payment:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.payment_mode, Model.mode_of_paymentList, new { @class = "form-control", @tabindex = "7" })
+                        @Html.ValidationMessageFor(o => o.payment_mode, "", new { @class = "text-error" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Bank:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.bank_id, Model.bankList, new { @class = "form-control", @tabindex = "8" })
+                        <span class="text-error bankvalidation field-validation-error" style="display:none;" data-valmsg-replace="true"><span for="bank_validation" class="">Please select bank.</span></span>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">
+                        Cheque Number:
+                    </label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.cheque_number, new { @class = "form-control", @tabindex = "9" })
+                        <span class="text-error chequenumbervalidation field-validation-error" style="display:none;" data-valmsg-replace="true"><span for="cheque_number" class="">Please enter valid cheque number.</span></span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="email">Remarks:</label>
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(o => o.remarks, new { @class = "form-control", @tabindex = "10" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div style="display:none;">
+            @*@Html.DropDownListFor(o => o.paymentdet_project_id, Model.projectList)*@
+
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <table class="table table-responsive table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="37%">Supplier Inv#</th>
+                            <th width="30%">Agreed Amt</th>
+                            <th width="30%">Payment Amt</th>
+                            <th width="3%">
+                                <a href="javascript:void(0);" onclick="AddNew();"><i class="more-less glyphicon glyphicon-plus" style="color:#ffffff;"></i></a>
+                                <input type="hidden" id="maintainID" name="maintainID" value="@Model.payment_details.Count()" />
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblbody">
+                        @{
+                            string gstper = Convert.ToString(PMS.Common.SessionManagement.BranchGST);
+                        }
+                        <input type="hidden" id="hdngst_percentage" name="hdngst_percentage" value="@gstper" />
+
+                        @if (Model.payment_details.Count == 0)
+                        {
+                            <tr>
+                                <td>
+                                    <select id="invoice_id1" name="invoice_id1" class="invoice_id form-control" onchange="FillInvAmt(1);"></select>
+                                </td>
+                                <td><input id="agreed_amount1" name="agreed_amount1" class="agreed_amount form-control amount" /></td>
+                                <td>
+                                    <input id="payment_amount1" name="payment_amount1" class="payment_amount form-control amount" onkeyup="CalculateGSTTotalAmount(1);" onkeydown="CalculateGSTTotalAmount(1);" onfocusout="SetPaidAmount()"/>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        }
+                        else
+                        {
+
+
+                            int i = 1;
+                            foreach (var pdlist in Model.payment_details)
+                            {
+                                <tr id="tr@(i)">
+                                    <td>
+                                        <select name="@String.Format("invoice_id{0}", i)" id="@String.Format("invoice_id{0}", i)" onchange="FillInvAmt(@(i));" class="invoice_id form-control">
+                                            @foreach (var item in Model.InvoiceList)
+                                            {
+                                                <option value="@item.Id" value2="@item.agreed_amt"
+                                                        selected="@(Model != null && item.Id == pdlist.invoice_id)">
+                                                    @item.invoice_number
+                                                </option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input id="agreed_amount@(i)" name="agreed_amount@(i)" class="agreed_amount form-control" value="@pdlist.agreed_amount" />
+                                    </td>
+                                    <td>
+                                        <input id="payment_amount@(i)" onkeyup="CalculateGSTTotalAmount(@(i));" onkeydown="CalculateGSTTotalAmount(@(i));" name="payment_amount@(i)" class="payment_amount form-control amount" value="@pdlist.payment_amount" />
+                                    </td>
+                                    <td>
+                                        <a href='javascript:void(0);' onclick=RemoveElement(@i)><i class='more-less glyphicon glyphicon-minus' style='color:#ff0000;'></i></a>
+                                    </td>
+                                </tr>
+                                i = i + 1;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-1">
+
+            </div>
+
+
+            <div class="col-md-7 pull-right">
+                @*<div class="form-group">
+                    <label class="control-label col-sm-8">Loan Total:</label>
+                    <div class="col-sm-4">
+                        <b>$</b><label class="control-label" id="LoanTotalamount"></label>
+                    </div>
+                </div>*@ 
+
+                <div class="form-group">
+                    <label class="control-label col-sm-8">Total:</label>
+                    <div class="col-sm-4">
+                        <b>$</b><label class="control-label" id="totalamount"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-8">Supplier Rebate:</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(o => o.rebate_amount, "{0:0.00}", new
+                   {
+                       @class = "form-control amount",
+                       @tabindex = "12",
+                       onblur = "CalculateTotalAmtAfterDiscount(0)",
+                       onkeydown = "CalculateTotalAmtAfterDiscount(0)",
+                       onkeyup = "CalculateTotalAmtAfterDiscount(0)"
+                   })
+                        @Html.ValidationMessageFor(o => o.rebate_amount, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-8" for="email">Net:</label>
+                    <div class="col-sm-4">
+                        <input type="text" tabindex="11" id="txtTotalPaymentAmount" name="txtTotalPaymentAmount"
+                               class="form-control amount"
+                               onblur="CalculateRebateAfterTotalPaymentAmt()"
+                               onkeydown="CalculateRebateAfterTotalPaymentAmt()"
+                               onkeyup="CalculateRebateAfterTotalPaymentAmt()" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-8" for="email">Loan Return:</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(o => o.loan_return, new { @class = "form-control amount", @tabindex = "12", @onblur = "SetPaidAmount();", @onkeydown = "SetPaidAmount();", @onkeyup = "SetPaidAmount();" })
+                        @Html.ValidationMessageFor(o => o.loan_return, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-8" for="email">Paid Amount:</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(o => o.paid_amount, new { @class = "form-control amount", @tabindex = "12" })
+                        @Html.ValidationMessageFor(o => o.paid_amount, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                        <label class="control-label col-sm-8" for="email">Rebate Amount With GST:</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(o => o.rebate_amount, "{0:0.00}", new
+                                           {
+                                               @class = "form-control amount",
+                                               @tabindex = "12",
+                                               onblur = "CalculateTotalAmtAfterDiscount(0)",
+                                               onkeydown = "CalculateTotalAmtAfterDiscount(0)",
+                                               onkeyup = "CalculateTotalAmtAfterDiscount(0)"
+                                           })
+                            @Html.ValidationMessageFor(o => o.rebate_amount, "", new { @class = "text-error" })
+                        </div>
+                    </div>*@<div class="form-group">
+                    <label class="control-label col-sm-8" for="email"></label>
+                    <div class="col-sm-4">
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+        @Html.HiddenFor(o => o.isactive)
+        @Html.HiddenFor(o => o.id)
+        @Html.HiddenFor(o => o.created_date)
+        @Html.HiddenFor(o => o.created_by)
+        <input type="hidden" id="rebate_per" name="rebate_per" value="0" />
+        <input type="hidden" id="hdnloanTotal" value="0.00" />
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="SavePaymentForm('save');">Save & SMS</button>
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="SavePaymentForm('saveprint');">Save & Print</button>
+    <button id="btnClosePayment" name="btnClosePayment" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+<script>
+    //function LoanAmtCalculation(id) {
+
+    //    var totalamount = 0;
+    //    $(".loan_amount").each(function () {
+    //            totalamount = (parseFloat(totalamount) + parseFloat(($(this).val()==""|| $(this).val()==undefined || $(this).val()==NaN)?0: $(this).val()));
+    //    });
+    //    $('#LoanTotalamount').text(parseFloat(totalamount) || 0);
+    //}
+
+
+    $(function () {
+        var projectDropDownHTML = String($("#paymentdet_project_id").html());
+        $(".ddlproject_id").each(function (index) {
+            var ddlid = String("hdn" + $(this).attr("id"));
+            var project_id_val = String($("#" + ddlid).val());
+            $(this).html(projectDropDownHTML);
+            $(this).find('option[value="' + project_id_val + '"]').attr("selected", true);
+        });
+
+
+        if (String($("#maintainID").val()) == "0") {
+            $("#maintainID").val("1");
+        }
+        $("#payment_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#payment_date').removeAttr("data-val-date");
+        $("#collection_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#collection_date').removeAttr("data-val-date");
+        $(".ddlproject_id").chosen();
+        $(".ddlproject_id").width(260);
+    });
+    $(document).ready(function () {
+        CalculateTotalAmtAfterDiscount(0);
+        //$('#LoanTotalamount').text($('#hdnloanTotal').val());
+
+        if ($("#id").val() != "0") {
+            //LoanAmtCalculation(id);
+        }
+    });
+
+    function AddNew() {
+        var projectDropDownHTML = String($("#invoice_id1").html());
+        var idval = $("#maintainID").val();
+        var idnum = parseInt(idval) + 1;
+        var addnewHtML = "";
+        var gstpercentagevalue = String($("#hdngst_percentage").val());
+        addnewHtML = "<tr id='tr" + idnum + "'>";
+        addnewHtML = addnewHtML + "<td><select id='invoice_id" + idnum + "' name='invoice_id" + idnum + "' class='invoice_id form-control' onchange='FillInvAmt(" + idnum + ");'>" + projectDropDownHTML + "</select></td>";
+
+        //addnewHtML = addnewHtML + "<td><input type='number' id='loan_amount" + idnum + "' name='loan_amount" + idnum + "' class='loan_amount form-control' onkeyup='LoanAmtCalculation(" + idnum + ");'  onkeyup='onkeydown(" + idnum + ");'/></td>";
+
+        addnewHtML = addnewHtML + "<td><input  id='agreed_amount" + idnum + "' name='agreed_amount" + idnum + "' class='agreed_amount form-control amount' /></td>";
+        addnewHtML = addnewHtML + "<td><input id='payment_amount" + idnum + "' name='payment_amount" + idnum + "' class='payment_amount form-control amount' onkeyup='CalculateGSTTotalAmount(" + idnum + ")' onkeydown='CalculateGSTTotalAmount(" + idnum + ")' /></td>";
+
+        addnewHtML = addnewHtML + "<td><a href='javascript:void(0);' onclick='RemoveElement(" + idnum + ")'><i class='more-less glyphicon glyphicon-minus' style='color:#ff0000;'></i></a></td></tr>";
+        $("#tblbody").append(addnewHtML);
+        addnewHtML = "";
+        $("#maintainID").val(idnum);
+        $("#invoice_id" + idnum).prop('selectedIndex', 0); // set dropdown set Please select
+        idnum = "";
+        $(".ddlproject_id").chosen();
+        $(".ddlproject_id").width(260);
+    }
+    function RemoveElement(idnum) {
+        $("#tr" + idnum).remove();
+        CalculateTotalAmtAfterDiscount(0);
+        //LoanAmtCalculation(id);
+    }
+
+
+    /* Not in use  */
+    function CalculateGSTTotalAmount(idctrl) {
+        //var camount = $("#invoice_amount"+ idctrl +"").val();
+        //$("#total_amount" + idctrl + "").val(camount);
+        //var gstp = $("#gst_percentage" + idctrl + "").val();
+        //if (String(camount).length > 0 && String(gstp).length > 0) {
+        //    var GST = parseFloat((camount * gstp) / 100).toFixed(2);
+        //    $("#gst_amount" + idctrl + "").val(GST);
+        //    var totalamt = (parseFloat(camount) + parseFloat(GST)).toFixed(2);
+        //    $("#payment_amount" + idctrl + "").val(totalamt);
+        //}
+
+        //var tolalamount = parseFloat($("#payment_amount" + idctrl + "").val());
+
+        //var gPer = 0;
+        //if ($("#gst_percentage" + idctrl + "").val() > 0) {
+        //    gPer = parseFloat($("#gst_percentage" + idctrl + "").val());
+        //}
+
+        //var gstp = parseFloat(gPer / 100) + 1;
+
+        //if (String(tolalamount).length > 0 && String(gstp).length > 0) {
+        //    var CAmount = parseFloat(tolalamount / gstp).toFixed(2);
+        //    var GST = parseFloat(tolalamount - CAmount).toFixed(2);
+        //    if (String(CAmount) == "NaN") {
+        //        CAmount = "0.00";
+        //    }
+        //    if (String(GST) == "NaN") {
+        //        GST = "0.00";
+        //    }
+        //    $("#gst_amount" + idctrl + "").val(GST);
+        //    $("#invoice_amount" + idctrl + "").val(CAmount)
+        //}
+        CalculateTotalAmtAfterDiscount(1);
+    }
+
+    function CalculateTotalAmtAfterDiscount(_obj) {
+
+        if (_obj == 0 && parseFloat($("#rebate_per").val()) > 0) {
+            $("#rebate_per").val(0);
+        }
+
+        var totalamount = 0;
+        $(".payment_amount").each(function () {
+            totalamount = (parseFloat(totalamount) + parseFloat($(this).val()));
+        });
+
+        if (String(totalamount) == "NaN") {
+            totalamount = "0.00";
+        } else {
+            totalamount = String(parseFloat(totalamount).toFixed(2));
+        }
+
+        if (parseFloat(totalamount) > 0) {
+            if (parseFloat($("#rebate_per").val()) > 0) {
+                //alert(totalamount);
+                // alert($("#rebate_per").val());
+                //debugger;
+                //_totalRbt = (parseFloat(totalamount) / parseFloat($("#rebate_per").val() * 100));
+                _totalRbt = ((parseFloat(totalamount) * parseFloat($("#rebate_per").val()) / 100));
+                $("#rebate_amount").val(parseFloat(_totalRbt).toFixed(2));
+            }
+            //else
+            //{
+            //    $("#rebate_amount").val(parseFloat(0).toFixed(2));
+            //}
+        }
+
+        //  if (rebatemode) {
+        $("#totalamount").text(totalamount);
+        // }
+
+        var disamt = parseFloat($("#rebate_amount").val());
+        var calamt = 0;
+        var showtotalamount = 0;
+        if (disamt > 0) {
+            showtotalamount = (parseFloat(totalamount) - parseFloat(disamt)).toFixed(2);
+        } else {
+            showtotalamount = totalamount;
+        }
+
+
+        if (showtotalamount > 0) {
+            var _per = (parseFloat($("#rebate_amount").val()) * 100) / parseFloat($("#totalamount").html());
+
+            var totalInvamount = 0;
+            $(".invoice_amount").each(function () {
+                totalInvamount = (parseFloat(totalInvamount) + parseFloat($(this).val()));
+
+            });
+            if (String(totalInvamount) == "NaN") {
+                totalInvamount = "0.00";
+            } else {
+                totalInvamount = String(parseFloat(totalInvamount).toFixed(2));
+            }
+
+            var _invoiceRebateAmount = (totalInvamount * _per) / 100;
+            $("#totalRebateAmount").html(String(parseFloat(_invoiceRebateAmount).toFixed(2)));
+
+        }
+
+        $("#txtTotalPaymentAmount").val(showtotalamount);
+        ///New Field Added
+        //if ($("#id").val() == "0") {
+        //    $("#paid_amount").val(showtotalamount);
+        //}
+
+        //Harshad Added
+        //SetPaidAmount();
+    }
+
+    function CalculateRebateAfterTotalPaymentAmt() {
+
+
+        var TotalInvoiceAmountAfterGST = parseFloat($("#totalamount").text());
+        var RebateAfterTotalPaymentAmt = parseFloat($("#rebate_amount").val());
+        var TotalPaymentAmount = parseFloat($("#txtTotalPaymentAmount").val());
+
+
+        var rebate_amount_after_cal = (parseFloat(TotalInvoiceAmountAfterGST) - parseFloat(TotalPaymentAmount)).toFixed(2)
+
+
+
+        if (String(rebate_amount_after_cal) == "NaN") {
+            rebate_amount_after_cal = "0.00";
+        }
+
+        $("#rebate_amount").val(rebate_amount_after_cal);
+
+
+        if (rebate_amount_after_cal > 0) {
+            var _per = (parseFloat($("#rebate_amount").val()) * 100) / parseFloat($("#totalamount").html());
+
+            var totalInvamount = 0;
+            $(".invoice_amount").each(function () {
+                totalInvamount = (parseFloat(totalInvamount) + parseFloat($(this).val()));
+
+            });
+            if (String(totalInvamount) == "NaN") {
+                totalInvamount = "0.00";
+            } else {
+                totalInvamount = String(parseFloat(totalInvamount).toFixed(2));
+            }
+
+            var _invoiceRebateAmount = (totalInvamount * _per) / 100;
+            $("#totalRebateAmount").html(String(parseFloat(_invoiceRebateAmount).toFixed(2)));
+
+        }
+        SetPaidAmount();
+    }
+
+    function GetRebateAmt() {
+        if ($("#supplier_id").val() > 0 && $("#id").val() == "0") {
+            $.ajax({
+                type: "POST",
+                url: "/Payments/GetSupplierRebateAmt", // the URL of the controller action method
+                data: {
+                    Id: $("#supplier_id").val()
+                },
+                success: function (result) {
+                    //alert(result);
+                    $("#rebate_per").val(result);
+                    ///this will work if new record insert
+                    if ($("#id").val() == "0") {
+                        CalculateTotalAmtAfterDiscount();
+                    }
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                }
+            });
+
+            $(".invoice_id option").remove();
+            $.getJSON("/Payments/GetInvoiceList?Id=" + $("#supplier_id").val() + "", function (response) {
+                $.each(response, function () {
+                    // debugger;
+                    _val = this.Id;
+                    _txt = this.Name;
+                    _AgreedAmt = this.AgreedAmt;
+                    _InvoiceAmount = this.InvoiceAmount;
+                    _Payment_Count = this.payment_Count;
+                    _Payment_amt = this.payment_amt;
+                    $(".invoice_id").each(function () {
+                        //  $(this).append($("<option />").val(_val).text(_txt));
+                        if ($("#id").val() == "0") {
+                            //insert mode
+                            //if (_InvoiceAmount > _Payment_amt || _txt == "Please Select") {
+                            if (_InvoiceAmount != _Payment_amt || _txt == "Please Select") {
+                                $(this).append("<option value=" + _val + " value2=" + _AgreedAmt + ">" + _txt + "</option>");
+                            }
+                            //if (_Payment_Count == 0 || _InvoiceAmount != _Payment_amt || _InvoiceAmount > _Payment_amt || _txt == "Please Select") {
+                            //    debugger;
+                            //    $(this).append("<option value=" + _val + " value2=" + _AgreedAmt + ">" + _txt + "</option>");
+                            //}
+                        }
+                        else {
+                            //debugger;
+                            //if (_InvoiceAmount > 0) {
+                                $(this).append("<option value=" + _val + " value2=" + _AgreedAmt + ">" + _txt + "</option>");
+                            //}
+                        }
+
+                        //$('option:selected', "#invoice_id1").attr('value2'); use it
+                    });
+                });
+            });
+
+        }
+    }
+
+    function FillInvAmt(obj) {
+        if ($("#invoice_id" + obj).val() != 0) {
+            var value2 = $('option:selected', "#invoice_id" + obj).attr('value2');
+            debugger;
+            $("#agreed_amount" + obj).val(value2);
+        }
+    }
+
+    //function showtotal()
+    //{
+    //    var totalamount=0;
+
+    //    $(".payment_amount").each(function(){
+
+
+    //        totalamount=(parseFloat(totalamount) + parseFloat($(this).val()));
+
+    //    });
+    //    if (String(totalamount) == "NaN") {
+    //        $("#totalamount").html("0.00");
+    //    } else {
+    //        $("#totalamount").html(String(parseFloat(totalamount).toFixed(2)));
+    //    }
+
+    //}
+    $("#frmPayment").validate({
+        rules: {
+            loan_return: {
+                number: true
+            }
+        }
+    });
+    //function SetPaidAmount() {
+    //    var netamt = parseFloat($("#txtTotalPaymentAmount").val());
+    //    var loanreturn = parseFloat($("#loan_return").val());
+    //    var paidamount = netamt - loanreturn;
+    //    if (paidamount != null && paidamount != "" && paidamount != undefined && !isNaN(paidamount)) {
+    //        $("#paid_amount").val(paidamount.toString());
+    //    }
+    //    else {
+    //        $("#paid_amount").val(0);
+    //    }
+    //};
+
+    function SetPaidAmount()
+    {
+        debugger;
+        var a = (parseFloat($("#txtTotalPaymentAmount").val()) - parseFloat($("#loan_return").val())); null != a && "" != a && null != a && !isNaN(a) ? $("#paid_amount").val(parseFloat(a).toFixed(2)) : $("#paid_amount").val(0)
+    }
+</script>
+
+
+<style>
+    .chosen-container {
+        width: 210px !important;
+    }
+</style>

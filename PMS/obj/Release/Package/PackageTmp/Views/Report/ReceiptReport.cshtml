@@ -1,0 +1,160 @@
+﻿@using MVCGrid.Web
+@model PMS.Models.ReportViewModel
+@{
+    ViewBag.Title = "Customer Payment Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Customer Payment Report</h3>
+        </div>        
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="well">                    
+                        @using (Html.BeginForm("ReceiptReport", "Report", FormMethod.Post, new { id= "SearchForm", name= "SearchForm" }))
+                        {
+                            <div class="form-inline">
+                                <div class="form-group ">
+                                    <label class="control-label" for="from_date">From:</label>
+                                    <input id="from_date" name="from_date" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.from_date).ToString("dd/MM/yyyy")" />
+                                    @*@Html.TextBoxFor(o => o.from_date, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "1", placeholder = "From Date" })*@
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="from_date">To:</label>
+                                    <input id="to_date" name="to_date" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.to_date).ToString("dd/MM/yyyy")" />
+                                    @*@Html.TextBoxFor(o => o.to_date, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "2", placeholder = "To Date" })*@
+
+                                </div>
+                                <div class="form-group">
+                                   @Html.DropDownListFor(o => o.BankId, Model.BankList, new { @class = "form-control", @tabindex = "3" ,style= "width: 155px;" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.DropDownListFor(o => o.ProjectId, Model.ProjectList, new { @class = "form-control", @tabindex = "3", style="width:200px" })
+                                                                    </div>
+
+                                @*<div class="form-group">
+                                    @Html.DropDownList("SalesmenStatus", PMS.Common.CommonFunction.ActiveInactive(), new { @class = "form-control", @tabindex = "3", onchange = "GetSalesmenList();" })
+                                </div>*@
+                                <div class="form-group">
+                                    @Html.DropDownListFor(o => o.SearchSalesmenStatus, Model.SalesmenStatusList, new { @class = "form-control", id = "ddlStatus" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.DropDownListFor(o => o.SalesmenId, Model.SalesmenAndUserList, new { @class = "form-control", @tabindex = "3", id = "ddlSalesmen" , style = "width:174px" })
+
+
+                                </div>
+                                <input type="hidden" id="BranchId" name="BranchId" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+                                @*<div class="form-group">
+                                    @Html.DropDownListFor(o => o.BranchId, Model.BranchList, new { @class = "form-control" })
+                                </div>*@
+                                <button type="submit" class="btn btn-primary" onclick="SubmitAs('form');"><i class="fa fa-search" aria-hidden="true"></i></button>
+
+                                <button type="submit" class="btn btn-success pull-right" onclick="SubmitAs('export');"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Export</button>
+                              
+                            </div>
+                        }
+                       
+                    </div>
+            </div>
+            <div class="panel-body">
+                <div class="responsive-table">
+                    @Html.Raw(Model.GridData)
+                    @*@Html.MVCGrid("ReceiptReport", new { ReportMonth = Model.ReportMonth, ReportYear = Model.ReportYear, Uid = Model.Uid, BranchId = Model.BranchId })*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<script>
+
+
+    $(document).ready(function () {
+        $('#tableid').DataTable({
+            "paging": false,
+            "ordering": true,
+            "info": false,
+            "searching": false,
+        });
+        $("#ddlStatus").change(function () {
+           
+            var Id = $('#ddlStatus').val();
+            $.ajax({
+                type: 'POST',
+
+                url: "/Report/GetSalesmen",
+                data: { salesmenStatus: Id },
+                dataType: "json",
+                success: function (Model) {
+                    {
+                       
+                        $("#ddlSalesmen").empty();
+                        $.each(Model.SalesmenAndUserList, function () {
+                            $("#ddlSalesmen").append($("<option/>").val(this.Value).text(this.Text));
+                        });
+                    }
+                },
+                error: function () {
+
+                }
+
+            })
+        });
+    });
+
+
+    function SubmitAs(obj) {
+        if (obj == 'form') {
+
+            //$('[id^=form]').submit(function resetValidation() {
+            //    //Removes validation summary
+            //    $('.validation-summary-errors').addClass('validation-summary-valid');
+            //    $('.validation-summary-errors').removeClass('validation-summary-errors');
+            //});
+
+            $("#SearchForm").attr('action', "ReceiptReport").submit();
+        } else {
+            $('#SearchForm').attr('action', "ExportReceiptReport").submit();
+        }
+    }
+    $(function () {
+       
+
+        $("#ProjectId").chosen();
+        $("#ProjectId").width(260);
+
+        $("#from_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#from_date').removeAttr("data-val-date");
+
+       
+
+        $("#to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#to_date').removeAttr("data-val-date");
+        
+    });
+
+    function GetSalesmenList() {
+        debugger;
+        var options = $("#ddlSalesmen");
+        $.getJSON("/Report/GetSalesmenByStatus?status=" + $("#ddlSalesmen").val(), function (response) {
+            $("#ddlSalesmen").html("");
+            $.each(response, function () {
+                options.append($("<option />").val(this.Value).text(this.Text));
+                $("#SalesmenId").trigger("chosen:updated");
+                $("#SalesmenId").trigger("liszt:updated");
+            });
+
+        });
+    }
+</script>
+

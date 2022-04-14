@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <!-- start: Css -->
+    <link rel="stylesheet" type="text/css" href="/Content/css/bootstrap.min.css">
+    <!-- plugins -->
+    <link rel="stylesheet" type="text/css" href="/Content/css/plugins/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="/Content/css/plugins/simple-line-icons.css" />
+        <link rel="stylesheet" type="text/css" href="/Content/css/plugins/animate.min.css" />
+        <link rel="stylesheet" type="text/css" href="/Content/css/plugins/icheck/skins/flat/aero.css" />
+        <link href="/Content/css/style.css" rel="stylesheet">
+    <!-- end: Css -->
+    <link rel="shortcut icon" href="/Content/img/logomi.png">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    <link href="/scripts/jquery.loader.css" rel="stylesheet" />
+    <link href="/Content/css/notifIt.css" type="text/css" rel="stylesheet">
+    <style>
+        .text-error {
+            color: red;
+            text-align: left;
+        }
+
+        .validation-summary-errors {
+            /*margin-top:50px;*/
+        }
+
+        .panel-heading {
+            padding: 5px 15px;
+        }
+
+        .panel-footer {
+            padding: 1px 15px;
+            color: #A0A0A0;
+        }
+
+        .profile-img {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 10px;
+            display: block;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+
+        .modal-header {
+            padding: 9px 15px;
+            border-bottom: 1px solid #eee;
+            background-color: #0480be;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            color: white !important;
+        }
+
+        .modal-footer {
+            background-color: #F5F5F5;
+        }
+    </style>
+</head>
+<body id="mimin" class="dashboard">
+
+    <nav class="navbar navbar-default header navbar-fixed-top">
+        <div class="col-md-12 nav-wrapper">
+            <div class="navbar-header" style="width:100%;">               
+                <a href="index.html" class="navbar-brand">
+                    <b>PMS Project</b>
+                </a>
+
+                </div>
+            </div>
+        </nav>
+
+
+                <div class="container" style="margin-top:60px">
+                    <div class="row">
+                        @RenderBody()
+                    </div>
+                </div>
+
+                <script src="/Content/js/jquery.min.js"></script>
+                <script src="/Content/js/jquery.ui.min.js"></script>
+                <script src="/Content/js/bootstrap.min.js"></script>
+                <script src="/scripts/jquery.loader.js"></script>
+                <script src="/Content/js/notifIt.js" type="text/javascript"></script>
+                <script src="~/Scripts/jquery.validate.js"></script>
+                <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</body>
+</html>

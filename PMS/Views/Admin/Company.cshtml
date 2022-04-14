@@ -1,0 +1,77 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Company";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Company</h3>
+        </div>
+        
+
+        <div class="col-md-6" style="margin-top:10px;">
+            @*<button type="button" onclick="openModelpop('/Admin/CompanyLoadAddEdit', 'id', 0);" class='btn btn-primary pull-right'>
+                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+            </button>*@
+        </div>   
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="responsive-table">
+                    @Html.MVCGrid("Company")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function SaveCompanyForm() {
+        
+        var form = $('#frmCompany');
+        $.validator.unobtrusive.parse(form);
+        if (form.valid()) {           
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Admin/CompanySaveUpdate", // the URL of the controller action method
+                data: {
+                    id: $('#frmCompany').find("#id").val(),
+                    company_name: $('#frmCompany').find("#company_name").val(),
+                    address1: $('#frmCompany').find("#address1").val(),
+                    address2: $('#frmCompany').find("#address2").val(),
+                    address3: $('#frmCompany').find("#address3").val(),
+                    address4: $('#frmCompany').find("#address4").val(),
+                    zip_code: $('#frmCompany').find("#zip_code").val(),
+                    website: $('#frmCompany').find("#website").val(),
+                    contact_person: $('#frmCompany').find("#contact_person").val(),
+                    reg_no: $('#frmCompany').find("#reg_no").val(),
+                    email: $('#frmCompany').find("#email").val(),
+                    phone: $('#frmCompany').find("#phone").val(),
+                    mobile: $('#frmCompany').find("#mobile").val(),
+                    isactive: $('#frmCompany').find("#isactive").val()
+                }, // optional data
+                success: function (result) {
+                    $.loader('close');
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {
+                        $("#btnClose").click();
+                        loadGrid();
+                        notify(result.msg, result.cls);
+                    }
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                }
+            });
+        }
+    }
+    function loadGrid() {
+        MVCGrid.reloadGrid('Company');
+    }
+</script>
+

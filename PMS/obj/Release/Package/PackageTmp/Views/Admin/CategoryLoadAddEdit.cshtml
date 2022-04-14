@@ -1,0 +1,63 @@
+﻿@model PMS.Models.ExpenseCategotyViewModel
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Add/Edit Category</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" id="frmcategory" name="frmcategory">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="name">Category Name:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.ExpenseCategory1, new { @class = "form-control", @tabindex = "1" })
+                        @Html.ValidationMessageFor(o => o.ExpenseCategory1, "", new { @class = "text-error" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Parent name:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.Parent, Model.ExpenseCategoryList, new { @class = "form-control", @tabindex = "2" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">IsActive:</label>
+                    <div class="col-sm-8">
+                        @if (Model.IsActive == true)
+                        {
+                            <input type="checkbox"  id="myCheck" onclick="myFunction()" checked>
+                        }
+                        else if (Model.IsActive == false)
+                        {
+                            <input type="checkbox" id="myCheck" onclick="myFunction()">
+
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="myCheck" onclick="myFunction()" checked>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        @Html.HiddenFor(o => o.id)
+        @Html.HiddenFor(o => o.IsActive)
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="SaveCategoryForm();">Save</button>
+    <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>

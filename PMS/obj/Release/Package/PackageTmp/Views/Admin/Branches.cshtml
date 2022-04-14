@@ -1,0 +1,107 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Companies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Companies</h3>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+@if (User.IsInRole("SuperAdmin"))
+{
+            <button type="button" onclick="openModelpop('/Admin/BranchLoadAddEdit', 'id', 0);" class='btn btn-primary pull-right'>
+            <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+        </button>
+}
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="responsive-table">
+@if (User.IsInRole("SuperAdmin"))
+{
+                    @Html.MVCGrid("Branches")
+}
+else
+{
+    @Html.MVCGrid("BranchesView")
+}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var che = true;
+    function myFunction() {
+        debugger;
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true) {
+            debugger;
+            che = true;
+        } else {
+            che = false;
+        }
+    }
+
+    function SaveBranchForm() {
+        var ch = che;
+        $('#isactive').val(ch);
+        var form = $('#frmBranch');
+        $.validator.unobtrusive.parse(form);
+        if (form.valid()) {
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Admin/BranchSaveUpdate", // the URL of the controller action method
+                data: {
+                    id: $('#frmBranch').find("#id").val(),
+                    company_id: $('#frmBranch').find("#company_id").val(),
+                    branch_name: $('#frmBranch').find("#branch_name").val(),
+                    address1: $('#frmBranch').find("#address1").val(),
+                    address2: $('#frmBranch').find("#address2").val(),
+                    address3: $('#frmBranch').find("#address3").val(),
+                    address4: $('#frmBranch').find("#address4").val(),
+                    zip_code: $('#frmBranch').find("#zip_code").val(),
+                    website: $('#frmBranch').find("#website").val(),
+                    email: $('#frmBranch').find("#email").val(),
+                    phone: $('#frmBranch').find("#phone").val(),
+                    mobile: $('#frmBranch').find("#mobile").val(),
+                    country_id: $('#frmBranch').find("#country_id").val(),
+                    gst_reg_no: $('#frmBranch').find("#gst_reg_no").val(),
+                    contact_person: $('#frmBranch').find("#contact_person").val(),
+                    company_reg_no: $('#frmBranch').find("#company_reg_no").val(),                    
+                    company_initial: $('#frmBranch').find("#company_initial").val(),
+                    fax: $('#frmBranch').find("#fax").val(),
+                    isactive: $('#frmBranch').find("#isactive").val()
+                }, // optional data
+                success: function (result) {
+                    $.loader('close');
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {
+                        $("#btnClose").click();
+                        loadGrid();
+                        notify(result.msg, result.cls);
+                    }
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                }
+            });
+        }
+    }
+    function loadGrid() {
+        MVCGrid.reloadGrid('Branches');
+    }
+</script>
+
+

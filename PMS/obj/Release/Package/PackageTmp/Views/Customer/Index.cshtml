@@ -1,0 +1,107 @@
+﻿@using MVCGrid.Web
+@model PMS.Models.CustomerViewModel
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Customer</h3>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+            <button type="button" onclick="openModelpop('/Customer/_LoadCustomer','id',0);" class='btn btn-primary pull-right'>
+                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="well">
+                    @using (Html.BeginForm("Index", "Customer", FormMethod.Post, new { id = "SearchForm", name = "SearchForm" }))
+                    {
+                        <div class="form-inline ">
+                            <div class="form-group">
+                                <label class="control-label" for="from_date">Search:&nbsp;</label>
+                                <input id="customersearch" name="customersearch" class="form-control"  value="@Model.customersearch" placeholder="Search with Name/NRIC"  />
+
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="responsive-table">
+                    @Html.MVCGrid("Customer", new { customersearch = Model.customersearch })
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+@*<div id="divModel">
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg modal-content-left">
+
+                <div class="modal-content" id="ModelForm">
+
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+<script type="text/javascript">
+
+    //function ShowModel(obj)
+    //{
+
+    //        $("#ModelForm").html("");
+    //        $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/Customer/_LoadCustomer", // the URL of the controller action method
+    //            data: {
+    //                Id: obj
+    //            }, // optional data
+    //            success: function (result) {
+    //                $("#ModelForm").html(result);
+    //                $.loader('close');
+    //            },
+    //            error: function (req, status, error) {
+    //                // do something with error
+    //            }
+    //        });
+
+    //        $("#myModal").modal('show');
+
+    //}
+
+
+
+    function notify(msg, type) {
+        notif({
+            msg: msg,
+            type: type,
+            position: "center",
+            opacity: 0.9,
+            timeout: 2000
+        });
+    }
+
+    function loadGrid()
+    {
+        MVCGrid.reloadGrid('Customer');
+    }
+
+
+
+</script>

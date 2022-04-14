@@ -1,0 +1,489 @@
+﻿@model PMS.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">
+@if (String.IsNullOrEmpty(Model.Id))
+{
+   <text> Add Users</text>
+}
+else
+{
+    <text> Edit Users</text>
+}
+            </h3>
+        </div>   
+        <div class="col-md-6" style="margin-top:10px;">
+            <a href="/Account/Users" class='btn btn-primary pull-right'>
+                <i class="fa fa-user" aria-hidden="true"></i><span style="padding-left:10px;">Users</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">         
+            <div class="panel-body">               
+                <div id="exTab3">
+                    <ul class="nav nav-pills">
+                        <li class="active">
+                            <a href="#1b" data-toggle="tab">Profile</a>
+                        </li>
+                    
+                                                @*
+
+            @if (string.IsNullOrEmpty(Model.UserRoleName))
+    {
+                                                <li id="LiBranch" name="LiBranch" class="disabled">
+           <a href="#2b" data-toggle="tab">Branches</a>
+       </li>
+
+                                                }*@
+                    
+                      
+                       
+                        <li id="LiRole" name="LiRole" class="disabled">
+                            <a href="#3b" data-toggle="tab">Roles</a>
+                        </li>                        
+                    </ul>
+
+                    <div class="tab-content clearfix">
+                        <div class="tab-pane active" id="1b">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(o => o.Id)
+
+        @*foreach (var modelState in ViewData.ModelState.Values)
+        {
+            foreach (var err in modelState.Errors)
+            {
+                <p class="text-danger">@err.ErrorMessage</p>
+            }
+        }*@
+
+    if (!String.IsNullOrEmpty(ViewBag.MSG))
+    { 
+        <div class="alert alert-info fade in top-20">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>@ViewBag.MSG</strong>
+    </div>
+    }
+
+                                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Company</label>
+                                            <div class="col-md-8">
+                                                @Html.DropDownListFor(o => o.company_id, Model.CompanyList, new { @class = "form-control", @tabindex = "1" })
+                                                @Html.ValidationMessageFor(o => o.company_id, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Name</label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control",@tabindex = "2" })
+                                                @Html.ValidationMessageFor(o => o.Name, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        @if (String.IsNullOrEmpty(Model.Id))
+                                        {
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label" })
+                                            <div class="col-md-8">
+                                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @tabindex = "4" })
+                                                @Html.ValidationMessageFor(o => o.Password, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        }
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @tabindex = "6" })
+                                                @Html.ValidationMessageFor(o => o.Email, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="pwd">Address 2</label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(o => o.address2, new { @class = "form-control", @tabindex = "8" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="pwd">Address 4</label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(o => o.address4, new { @class = "form-control", @tabindex = "10" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="email">Country</label>
+                                            <div class="col-sm-8">
+                                                @Html.DropDownListFor(o => o.country_id, Model.CountryList, new { @class = "form-control", @tabindex = "12" })
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="email">Phone</label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(o => o.phone, new { @class = "form-control", @tabindex = "14" })
+                                            </div>
+                                        </div>
+
+                                       
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label"><br /></label>
+                                            <div class="col-md-8">
+                                                <br /><br />
+                                            </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">User Name</label>
+                                                <div class="col-md-8">
+                                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @tabindex = "3" })
+                                                    @Html.ValidationMessageFor(o => o.UserName, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            @if (String.IsNullOrEmpty(Model.Id))
+                                            {
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label" })
+                                                    <div class="col-md-8">
+                                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @tabindex = "5" })
+                                                        @Html.ValidationMessageFor(o => o.ConfirmPassword, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4" for="pwd">Address 1</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(o => o.address1, new { @class = "form-control", @tabindex = "7" })
+                                                    @Html.ValidationMessageFor(o => o.address1, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4" for="pwd">Address 3</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(o => o.address3, new { @class = "form-control", @tabindex = "9" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4" for="email">ZipCode</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(o => o.zip_code, new { @class = "form-control", @tabindex = "11" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4" for="email">Mobile</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(o => o.mobile, new { @class = "form-control", @tabindex = "13" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4" for="email">Is Active</label>
+                                                <div class="col-sm-8">
+                                                    @*@if (Model.is_active == true)
+                                                    {
+                                                        <input type="checkbox" id="myCheck" onclick="myFunction()" checked>
+                                                    }   
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="myCheck" onclick="myFunction()">
+
+                                                    }*@
+                                                    @*@Html.CheckBoxFor(model => model.is_active, htmlAttributes: new { @checked = true })*@
+                                                    @Html.DropDownListFor(o => o.is_active, Model.StatusList, new { @class = "form-control", @tabindex = "15" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12 text-center">
+                                            <input type="submit" class="btn btn-primary" value="Submit" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                }
+
+                            </div>
+                        <div class="tab-pane" id="2b">
+
+                            <div class="row">
+                                <div class="col-md-12">                                   
+                                    <div class="well top-20">
+                                        <div class="form-inline">
+                                            <div class="form-group">                                               
+                                                <input type="text" id="SearchBranch" name="SearchBranch" onkeyup="LoadBranches();" onkeydown="LoadBranches();" class="form-control" style="width:400px" />
+                                                <input type="hidden" id="hdnBranchID" name="hdnBranchID" value="" />
+                                            </div>
+                                            <input type="button" id="btnAddBranch" name="btnAddBranch" class="btn btn-primary" value="Add" onclick="AddBranch();" />
+                                            
+                                        </div>
+                                    </div>                                  
+                                </div>
+                           </div>
+                            <div id="div_Branches" name="div_Branches">
+
+                            </div>
+
+                                </div>
+                                <div class="tab-pane" id="3b">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="top-20">
+                                                <div class="form-inline">
+                                                    <div class="form-group">
+                                                        @foreach (var roles in Model.RoleList)
+                                                        {
+                                                            <div class="checkbox">
+                                                                <label class="control-label"><input id="userRole_@roles.Id" name="userRole_@roles.Id" type="checkbox" onclick="UpdateRole('@roles.Id','@roles.Name');" @if (roles.RoleId != "0") { <text> checked="checked" </text> } class="userRoles"> <strong>@roles.Name</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </div>
+                                                        }
+                                                        
+                                                    <div class="form-group" id="divSalesman" style="display:none">
+                                                        @*<label class="control-label" for="from_date"><span class="data_inline_label">Supplier</span></label>*@
+                                                        <!--<select name="SalesmenId" id="SalesmenId" style="width:200px !important" class="form-control">
+    </select>-->
+                                                        @Html.DropDownListFor(o => o.SalemanId, Model.SalesmanList, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(o => o.SalemanId, "", new { @class = "text-error" })
+                                                    </div>
+                                                        
+                                                    </div>
+                                                    <input type="button" id="btnAddRole" name="btnAddRole" class="btn btn-primary" value="Update" onclick="AddRole();" />
+
+                                                </div>                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                   <br /><br />
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        if ($("#Id").val() == "") {
+            $('a[data-toggle="tab"]').on('click', function () {
+                if ($(this).parent('li').hasClass('disabled')) {
+                    return false;
+                };
+            });
+        } else {
+            $("#LiBranch").removeClass('disabled');
+            $("#LiRole").removeClass('disabled');
+            $("#UserName").attr("disabled", "disabled")
+        }
+
+        if ($("#Id").val() != "") {
+            LoadUserBranchs();
+        }
+
+    });
+
+    function LoadBranches() {
+        $("#SearchBranch").autocomplete({
+            source: "/Home/GetBranchList?code=" + $("#SearchBranch").val(),
+            minLength: 3,
+            select: function (event, ui) {
+                $("#SearchBranch").val(ui.item.label);
+                $("#hdnBranchID").val(ui.item.id);
+            }
+        });
+    }
+
+    function AddBranch()
+    {
+        if ($("#hdnBranchID").val() != "" && $("#hdnBranchID").val() > 0) {
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Account/AssignBranch",
+                data: {
+                    userId: $("#Id").val(),
+                    Id: $("#hdnBranchID").val()
+                },
+                success: function (result) {
+                    if (result.cls == "success") {
+                        $("#hdnBranchID").val("");
+                        $("#SearchBranch").val("");                        
+                        LoadUserBranchs();
+                        notify(result.msg, result.cls);
+                    } else if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                        $.loader('close');
+                    }
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                    $.loader('close');
+                }
+            });
+        } else {
+            notify("Please select a branch.", "error");
+        }
+    }
+
+    function LoadUserBranchs() {
+        $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+        $.ajax({
+            type: "POST",
+            url: "/Account/UserBranches",
+            data: {
+                userId: $("#Id").val()
+            },
+            success: function (result) {
+                $("#div_Branches").html(result);
+                $.loader('close');               
+            },
+            error: function (req, status, error) {
+                // do something with error
+                $.loader('close');
+            }
+        });
+    }
+
+    function RemoveBranch(Id) {
+        if (confirm('Are you sure you want to delete?')) {
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Account/RemoveBranch",
+                data: {
+                    Id: Id
+                },
+                success: function (result) {
+                    $.loader('close');
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {                    
+                        LoadUserBranchs();
+                        notify(result.msg, result.cls);
+                    }
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                    $.loader('close');
+                }
+            });
+        }
+    }
+
+    function ChangeStatus(obj) {
+        $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+        $.ajax({
+            type: "POST",
+            url: "/Account/ChangeStatus",
+            data: {
+                Id: obj
+            },
+            success: function (result) {
+                $.loader('close');
+                if (result.cls == "error") {
+                    notify(result.msg, result.cls);
+                } else {
+                    LoadUserBranchs();
+                    //notify(result.msg, result.cls);
+                }
+            },
+            error: function (req, status, error) {
+                // do something with error
+                $.loader('close');
+            }
+        });
+    }
+
+    function AddRole() {
+        var role = 0;
+        var roleName = "";
+        var mulSelect = 0
+        if ($("#userRole_1").is(":checked")) {           
+            roleName = "SuperAdmin";
+            mulSelect = 1;
+        }
+        if ($("#userRole_2").is(":checked")) {
+            roleName = "User";
+            mulSelect = mulSelect + 1;
+        }
+        if ($("#userRole_3").is(":checked")) {
+            roleName = "Salesman";
+            mulSelect = mulSelect + 1;
+        }
+        if (mulSelect >= 2) {
+            notify("Please select only 1 role", "error");
+        }
+        if (roleName == "") {
+            notify("Please select a role", "error");
+        } else {
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+            $.ajax({
+                type: "POST",
+                url: "/Account/UpdateRole",
+                data: {
+                    Id: $("#Id").val(),
+                    roleId: roleName
+                },
+                success: function (result) {
+                    $.loader('close');
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {                   
+                        location.reload();
+                    }
+                },
+                error: function (req, status, error) {                
+                    $.loader('close');
+                }
+            });
+        }
+    }
+    function UpdateRole(role, rolename) {
+        if (role == "1") {
+            if ($("#userRole_" + role).is(":checked")) {
+                $('#userRole_2').attr('checked', false);
+                $('#userRole_3').attr('checked', false);               
+                $('#SalemanId').val('');
+                $('#divSalesman').hide();
+            }
+        }
+        if (role == "2") {
+            if ($("#userRole_" + role).is(":checked")) {
+                $('#userRole_1').attr('checked', false);
+                $('#userRole_3').attr('checked', false);
+                $('#SalemanId').val('');
+                $('#divSalesman').hide();
+            }
+        }
+        if (role == "3") {
+            if ($("#userRole_" + role).is(":checked")) {
+                $('#userRole_1').attr('checked', false);
+                $('#userRole_2').attr('checked', false);
+                $('#divSalesman').show();
+               
+            }
+        }
+    }
+
+</script>

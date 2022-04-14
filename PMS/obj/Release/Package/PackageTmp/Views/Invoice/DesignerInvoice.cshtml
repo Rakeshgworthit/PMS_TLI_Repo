@@ -1,0 +1,205 @@
+﻿@using MVCGrid.Web
+@model PMS.Models.InvoiceViewModel
+@{
+    ViewBag.Title = "DesignerInvoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{bool SuperAdmin = User.IsInRole("SuperAdmin"); }
+<div class="panel box-shadow-none content-header">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <h3 class="animated fadeInLeft text-primary">Designer Invoices</h3>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+            <button type="button" onclick="ShowCustomerModel(0);" class='btn btn-primary pull-right'>
+                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+
+                <div class="well">
+                    @using (Html.BeginForm("DesignerInvoice", "Invoice", FormMethod.Post, new { id = "SearchForm", name = "SearchForm" }))
+                    {
+                        <div class="form-inline">
+                            <div class="form-group ">
+                                <input id="SearchFrom" name="SearchFrom" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.SearchFrom).ToString("dd/MM/yyyy")" />
+                            </div>
+                            <div class="form-group">
+                                <input id="SearchTo" name="SearchTo" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.SearchTo).ToString("dd/MM/yyyy")" />
+                            </div>                                                  
+                            <div class="form-group">
+                                <label class="control-label" for="from_date">Search:</label>
+                                @Html.TextBoxFor(x => x.SearchText, new { @class = "form-control" })
+                            </div>
+                            <input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </div>
+                    }
+                </div>
+
+                <div class="responsive-table">
+                    @Html.MVCGrid("DesignerInvoices", new { hdnUID = Model.UID, brId = SuperAdmin ? 0 : PMS.Common.SessionManagement.SelectedBranchID, SearchFrom = Model.SearchFrom, SearchTo = Model.SearchTo, searchText = Model.SearchText })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divModel">
+    <div id="myModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg modal-content-left" style="width:1010px;">
+            <div class="modal-content" id="ModelForm">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ShowCustomerModel(obj) {
+        $("#ModelForm").html("");
+        $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+
+        $.ajax({
+            type: "POST",
+            url: "/Invoice/LoadAddEditDesignerInvoice", // the URL of the controller action method
+            data: {
+                Id: obj
+            },
+            success: function (result) {
+                $("#ModelForm").html(result);
+                $.loader('close');
+            },
+            error: function (req, status, error) {
+                // do something with error
+            }
+        });
+        $("#myModal").modal('show');
+    }
+
+
+    function SavePaymentForm(actiontype) {
+        var chval = true;
+        var form = $('#frmInvoice');
+        $.validator.unobtrusive.parse(form);
+
+        if ($('#frmInvoice').find("#is_tax").val() == 'true')
+        {
+            if (isNumber($('#frmInvoice').find('#tax').val()))
+            {
+                chval = true;
+            } else {
+                chval = false;
+                $('#frmInvoice').find("#tax").addClass("errorCls");
+            }
+        }
+
+        if (form.valid() && IsDecimal() && chval) {
+            var comp_id = $('#frmInvoice').find("#Company_id").val();
+
+            var jsonData = {
+                Id: $('#frmInvoice').find("#Id").val(),
+                Invoice_number: $('#frmInvoice').find("#Invoice_number").val(),
+                Designer_name: $('#frmInvoice').find("#Designer_name").val(),
+                Invoice_date: $('#frmInvoice').find("#Invoice_date").val(),
+                Contract_type: $('#frmInvoice').find("#Contract_type").val(),
+                Payment_terms: $('#frmInvoice').find("#Payment_terms").val(),
+                Company_id: comp_id,
+                is_tax: $('#frmInvoice').find("#is_tax").val(),
+                tax: $('#frmInvoice').find('#tax').val(),
+                invoice_details: [],
+                tax_amount: $('#frmInvoice').find('#tax_amount').val(),
+            };
+            $("#tblbody tr").each(function () {
+                var item_description = encodeURIComponent($(this).find(".item_description").val());
+                var item_amount = $(this).find(".item_amount").val();
+                var cno = encodeURIComponent($(this).find(".item_Contractnumber").val());
+                jsonData.invoice_details.push({
+                    invoice_id: 0,
+                    item_description: item_description,
+                    item_amount: item_amount,
+                    Contract_number: cno
+                });
+            });
+
+
+            var paymentReturnID = "";
+            $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
+
+            $.ajax({
+                type: "POST",
+                url: "/Invoice/SaveUpdateDesignerInvoice", // the URL of the controller action method
+                data: "invoiceobj=" + JSON.stringify(jsonData), // optional data
+                success: function (result) {
+                    $.loader('close');
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {
+                        $("#btnClosePayment").click();
+                        loadGrid();
+                        paymentReturnID = String(result.id);
+                        notify(result.msg, result.cls);
+                    }
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                    $.loader('close');
+                    notify(error, "error");
+                }
+            }).done(function () {
+                if (actiontype == "saveprint" && paymentReturnID != "") {
+                    setTimeout(function () {
+                        openModelpop('/Invoice/DesignerInvoicePrintPreview', 'id', paymentReturnID);
+                    }, 600);
+                }
+            });
+
+        }
+    }
+
+
+    function loadGrid() {
+        MVCGrid.reloadGrid('DesignerInvoices');
+    }
+
+
+    $(function () {
+        $("#SearchFrom").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#SearchFrom').removeAttr("data-val-date");
+
+        $("#SearchTo").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#SearchTo').removeAttr("data-val-date");
+    });
+
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    function IsDecimal() {
+        debugger;
+        var regexp = /^\d+(\.\d{1,2})?$/;
+        var ret = true;
+        //$(".amount").each(function () {
+        //    if (regexp.test($(this).val()) == false) {
+        //        $(this).addClass("errorCls");
+        //        ret = false;
+        //    }
+        //});
+
+        $(".item_Contractnumber").each(function () {
+            if ($(this).val() == "") {
+                $(this).addClass("errorCls");
+                ret = false;
+            }
+        });
+
+        return ret;
+    }
+
+</script>
+

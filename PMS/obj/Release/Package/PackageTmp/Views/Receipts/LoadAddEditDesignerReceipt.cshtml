@@ -1,0 +1,288 @@
+﻿@model PMS.Models.DesignerReceiptsViewModel
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Add/Edit Designer Receipt</h4>
+</div>
+<input type="hidden" id="receiptID" name="receiptID" value="@Model.id" />
+
+<div class="modal-body">
+    <form class="form-horizontal" id="frmReceipt" name="frmReceipt">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="name">Receipt Date:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.receipt_date, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "2", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(o => o.receipt_date, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Mode of Payment:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.mode_of_payment_id, Model.mode_of_paymentList, new { @class = "form-control", @tabindex = "3" })
+                        @Html.ValidationMessageFor(o => o.mode_of_payment_id, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="pwd">Select Designer:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.designer_name, Model.designer_list, new { @class = "form-control", @tabindex = "3", onchange = "GetInvoiceListByDesigner();" })
+                        @Html.ValidationMessageFor(o => o.designer_name, "", new { @class = "text-error" })
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Bank:</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(o => o.bank_id, Model.bankList, new { @class = "form-control", @tabindex = "4" })
+                        <span class="text-error bankvalidation field-validation-error" style="display:none;" data-valmsg-replace="true"><span for="bank_validation" class="">Please select bank.</span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Cheque Details:</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(o => o.cheque_details, new { @class = "form-control", @tabindex = "5" })
+                        <span class="text-error chequenumbervalidation field-validation-error" style="display:none;" data-valmsg-replace="true"><span for="cheque_number" class="">Please enter cheque number.</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="email">Remarks:</label>
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(o => o.remarks, new { @class = "form-control", @tabindex = "10" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <table class="table table-responsive table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="30%">Invoice Number</th>
+                            <th width="20%">Invoice Amt with GST</th>
+                            <th width="15%">GST %</th>
+                            <th width="15%">GST Amt</th>
+                            <th width="15%">Amt</th>
+                            <th width="5%">
+                                <a href="javascript:void(0);" onclick="AddNew();"><i class="more-less glyphicon glyphicon-plus" style="color:#ffffff;"></i></a>
+                                <input type="hidden" id="maintainID" name="maintainID" value="@Model.receipt_details.Count()" />
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblbody">
+                        @{
+                            string gstper = Convert.ToString(PMS.Common.SessionManagement.BranchGST);
+
+                        }
+                        <input type="hidden" id="hdngst_percentage" name="hdngst_percentage" value="@gstper" />
+
+                        @if (Model.receipt_details.Count == 0)
+                        {
+                            <tr>
+                                <td><select id="invoice_id1" name="invoice_id1" class="ddl_invoice form-control"></select></td>
+                                <td><input id="payment_amount1" onblur="CalculateGSTTotalAmount('1')" name="payment_amount1" class="payment_amount form-control amount" /></td>
+                                <td><input id="gst_percentage1" onblur="CalculateGSTTotalAmount('1')" name="gst_percentage1" class="gst_percentage form-control amount" value="@gstper" /></td>
+                                <td><input id="gst_amount1" name="gst_amount1" class="gst_amount form-control amount" /></td>
+                                <td><input id="invoice_amount1" name="invoice_amount1" class="invoice_amount form-control amount" /></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            int i = 1;
+                            foreach (var reclist in Model.receipt_details)
+                            {
+                                <tr id="tr@(i)">
+
+                                    <td>@Html.DropDownList("item_invoice", new SelectList(Model.invoiceList, "Value", "Text", reclist.invoice_id), new { @id = String.Format("invoice_id{0}", i), @name = String.Format("invoice_id{0}", i), @class = "ddl_invoice form-control" })</td>
+                                    <td><input id="payment_amount@(i)" onblur="CalculateGSTTotalAmount(@(i));" name="payment_amount@(i)" class="payment_amount form-control amount" value="@reclist.total_amount" /></td>
+                                    <td><input id="gst_percentage@(i)" onblur="CalculateGSTTotalAmount(@(i));" name="gst_percentage@(i)" class="gst_percentage form-control amount" value="@reclist.gst_percentage" /></td>
+                                    <td><input id="gst_amount@(i)" name="gst_amount@(i)" class="gst_amount form-control amount" value="@reclist.gst_amount" /></td>
+                                    <td><input id="invoice_amount@(i)" name="invoice_amount@(i)" class="invoice_amount form-control amount" value="@reclist.amount" /></td>
+                                    <td><a href='javascript:void(0);' onclick=RemoveElement(@i)><i class='more-less glyphicon glyphicon-minus' style='color:#ff0000;'></i></a></td>
+                                </tr>
+                                i = i + 1;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-1">
+
+            </div>
+
+            <div class="col-md-7 pull-right">
+                <div class="form-group">
+                    <label class="control-label col-sm-8">Total Invoice Amount with GST:</label>
+                    <div class="col-sm-4">
+                        <b>$</b><label class="control-label" id="totalamount"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        @Html.HiddenFor(o => o.isactive)
+
+        @Html.HiddenFor(o => o.id)
+        @Html.HiddenFor(o => o.created_date)
+        @Html.HiddenFor(o => o.created_by)
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnSave" name="btnSave" type="button" class="btn btn-primary" onclick="SaveForm('');">Save</button>
+    <button id="btnSave" name="btnSave" type="button" class="btn btn-primary" onclick="SaveForm('saveprint');">Save & Print</button>
+    <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+
+    $( document ).ready(function() {
+        if($("#receiptID").val() == "0")
+        {
+            //GetDesignerInvoice(true);
+            GetInvoiceListByDesigner();
+        }
+
+    });
+
+    $(function () {
+        if (String($("#maintainID").val()) == "0") {
+            $("#maintainID").val("1");
+        }
+
+        $("#receipt_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
+        $('#receipt_date').removeAttr("data-val-date");
+
+        CalculateTotalAmtAfterDiscount();
+    });
+
+    function AddNew() {
+        var idval = $("#maintainID").val();
+
+        var idnum = parseInt(idval) + 1
+
+        var addnewHtML = "";
+        var gstpercentagevalue = String($("#hdngst_percentage").val());
+        addnewHtML = "<tr id='tr" + idnum + "'>";
+        addnewHtML = addnewHtML + "<td><select id='invoice_id" + idnum + "'  name='invoice_id" + idnum + "' class='ddl_invoice form-control'></select></td>";
+        addnewHtML = addnewHtML + "<td><input id='payment_amount" + idnum + "'  onblur='CalculateGSTTotalAmount(" + idnum + ");' name='payment_amount" + idnum + "' class='payment_amount form-control amount' /></td>";
+        addnewHtML = addnewHtML + "<td><input onblur='CalculateGSTTotalAmount(" + idnum + ");' id='gst_percentage" + idnum + "' name='gst_percentage" + idnum + "' value='" + gstpercentagevalue + "' class='gst_percentage form-control amount' /></td>";
+        addnewHtML = addnewHtML + "<td><input  id='gst_amount" + idnum + "' name='gst_amount" + idnum + "' class='gst_amount form-control amount' /></td>";
+        addnewHtML = addnewHtML + "<td><input id='invoice_amount" + idnum + "' name='invoice_amount" + idnum + "' class='invoice_amount form-control amount' /></td>";
+        addnewHtML = addnewHtML + "<td><a href='javascript:void(0);' onclick='RemoveElement(" + idnum + ")'><i class='more-less glyphicon glyphicon-minus' style='color:#ff0000;'></i></a></td></tr>";
+        $("#tblbody").append(addnewHtML);
+        addnewHtML = "";
+        $("#maintainID").val(idnum);
+        //GetDesignerInvoice(true);
+        GetInvoiceListByDesigner();
+        idnum = "";
+    }
+
+    function RemoveElement(idnum) {
+        $("#tr" + idnum).remove();
+        CalculateTotalAmtAfterDiscount();
+    }
+
+    function CalculateGSTTotalAmount(idctrl) {
+        var tolalamount = parseFloat($("#payment_amount" + idctrl + "").val());
+
+        var gPer = 0;
+        if ($("#gst_percentage" + idctrl + "").val() > 0) {
+            gPer = parseFloat($("#gst_percentage" + idctrl + "").val());
+        }
+
+        var gstp = parseFloat(gPer / 100) + 1;
+        if (String(tolalamount).length > 0 && String(gstp).length > 0) {
+            var CAmount = parseFloat(tolalamount / gstp).toFixed(2);
+            var GST = parseFloat(tolalamount - CAmount).toFixed(2);
+            if (String(GST) == "NaN") {
+                GST = "0.00";
+            }
+            if (String(CAmount) == "NaN") {
+                CAmount = "0.00";
+            }
+
+            $("#gst_amount" + idctrl + "").val(GST);
+            $("#invoice_amount" + idctrl + "").val(CAmount)
+        }
+        CalculateTotalAmtAfterDiscount();
+    }
+
+
+    function CalculateTotalAmtAfterDiscount() {
+        var totalamount = 0;
+        $(".payment_amount").each(function () {
+            totalamount = (parseFloat(totalamount) + parseFloat($(this).val()));
+
+        });
+        if (String(totalamount) == "NaN") {
+            totalamount = "0.00";
+        } else {
+            totalamount = String(parseFloat(totalamount).toFixed(2));
+        }
+        $("#totalamount").text(totalamount);
+    }
+
+    function GetDesignerInvoice(isAddNew) {
+        var _val = "";
+        var _txt = "";
+        if(isAddNew==false)
+        {
+            $(".ddl_invoice").each(function () {
+                $(this).html("");
+            });
+        }
+        $.getJSON("/Receipts/GetDesignerInvoice", function (response) {
+            $.each(response, function () {
+                _val = this.Value;
+                _txt = this.Text;
+
+                $(".ddl_invoice").each(function () {
+                    $(this).append($("<option />").val(_val).text(_txt));
+                });
+            });
+        });
+    }
+
+    function GetInvoiceListByDesigner(){
+        var _val = "";
+        var _txt = "";
+            $(".ddl_invoice").each(function () {
+                $(this).html("");
+            });
+            $.getJSON("/Receipts/DesignerInvoiceByDesignerName?designer_name=" + $("#designer_name").val() + "", function (response) {
+            $.each(response, function () {
+                _val = this.Value;
+                _txt = this.Text;
+
+                $(".ddl_invoice").each(function () {
+                    $(this).append($("<option />").val(_val).text(_txt));
+                });
+            });
+        });
+    }
+
+</script>
+
+<style>
+    .errorCls {
+        border: solid 1px #ff0000;
+    }
+</style>

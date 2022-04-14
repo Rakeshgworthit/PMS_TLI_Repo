@@ -1,0 +1,52 @@
+﻿@model List<PMS.Database.SSP_UserBranches_Result>
+@{
+    Layout = null;
+}
+
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>Company</th>
+            <th>Branch</th>
+            <th>Status</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count > 0)
+        {
+            foreach (var items in Model)
+            {
+            <tr>
+                <td>@items.company_name</td>
+                <td>@items.branch_name</td>
+                <td>
+                    @if (items.isactive)
+                    {
+                        <button class="label label-primary" onclick="ChangeStatus(@items.Id);" title="Active">
+                            <i class="fa fa-check" aria-hidden="true" style="font-size:18px;"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="label label-danger" onclick="ChangeStatus(@items.Id);" title="In-active"><i class="fa fa-ban fa-2x"></i></button>
+                    }
+</td>
+                <td class="text-right">
+                    <button class="label label-primary" onclick="RemoveBranch(@items.Id);" title="Remove"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>                    
+                </td>
+            </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">
+                    <p class="text-primary text-center">                        
+                        <strong>No record found</strong>
+                    </p>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
