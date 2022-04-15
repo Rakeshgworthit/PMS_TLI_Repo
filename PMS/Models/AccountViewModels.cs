@@ -126,7 +126,7 @@ namespace PMS.Models
         [Required(ErrorMessage = "Please select company")]
         public Int32 company_id { get; set; }
 
-        public Int32 SalemanId { get; set; }
+        public Int32 SalesmanId { get; set; }
 
         public List<System.Web.Mvc.SelectListItem> CompanyList { get; set; }
     }

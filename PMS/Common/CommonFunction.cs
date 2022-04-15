@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Reflection;
 using PMS.Database;
 using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
 
 namespace PMS.Common
 {
@@ -1117,26 +1119,72 @@ namespace PMS.Common
             return objList;
         }
 
-        public static bool IsSalesmanLogin(string UserId)
+        public static SuccessMessage UpdateSalemanUser(string UserId,string SalesmanId,string BranchId)
         {
-            bool IsSalesmanLogin = false;
-            try
-            {              
-                SqlConnection Conn = GetConnection();
-                SqlCommand Cmd = new SqlCommand();
+            SuccessMessage Success = new SuccessMessage();
+            SqlCommand Cmd;
 
-            }
-            catch(Exception ex)
+
+            using (SqlConnection Conn = GetConnection())
             {
-                throw ex;
-            }
-            return IsSalesmanLogin;
+                try
+                {
+                    Cmd = new SqlCommand("[dbo].[Usp_Save_SalesmenRole]", Conn);
+                    Cmd.CommandType = CommandType.StoredProcedure;
+                    Cmd.Parameters.AddWithValue("@Id", UserId);
+                    Cmd.Parameters.AddWithValue("@SalesmanId", SalesmanId);
+                    Cmd.Parameters.AddWithValue("@BranchId", BranchId);
 
+                    IDataReader ireader = Cmd.ExecuteReader();
+                    while (ireader.Read())
+                    {
+                        Success.Errormessage = ireader.GetString(0);
+                        Success.Result = ireader.GetInt32(1).ToString();
+                    }
+                    CloseConnection(Conn);                    
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return Success;
         }
+
+        public static int GetSalesmanIdByUser(string UserId)
+        {
+            SqlCommand Cmd;
+            int SalesmanId = 0;
+
+
+            using (SqlConnection Conn = GetConnection())
+            {
+                try
+                {
+                    Cmd = new SqlCommand("[dbo].[GetSalesManIdByUser]", Conn);
+                    Cmd.CommandType = CommandType.StoredProcedure;
+                    Cmd.Parameters.AddWithValue("@Id", UserId);
+                    IDataReader ireader = Cmd.ExecuteReader();
+                    while (ireader.Read())
+                    {
+                        SalesmanId = Convert.ToInt32(ireader.GetInt64(0));
+                    }
+                    CloseConnection(Conn);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return SalesmanId;
+        }
+
 
         public static SqlConnection GetConnection()
         {
-            SqlConnection Conn = new SqlConnection();
+            SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
             Conn.Open();
 
             return Conn;

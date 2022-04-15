@@ -261,8 +261,8 @@ else
                                                         @*<label class="control-label" for="from_date"><span class="data_inline_label">Supplier</span></label>*@
                                                         <!--<select name="SalesmenId" id="SalesmenId" style="width:200px !important" class="form-control">
     </select>-->
-                                                        @Html.DropDownListFor(o => o.SalemanId, Model.SalesmanList, new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(o => o.SalemanId, "", new { @class = "text-error" })
+                                                        @Html.DropDownListFor(o => o.SalesmanId, Model.SalesmanList, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(o => o.SalesmanId, "", new { @class = "text-error" })
                                                     </div>
                                                         
                                                     </div>
@@ -285,6 +285,7 @@ else
 
 <script>
     $(document).ready(function () {
+        debugger;
         if ($("#Id").val() == "") {
             $('a[data-toggle="tab"]').on('click', function () {
                 if ($(this).parent('li').hasClass('disabled')) {
@@ -299,6 +300,10 @@ else
 
         if ($("#Id").val() != "") {
             LoadUserBranchs();
+        }
+        if ($("#userRole_3").is(":checked"))
+        {
+            $("#divSalesman").show();
         }
 
     });
@@ -416,6 +421,7 @@ else
     }
 
     function AddRole() {
+        debugger;
         var role = 0;
         var roleName = "";
         var mulSelect = 0
@@ -443,7 +449,8 @@ else
                 url: "/Account/UpdateRole",
                 data: {
                     Id: $("#Id").val(),
-                    roleId: roleName
+                    roleId: roleName,
+                    SalesmanId: $("#SalesmanId").val()
                 },
                 success: function (result) {
                     $.loader('close');
@@ -459,12 +466,12 @@ else
             });
         }
     }
+
     function UpdateRole(role, rolename) {
         if (role == "1") {
             if ($("#userRole_" + role).is(":checked")) {
                 $('#userRole_2').attr('checked', false);
-                $('#userRole_3').attr('checked', false);               
-                $('#SalemanId').val('');
+                $('#userRole_3').attr('checked', false);  
                 $('#divSalesman').hide();
             }
         }
@@ -472,7 +479,6 @@ else
             if ($("#userRole_" + role).is(":checked")) {
                 $('#userRole_1').attr('checked', false);
                 $('#userRole_3').attr('checked', false);
-                $('#SalemanId').val('');
                 $('#divSalesman').hide();
             }
         }

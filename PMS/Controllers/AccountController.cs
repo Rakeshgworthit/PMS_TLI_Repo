@@ -330,6 +330,7 @@ namespace PMS.Controllers
                     if (ud != null)
                     {
                         Common.CommonFunction.MergeObjects(objView, ud, true);
+                        objView.SalesmanId = CommonFunction.GetSalesmanIdByUser(Id);
                     }
 
                     Database.AspNetUser au = obj.AspNetUsers.Where(o => o.Id == Id).SingleOrDefault();
@@ -383,11 +384,14 @@ namespace PMS.Controllers
         }
         
 
-        public JsonResult UpdateRole(string Id,string roleId)
+        public JsonResult UpdateRole(string Id,string roleId,string SalesmanId)
         {
+            string BranchId = "";
+            SuccessMessage successMessage = new SuccessMessage();
             UserManager.RemoveFromRole(Id, "SuperAdmin");
             UserManager.RemoveFromRole(Id, "User");
             UserManager.AddToRole(Id, roleId);
+
             //if (roleValue)
             //{               
             //    UserManager.AddToRole(Id, roleId);
@@ -395,8 +399,24 @@ namespace PMS.Controllers
             //{
             //    UserManager.RemoveFromRole(Id, roleId);
             //}            
+            if (!string.IsNullOrEmpty(SalesmanId) && !string.IsNullOrEmpty(Id))
+            {
+                BranchId = Convert.ToString(Common.SessionManagement.SelectedBranchID);
+                successMessage = CommonFunction.UpdateSalemanUser(Id, SalesmanId, BranchId);
+            }
+            if (successMessage.Result == "1")
+            {
+                return Json(new { msg = successMessage.Errormessage, cls = "success" });
+            }
+            else if (successMessage.Result == "-1")
+            {
+                return Json(new { msg = successMessage.Errormessage, cls = "warning" });
+            }
+            else
+            {
+                return Json(new { msg = "The Salesman mapping is failed.", cls = "error" });
+            }
 
-            return Json(new { msg = "Record updated successfully.", cls = "success" });
         }
 
         public ActionResult UserBranches(string userId)
