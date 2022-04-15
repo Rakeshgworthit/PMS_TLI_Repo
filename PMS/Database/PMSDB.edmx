@@ -249,7 +249,7 @@
           <Property Name="bank_id" Type="int" />
           <Property Name="cheque_number" Type="varchar" MaxLength="15" />
           <Property Name="remarks" Type="varchar" MaxLength="7500" />
-          <Property Name="Pay_To" Type="varchar" MaxLength="100" />
+          <Property Name="Pay_To" Type="varchar" MaxLength="7500" />
         </EntityType>
         <EntityType Name="ExpenseCategory">
           <Key>
@@ -513,7 +513,7 @@
           <Property Name="tax_amount" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'TLI_SG.dbo.tbl_invoice_items' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'PMS_TLI_210903.dbo.tbl_invoice_items' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_invoice_items">
           <Key>
             <PropertyRef Name="invoice_id" />
@@ -1107,12 +1107,6 @@ warning 6002: The table/view 'TLI_SG.dbo.tbl_invoice_items' does not have a prim
         <Function Name="SSP_UsersRolesById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="Usp_Save_SalesmenRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Id" Type="varchar" Mode="In" />
-          <Parameter Name="SalesmanId" Type="bigint" Mode="In" />
-          <Parameter Name="BranchId" Type="bigint" Mode="In" />
-          <Parameter Name="SalesmanName" Type="nvarchar" Mode="In" />
-        </Function>
         <EntityContainer Name="PMSModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="additions_omissions" EntityType="Self.additions_omissions" Schema="dbo" store:Type="Tables" />
@@ -1676,12 +1670,6 @@ warning 6002: The table/view 'TLI_SG.dbo.tbl_invoice_items' does not have a prim
           <FunctionImport Name="SSP_SupplierPaymentAndAssignedInvoices" ReturnType="Collection(PMSModel.SSP_SupplierPaymentAndAssignedInvoices_Result)">
           <Parameter Name="projectId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="Usp_Save_SalesmenRole" ReturnType="Collection(PMSModel.Usp_Save_SalesmenRole_Result)">
-            <Parameter Name="Id" Mode="In" Type="String" />
-            <Parameter Name="SalesmanId" Mode="In" Type="Int64" />
-            <Parameter Name="BranchId" Mode="In" Type="Int64" />
-            <Parameter Name="SalesmanName" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -1907,7 +1895,7 @@ warning 6002: The table/view 'TLI_SG.dbo.tbl_invoice_items' does not have a prim
           <Property Name="bank_id" Type="Int32" />
           <Property Name="cheque_number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="remarks" Type="String" MaxLength="7500" FixedLength="false" Unicode="false" />
-          <Property Name="Pay_To" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Pay_To" Type="String" MaxLength="7500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ExpenseCategory">
           <Key>
@@ -3030,10 +3018,6 @@ warning 6002: The table/view 'TLI_SG.dbo.tbl_invoice_items' does not have a prim
           <Property Type="Decimal" Name="Gst" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="AgreedAmountWithoutGst" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="AgreedAmount" Nullable="false" Precision="18" Scale="2" />
-        </ComplexType>
-        <ComplexType Name="Usp_Save_SalesmenRole_Result">
-          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="2048" />
-          <Property Type="Int32" Name="ReturnCode" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4606,14 +4590,6 @@ warning 6002: The table/view 'TLI_SG.dbo.tbl_invoice_items' does not have a prim
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Usp_Save_SalesmenRole" FunctionName="PMSModel.Store.Usp_Save_SalesmenRole">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="PMSModel.Usp_Save_SalesmenRole_Result">
-                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
-                <ScalarProperty Name="ReturnCode" ColumnName="ReturnCode" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -4628,8 +4604,8 @@ warning 6002: The table/view 'TLI_SG.dbo.tbl_invoice_items' does not have a prim
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

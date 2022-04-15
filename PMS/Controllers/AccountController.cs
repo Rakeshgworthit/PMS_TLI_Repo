@@ -475,7 +475,7 @@ namespace PMS.Controllers
 
             using (Database.PMSEntities objDB = new Database.PMSEntities())
             {
-                objDB.(Convert.ToInt32(Id));
+                //objDB.(Convert.ToInt32(Id));
 
             }
             return _SuccessMessage;

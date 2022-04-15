@@ -1566,25 +1566,25 @@ namespace PMS.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SSP_SupplierPaymentAndAssignedInvoices_Result>("SSP_SupplierPaymentAndAssignedInvoices", projectIdParameter);
         }
     
-        public virtual ObjectResult<Usp_Save_SalesmenRole_Result> Usp_Save_SalesmenRole(string id, Nullable<long> salesmanId, Nullable<long> branchId, string salesmanName)
-        {
-            var idParameter = id != null ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(string));
+        //public virtual ObjectResult<Usp_Save_SalesmenRole_Result> Usp_Save_SalesmenRole(string id, Nullable<long> salesmanId, Nullable<long> branchId, string salesmanName)
+        //{
+        //    var idParameter = id != null ?
+        //        new ObjectParameter("Id", id) :
+        //        new ObjectParameter("Id", typeof(string));
     
-            var salesmanIdParameter = salesmanId.HasValue ?
-                new ObjectParameter("SalesmanId", salesmanId) :
-                new ObjectParameter("SalesmanId", typeof(long));
+        //    var salesmanIdParameter = salesmanId.HasValue ?
+        //        new ObjectParameter("SalesmanId", salesmanId) :
+        //        new ObjectParameter("SalesmanId", typeof(long));
     
-            var branchIdParameter = branchId.HasValue ?
-                new ObjectParameter("BranchId", branchId) :
-                new ObjectParameter("BranchId", typeof(long));
+        //    var branchIdParameter = branchId.HasValue ?
+        //        new ObjectParameter("BranchId", branchId) :
+        //        new ObjectParameter("BranchId", typeof(long));
     
-            var salesmanNameParameter = salesmanName != null ?
-                new ObjectParameter("SalesmanName", salesmanName) :
-                new ObjectParameter("SalesmanName", typeof(string));
+        //    var salesmanNameParameter = salesmanName != null ?
+        //        new ObjectParameter("SalesmanName", salesmanName) :
+        //        new ObjectParameter("SalesmanName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Usp_Save_SalesmenRole_Result>("Usp_Save_SalesmenRole", idParameter, salesmanIdParameter, branchIdParameter, salesmanNameParameter);
-        }
+        //    return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Usp_Save_SalesmenRole_Result>("Usp_Save_SalesmenRole", idParameter, salesmanIdParameter, branchIdParameter, salesmanNameParameter);
+        //}
     }
 }
