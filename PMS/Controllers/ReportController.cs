@@ -23,6 +23,10 @@ namespace PMS.Controllers
         {
             string uid = User.Identity.GetUserId();
             List<SelectListItem> branchList = new List<SelectListItem>();
+            if (User.IsInRole("Salesman"))
+            {
+                objView.SalesmenId = Common.CommonFunction.GetSalesmanIdByUser(uid);
+            }
             if (User.IsInRole("SuperAdmin"))
             {
                 uid = "";
@@ -563,7 +567,10 @@ namespace PMS.Controllers
                 // objView.ProjectList = CommonFunction.UserProjectList(uid);
             }
             objView.Uid = uid;
-
+            if (User.IsInRole("Salesman"))
+            {
+                objView.SalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.Uid);
+            }
 
             DateTime now = DateTime.Now;
             //var startDate = new DateTime(now.Year, now.Month, 1);
@@ -1312,6 +1319,10 @@ namespace PMS.Controllers
             }
 
             objView.Uid = uid;
+            if (User.IsInRole("Salesman"))
+            {
+                objView.SalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.Uid);
+            }
             objView.YearList = CommonFunction.YearList();
             if (objView.ReportYear == 0)
             {

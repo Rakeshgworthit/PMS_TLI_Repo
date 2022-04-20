@@ -10,11 +10,14 @@
         <div class="col-md-6">
             <h3 class="animated fadeInLeft text-primary">Contracts</h3>
         </div>
-        <div class="col-md-6" style="margin-top:10px;">
-            <button type="button" onclick="openModelpop('/Projects/_LoadProject','id',0);" class='btn btn-primary pull-right'>
-                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
-            </button>
-        </div>
+        @if (!User.IsInRole("Salesman"))
+        {
+            <div class="col-md-6" style="margin-top:10px;">
+                <button type="<button></button>" onclick="openModelpop('/Projects/_LoadProject','id',0);" class='btn btn-primary pull-right'>
+                    <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+                </button>
+            </div>
+        }
     </div>
 </div>
 <div class="col-md-12 padding-0">

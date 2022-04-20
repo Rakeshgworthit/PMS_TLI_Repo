@@ -42,6 +42,11 @@ namespace PMS.Controllers
                 objView.UID = User.Identity.GetUserId();
                // branchList = Common.CommonFunction.UserBranchList(objView.UID);
             }
+            if (User.IsInRole("Salesman"))
+            {
+                objView.ProjectSalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);
+                //branchList = Common.CommonFunction.BranchList();
+            }
             //branchList.Insert(0, new SelectListItem { Text = "Please Select", Value = "0" });
             // objView.BranchList = branchList;
 
@@ -179,6 +184,10 @@ namespace PMS.Controllers
             else
             {
                 objView.UID = User.Identity.GetUserId();
+            }
+            if (User.IsInRole("Salesman"))
+            {
+                objView.ProjectSalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);
             }
 
             DateTime now = DateTime.Now;

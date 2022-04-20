@@ -41,7 +41,10 @@ namespace PMS.Controllers
             {
                 objView.UID = User.Identity.GetUserId();
             }
-
+            if (User.IsInRole("Salesman"))
+            {
+                objView.SearchSales_person = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);
+            }
             DateTime now = DateTime.Now;
             var CurrentstartDate = new DateTime(now.Year, now.Month, 1);
             var endDate = CurrentstartDate.AddMonths(1).AddDays(-1);
