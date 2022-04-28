@@ -1,0 +1,117 @@
+﻿@model PMS.Models.ProjectDocumentViewModel
+@{
+    Layout = null;
+}
+<link rel="stylesheet" type="text/css" href="/Content/css/bootstrap.min.css">
+<!-- plugins -->
+<link rel="stylesheet" type="text/css" href="/Content/css/plugins/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="/Content/css/plugins/simple-line-icons.css" />
+<link rel="stylesheet" type="text/css" href="/Content/css/plugins/animate.min.css" />
+<link rel="stylesheet" href="~/Content/css/jquery-ui.css">
+<link href="/Content/css/style.css" rel="stylesheet">
+<script src="/Content/js/jquery.min.js"></script>
+<script src="/Content/js/jquery.ui.min.js"></script>
+
+
+<div class="container" style="width:850px;">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="animated fadeInLeft text-primary">Contract Document</h4>
+            <form class="form-horizontal" id="frmAddJob" name="frmAddJob" method="post" enctype="multipart/form-data" action="/Projects/SaveDocument">
+                <table class="table">
+                    <tr>
+                        <td><strong>Select Document</strong></td>
+                        <td><input type="file" id="FileName" name="FileName" />
+                        <input type="hidden" id="project_id" name="project_id" value="@Model.project_id" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Description</strong></td>
+                        <td><textarea id="file_desc" name="file_desc" rows="3" cols="40"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" id="btn_submit" name="btn_submit" value="Submit" class="btn btn-primary" />
+                            <input type="button" id="TB_closeWindowButton" name="TB_closeWindowButton" value="Cancel" class="btn btn-danger" onclick="self.close();" />
+                        </td>
+                    </tr>
+                </table>
+                </form>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Uploaded By</th>
+                            <th>Uploaded On</th>
+                            <th>Description</th>
+                            <th></th><th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @if (Model.project_document_list.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="4"><p class="alert alert-info" role="alert">Record Not Found.</p></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var pdlist in Model.project_document_list)
+                                {
+                                    if ((pdlist.Uploaded_By_Name)!=null)
+                                    {
+                                        <tr>                                            
+                                            <td>@pdlist.Uploaded_By_Name</td>
+                                            <td>@pdlist.uploaded_on.ToString("MM/dd/yyyy")</td>
+                                            <td>@Html.Raw(pdlist.file_desc)</td>                                              
+                                            <td><a target="_blank" title="View document" href="@pdlist.document_path/@pdlist.file_name">View</a></td>
+                                            <td><a target="_blank" title="Delete document" onclick="deletedocument(@pdlist.document_id,@pdlist.project_id, '@pdlist.file_name', '@pdlist.document_path')" href="Javascript:void(2)">Delete</a></td>
+                                        </tr>
+                                    }
+                                }
+
+                            }
+
+                        
+                        
+                    </tbody>
+                </table>
+</div>
+    </div>
+</div>
+
+<style>
+    body {
+    background:#fff!important;
+    
+    }
+    .container {
+        font-size: 12px;
+    }
+</style>
+
+<script>
+    function deletedocument(docid, project_id,FileName,FilePath) {
+        debugger;
+        var r = confirm("Are you sure want to delete this record?");
+        if (r == true) {
+            $.ajax({
+                url: '/Projects/DeleteDocument',
+                type: "post",
+                data: {
+                    Id: docid,
+                    FilePath: FilePath,
+                    FileName: FileName,
+                    project_id: project_id
+                },
+                success: function (data) {
+                    debugger;
+                    location.reload();
+
+                }
+            });
+        }
+    }
+
+</script>

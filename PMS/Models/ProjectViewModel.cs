@@ -141,4 +141,38 @@ namespace PMS.Models
         public string SearchText { get; set; }
     }
 
+    public class ProjectDocumentViewModel
+    {
+        public long project_id { get; set; }
+        public List<project_document_list> project_document_list { get; set; }
+
+        public override string ToString()
+        {
+            return $"{{{nameof(project_id)}={project_id.ToString()}, {nameof(project_document_list)}={project_document_list}}}";
+        }
+    }
+
+    public class project_document_list
+    {
+        public long document_id { get; set; }
+        public Int16  Id { get; set; }
+        public long project_id { get; set; }
+        public Guid uploaded_by { get; set; }
+        public System.DateTime uploaded_on { get; set; }
+        public Int32 Uploaded_By_Name { get; set; }
+        public string file_name { get; set; }
+        public string file_desc { get; set; }
+
+        public string document_path { get; set; }
+       
+        public string project_number { get; set; }
+
+
+        public override string ToString()
+        {
+            return $"{{{nameof(Id)}={Id.ToString()}, {nameof(project_id)}={project_id.ToString()}, {nameof(uploaded_by)}={uploaded_by.ToString()}, {nameof(uploaded_on)}={uploaded_on.ToString()}, {nameof(Uploaded_By_Name)}={Uploaded_By_Name}, {nameof(file_name)}={file_name}, {nameof(file_desc)}={file_desc}}}";
+        }
+    }
+
+
 }

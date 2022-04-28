@@ -1,0 +1,55 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Approve Customer Payment</h4>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="name">Approval Comments:</label>
+            <div class="col-sm-8">
+                <input type="text" id="txtAppovalComments" style="width:550px" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    @if (@Model.id != 0)
+    {
+        <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="SaveForm();">Save</button>
+    }
+    else
+    {
+        <button id="btnSave" name="btnSave" type="submit" class="btn btn-primary" onclick="SaveForm();">Save</button>
+    }
+    <button id="btnClose" name="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+    function SaveForm() {
+        var prjid = @ViewBag.receiptID;
+        alert(prjid);
+            $.ajax({
+                type: "GET",
+                url: "/Invoice/UpdateApprovedStatus", // the URL of the controller action method
+                data: {
+                    projectId: prjid
+                },
+                success: function (result) {
+                    debugger;
+                    notify(result.msg, "success");
+                    //$("#remarks").html("Receipt - " + result);
+                },
+                error: function (req, status, error) {
+
+                }
+            });
+        }
+
+</script>

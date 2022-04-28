@@ -62,7 +62,14 @@
                 </div>
                 <div class="responsive-table">
                     <input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
-                    @Html.MVCGrid("MyProjects", new { hdnUID = Model.UID, brId = PMS.Common.SessionManagement.SelectedBranchID, fromdate = Model.from_date, todate = Model.to_date, ProjectStatusId = Model.ProjectStatusId, ProjectSalesmenId = Convert.ToInt32(Model.ProjectSalesmenId), searchText = Model.SearchText })
+                    @if (User.IsInRole("Salesman"))
+                    {
+                        @Html.MVCGrid("MyProjectsForSalesman", new { hdnUID = Model.UID, brId = PMS.Common.SessionManagement.SelectedBranchID, fromdate = Model.from_date, todate = Model.to_date, ProjectStatusId = Model.ProjectStatusId, ProjectSalesmenId = Convert.ToInt32(Model.ProjectSalesmenId), searchText = Model.SearchText })
+                    }
+                    else
+                    {
+                        @Html.MVCGrid("MyProjects", new { hdnUID = Model.UID, brId = PMS.Common.SessionManagement.SelectedBranchID, fromdate = Model.from_date, todate = Model.to_date, ProjectStatusId = Model.ProjectStatusId, ProjectSalesmenId = Convert.ToInt32(Model.ProjectSalesmenId), searchText = Model.SearchText })
+                    }
                 </div>
             </div>
         </div>
@@ -191,6 +198,12 @@
             $("#customer_id").val(obj);
             GetCustomerInfo(obj)
         });
+    }
+
+    function UploadFile(id) {
+        debugger;
+        window.open("/Projects/ProjectDocument?id=" + id, 'targetWindow', 'toolbar=no,location=no, status=no, menubar=no, scrollbars=yes,resizable=yes,width=850,height=500');
+        //UploadFile
     }
 
 </script>

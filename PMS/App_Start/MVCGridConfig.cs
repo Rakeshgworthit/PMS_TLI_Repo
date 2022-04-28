@@ -170,7 +170,7 @@ namespace PMS
 
 
                    cols.Add("ViewLink").WithSorting(false).WithHeaderText("").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1")
-                    .WithValueExpression((p, c) => p.id.ToString()).WithValueTemplate("<a title='Edit' onclick=openModelpop('/Projects/_LoadProject','id',{Value}); class='btn-xs' title='Edit'><span class='glyphicon glyphicon-pencil'></span></a><a title='Cost' class='btn-xs' href='/Report/ProjectCostingReport?ProjectId={Value}' ><span class='glyphicon glyphicon-usd'></span></a><a title='Delete' onclick=DeleteConfirm('/Projects/DeleteProjectById','id',{Value}); class='btn-xs'><span class='glyphicon glyphicon-trash'></span></a>");
+                    .WithValueExpression((p, c) => p.id.ToString()).WithValueTemplate("<a title='Edit' onclick=openModelpop('/Projects/_LoadProject','id',{Value}); class='btn-xs' title='Edit'><span class='glyphicon glyphicon-pencil'></span></a><a title='Cost' class='btn-xs' href='/Report/ProjectCostingReport?ProjectId={Value}' ><span class='glyphicon glyphicon-usd'></span></a><a title='Delete' onclick=DeleteConfirm('/Projects/DeleteProjectById','id',{Value}); class='btn-xs'><span class='glyphicon glyphicon-trash'></span></a><a onclick=UploadFile({Value}); href='#' class='btn-xs' title='Contract Documents'><i class='fa fa-upload' aria-hidden='true'></i></a>");
 
 
                })
@@ -200,6 +200,59 @@ namespace PMS
                    };
                })
            );
+
+
+            MVCGridDefinitionTable.Add("MyProjectsForSalesman", new MVCGridBuilder<Database.SSP_Projects_Result>()
+              .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+              .WithPaging(true, 20)
+              .WithPageParameterNames("hdnUID", "brId", "fromdate", "todate", "ProjectStatusId", "ProjectSalesmenId", "searchText")
+              .AddColumns(cols =>
+              {
+                  cols.Add("project_number").WithHeaderText("Project Number").WithCellCssClassExpression(p => "col-sm-2")
+                  .WithSorting(true).WithValueExpression(p => p.project_number);
+                  cols.Add("project_name").WithHeaderText("Address/Site").WithCellCssClassExpression(p => "col-sm-2")
+                     .WithSorting(true).WithValueExpression(i => i.project_name);
+                  cols.Add("contract_date").WithHeaderText("Contract Date").WithCellCssClassExpression(p => "col-sm-2")
+                      .WithSorting(true).WithValueExpression(i => i.contract_date);
+                  cols.Add("name1").WithHeaderText("Customer").WithCellCssClassExpression(p => "col-sm-1")
+                     .WithSorting(true).WithValueExpression(i => i.name1);
+                  cols.Add("salesmen_name").WithHeaderText("Salesmen").WithCellCssClassExpression(p => "col-sm-2")
+                     .WithSorting(true).WithValueExpression(i => i.salesmen_name);
+                  cols.Add("CreatedUpdated").WithHeaderText("Created/Updated").WithCellCssClassExpression(p => "col-sm-2")
+                    .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.CreatedUpdated);
+
+
+                  cols.Add("ViewLink").WithSorting(false).WithHeaderText("").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1")
+                   .WithValueExpression((p, c) => p.id.ToString()).WithValueTemplate("<a title='Cost' class='btn-xs' href='/Report/ProjectCostingReport?ProjectId={Value}' ><span class='glyphicon glyphicon-usd'></span></a><a  href='#' class='btn-xs' title='Contract Documents'><i class='fa fa-upload' aria-hidden='true'></i></a>");
+
+
+              })
+              .WithSorting(true, "contract_date")
+              .WithRetrieveDataMethod((context) =>
+              {
+                  var options = context.QueryOptions;
+                  int totalRecords = 0;
+                  IProject repo = new ProjectService();
+                  string sortColumn = options.GetSortColumnData<string>();
+                  string uid = context.QueryOptions.GetPageParameterString("hdnUID");
+                  DateTime fromdate = Convert.ToDateTime(context.QueryOptions.GetPageParameterString("fromdate"));
+                  DateTime todate = Convert.ToDateTime(context.QueryOptions.GetPageParameterString("todate"));
+                  Int32 projStatus = Convert.ToInt32(context.QueryOptions.GetPageParameterString("ProjectStatusId"));
+                  Int32 salesMenId = Convert.ToInt32(context.QueryOptions.GetPageParameterString("ProjectSalesmenId"));
+                  string globalSearch = options.GetPageParameterString("searchText");
+                  var items = repo.GetMyProjects(uid, Convert.ToInt32(context.QueryOptions.GetPageParameterString("brId")), Convert.ToInt32(options.GetLimitOffset()) + 1, Convert.ToInt32(options.GetLimitRowcount()), sortColumn, options.SortDirection.ToString(), fromdate, todate, projStatus, salesMenId, globalSearch);
+                  if (items != null && items.Count > 0)
+                  {
+                      totalRecords = Convert.ToInt32(items[0].TotalRecords);
+                  }
+
+                  return new QueryResult<Database.SSP_Projects_Result>()
+                  {
+                      Items = items,
+                      TotalRecords = totalRecords
+                  };
+              })
+          );
             //********************End My Project Grid **********************************************//
 
             // ******************* Start My Project Additions Grid   ***********************************************//
@@ -784,7 +837,8 @@ namespace PMS
                    cols.Add("invoice_date").WithHeaderText("Date").WithCellCssClassExpression(p => "col-sm-2").WithSorting(true).WithValueExpression(p => p.Invoice_date);
                    cols.Add("supplier_name").WithHeaderText("Supplier").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.supplier_name);
                    //cols.Add("company_name").WithHeaderText("Company").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.company_name);
-
+                   cols.Add("ActionLink").WithSorting(false).WithHeaderText("Approve").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1").WithValueExpression((p, c) => p.Id.ToString())
+                    .WithValueTemplate("<a onclick=openModelpop('/Invoice/LoadApproval','id',{Value}); class='btn-xs' title='Approve'><span class='glyphicon glyphicon-pencil'></span></a>");
                    //cols.Add("CreatedUpdated").WithHeaderText("Created/Updated").WithCellCssClassExpression(p => "col-sm-5")
                    //     .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.CreatedUpdated);
                    cols.Add("SupplierInvoiceItems").WithHeaderText("Invoice/Items").WithCellCssClassExpression(p => "col-sm-5")

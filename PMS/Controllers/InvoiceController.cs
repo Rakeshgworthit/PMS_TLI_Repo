@@ -635,7 +635,6 @@ namespace PMS.Controllers
         }
         #endregion
 
-
         #region Designer Invoice
 
         public ActionResult DesignerInvoice(InvoiceViewModel objView)
@@ -826,6 +825,52 @@ namespace PMS.Controllers
             objViewprint.Designer_Invoice_Items = invItems;
 
             return View(objViewprint);
+        }
+        #endregion
+
+        #region Verification
+
+        public ActionResult LoadApproval(Int32 Id)
+        {
+            ViewBag.receiptID = Id;
+            string uid = User.Identity.GetUserId();
+            Int32 branchid = Common.SessionManagement.SelectedBranchID;
+            ReceiptsViewModel objView = new ReceiptsViewModel();
+            Int32 projectId = 0;
+            try
+            {
+                //objView.bankList = Common.CommonFunction.BankList();
+                //objView.mode_of_paymentList = Common.CommonFunction.ModeofPaymentList();
+                //if (User.IsInRole("SuperAdmin"))
+                //{
+                //    objView.branchList = Common.CommonFunction.BranchList();
+                //    objView.projectList = Common.CommonFunction.UserProjectListWithID("00000000-0000-0000-0000-000000000000", projectId);
+                //}
+                //else
+                //{
+                //    objView.branchList = Common.CommonFunction.UserBranchList(uid);
+                //    objView.projectList = Common.CommonFunction.UserProjectListWithID(uid, projectId);
+                //}
+                //objView.IsActiveList = Common.CommonFunction.StatusList();
+                return View(objView);
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                     
+                //ExceptionLog.WriteLog(ex, $"Method Name: LoadAddEdit, Parameter : Id={Id}");
+                return null;
+            }
+            finally
+            {
+                objView = null;
+            }
+        }
+
+        public JsonResult UpdateApprovedStatus(string projectId)
+        {
+
+            return Json(new { msg = "Receipt Approved successfully.", cls = "success" });
         }
         #endregion
     }

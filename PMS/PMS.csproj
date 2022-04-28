@@ -1108,11 +1108,14 @@
     <Content Include="Views\Report\DesignerInvoiceReport.cshtml" />
     <Content Include="Views\Receipts\LoadSMS.cshtml" />
     <Content Include="Views\Payments\LoadSMS.cshtml" />
+    <Content Include="Views\Projects\ProjectDocument.cshtml" />
+    <Content Include="Views\Invoice\LoadApproval.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\media\" />
     <Folder Include="Repository\Infrastructure\NewFolder1\" />
+    <Folder Include="UploadDocuments\Projects\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

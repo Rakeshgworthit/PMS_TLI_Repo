@@ -9,6 +9,11 @@ using PMS.Repository.DataService;
 using PMS.Repository.Infrastructure;
 using PMS.Database;
 using PMS.Common;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
+using System.IO;
+
 namespace PMS.Controllers
 {
     [Authorize]
@@ -361,6 +366,164 @@ namespace PMS.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult ProjectDocument(Int32 id, bool viewdoc = false)
+        {
+            ProjectDocumentViewModel objView = new ProjectDocumentViewModel();
+            List<project_document_list> objPDList = new List<project_document_list>();
+            SqlCommand Cmd;
+            try
+            {
+                using (var Conn = Common.CommonFunction.GetConnection())
+                {
+                    Cmd = new SqlCommand("Get_Documents_For_Project", Conn);
+                    Cmd.CommandType = CommandType.StoredProcedure;
+                    Cmd.Parameters.AddWithValue("@projectid", id);                    
+                    IDataReader Ireader = Cmd.ExecuteReader();
+                    while (Ireader.Read())
+                    {
+                        project_document_list _GetQuotationDeatils = new project_document_list();
+                        _GetQuotationDeatils.document_id = Ireader.GetInt64(0);
+                        _GetQuotationDeatils.document_path = Ireader.GetString(1);
+                        _GetQuotationDeatils.file_name = Ireader.GetString(2);
+                        // _GetQuotationDeatils.document_name = Ireader.GetString(CommonColumns.document_name);
+                        _GetQuotationDeatils.project_number = Ireader.GetString(3);
+                        _GetQuotationDeatils.project_id = Ireader.GetInt64(4);
+                        _GetQuotationDeatils.uploaded_on = Ireader.GetDateTime(5);
+                        _GetQuotationDeatils.Uploaded_By_Name = Ireader.GetInt32(6);
+                        _GetQuotationDeatils.Id = Ireader.GetInt16(7);
+
+                        objPDList.Add(_GetQuotationDeatils);
+                    }
+                    Common.CommonFunction.CloseConnection(Conn);
+                }
+                if (objView == null)
+                {
+                    objView.project_id = id;
+                }
+                else
+                {
+                    objView.project_document_list = objPDList;
+                    objView.project_id = id;
+                }
+                if (viewdoc == true)
+                {
+                    return View("LoadDocuments", objView);
+                }
+                else
+                {
+                    return View(objView);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                return null;
+            }
+            finally
+            {
+                objView = null;
+                objPDList = null;
+            }
+        }
+
+        public ActionResult SaveDocument(Int32 project_id, string file_desc)
+        {
+            string uid = User.Identity.GetUserId();
+            string fname = "";
+            string filename = "";
+            string extension = string.Empty;
+            string fileNameWithExt = string.Empty;
+            string filepathRoot = string.Empty;
+            string FilePath = ConfigurationManager.AppSettings["PhysicalPath"].ToString();
+            try
+            {
+                if (Request.Files.Count > 0)
+                {
+                    HttpPostedFileBase file = Request.Files[0] as HttpPostedFileBase;
+                    string fileName = file.FileName;
+                    fileNameWithExt = fileName;
+                    string doc_Path = "/UploadDocuments/" + "/Projects/" + project_id;
+                    string dirPath = FilePath + doc_Path;
+
+                    string UploadPath = "~/UploadDocuments/Projects/" + project_id ;
+                    if (!Directory.Exists(dirPath))
+                    {
+                        Directory.CreateDirectory(dirPath);
+                    }
+                    string addTimeStampToFileName = string.Empty;
+                    //if (file.ContentLength == 0)
+                    //   continue;
+                    if (file.ContentLength > 0)
+                    {
+                        //addTimeStampToFileName = string.Concat(Path.GetFileNameWithoutExtension(fileName), DateTime.Now.ToString("yyyyMMddHHmmssfff"), Path.GetExtension(file.FileName));
+                        filepathRoot = Path.Combine(HttpContext.Request.MapPath(UploadPath) + "/" + fileNameWithExt);
+                        extension = Path.GetExtension(file.FileName);
+                        file.SaveAs(filepathRoot);
+                    }                    
+                    using (var Conn = Common.CommonFunction.GetConnection())
+                    {
+                        SqlCommand cmd = new SqlCommand("Upsert_project_Document", Conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@DOCUMENT_NAME", fileName);
+                        cmd.Parameters.AddWithValue("@ACTIVITY_TYPE", 0);
+                        cmd.Parameters.AddWithValue("@SUB_ACTIVITY_TYPE", 0);
+                        cmd.Parameters.AddWithValue("@REMARKS", "");
+                        cmd.Parameters.AddWithValue("@ACTIVE_FLAG", 1);
+                        cmd.Parameters.AddWithValue("@CREATED_BY",1);
+                        cmd.Parameters.AddWithValue("@SUPER_ID", project_id);
+                        cmd.Parameters.AddWithValue("@ID", 11);
+                        cmd.Parameters.AddWithValue("@ID_TYPE", 6);
+                        cmd.Parameters.AddWithValue("@SUBDETAILS_ID", 0);
+                        cmd.Parameters.AddWithValue("@SUBSUBDETAILS_ID", 0);
+                        cmd.Parameters.AddWithValue("@FILE_TYPE", extension);
+                        cmd.Parameters.AddWithValue("@DOCUMENT_CONTENT_TYPE_ID", 0);
+                        cmd.Parameters.AddWithValue("@DOCUMENT_PATH ", doc_Path);
+                        cmd.Parameters.AddWithValue("@DOC_CONFIG_ID ", 1);
+                        cmd.Parameters.AddWithValue("@COMPANY_ID ", 1);
+                        cmd.Parameters.AddWithValue("@PROJECT_BUDGET_DETAILS_ID ", 0);
+                        cmd.ExecuteNonQuery();
+                        Common.CommonFunction.CloseConnection(Conn);
+                    }
+
+                }
+                return RedirectToAction("ProjectDocument", new { Id = project_id });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                return null;
+            }
+            finally
+            {
+            }
+        }
+
+
+        public void DeleteDocument(Int32 Id, string FilePath, string FileName,long project_id)
+        {
+            string EnroutePath = "~" + FilePath + '/' + FileName;
+            using (var Conn  = Common.CommonFunction.GetConnection())
+            {
+                try
+                {
+                    System.IO.File.Delete(Server.MapPath(EnroutePath));
+                    SqlCommand cmd = new SqlCommand("SSP_DeleteDocument", Conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@DocumentId", Id);
+                    cmd.Parameters.AddWithValue("@ProjectId", project_id);
+                    cmd.ExecuteNonQuery();
+                    Common.CommonFunction.CloseConnection(Conn);
+                }
+                catch (Exception ex)
+                {
+                    
+                }
+
+            }
+            // return RedirectToAction("ProjectDocument", new { Id = project_id });
+        }
+
 
     }
 }
