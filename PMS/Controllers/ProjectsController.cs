@@ -392,6 +392,7 @@ namespace PMS.Controllers
                         _GetQuotationDeatils.uploaded_on = Ireader.GetDateTime(5);
                         _GetQuotationDeatils.Uploaded_By_Name = Ireader.GetInt32(6);
                         _GetQuotationDeatils.Id = Ireader.GetInt16(7);
+                        _GetQuotationDeatils.file_desc = Ireader.GetString(8);
 
                         objPDList.Add(_GetQuotationDeatils);
                     }
@@ -468,7 +469,7 @@ namespace PMS.Controllers
                         cmd.Parameters.AddWithValue("@DOCUMENT_NAME", fileName);
                         cmd.Parameters.AddWithValue("@ACTIVITY_TYPE", 0);
                         cmd.Parameters.AddWithValue("@SUB_ACTIVITY_TYPE", 0);
-                        cmd.Parameters.AddWithValue("@REMARKS", "");
+                        cmd.Parameters.AddWithValue("@REMARKS", file_desc);
                         cmd.Parameters.AddWithValue("@ACTIVE_FLAG", 1);
                         cmd.Parameters.AddWithValue("@CREATED_BY",1);
                         cmd.Parameters.AddWithValue("@SUPER_ID", project_id);

@@ -223,7 +223,7 @@ namespace PMS
 
 
                   cols.Add("ViewLink").WithSorting(false).WithHeaderText("").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1")
-                   .WithValueExpression((p, c) => p.id.ToString()).WithValueTemplate("<a title='Cost' class='btn-xs' href='/Report/ProjectCostingReport?ProjectId={Value}' ><span class='glyphicon glyphicon-usd'></span></a><a  href='#' class='btn-xs' title='Contract Documents'><i class='fa fa-upload' aria-hidden='true'></i></a>");
+                   .WithValueExpression((p, c) => p.id.ToString()).WithValueTemplate("<a title='Cost' class='btn-xs' href='/Report/ProjectCostingReport?ProjectId={Value}' ><span class='glyphicon glyphicon-usd'></span></a><a  onclick=UploadFile({Value});  href='#' class='btn-xs' title='Contract Documents'><i class='fa fa-upload' aria-hidden='true'></i></a>");
 
 
               })
