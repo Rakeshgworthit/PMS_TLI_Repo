@@ -252,13 +252,24 @@ else
                                                     <div class="form-group">
                                                         @foreach (var roles in Model.RoleList)
                                                         {
-                                                            <div class="checkbox">                                                               
-                                                                <label class="control-label"><input id="userRole_@roles.Id" name="userRole_@roles.Id" type="checkbox" onclick="UpdateRole('@roles.Id','@roles.Name');"  @if (roles.RoleId != "0") { <text> checked="checked" </text> } class="userRoles"> <strong>@roles.Name</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <div class="checkbox">
+                                                                <label class="control-label"><input id="userRole_@roles.Id" name="userRole_@roles.Id" type="checkbox" onclick="UpdateRole('@roles.Id','@roles.Name');" @if (roles.RoleId != "0") { <text> checked="checked" </text> } class="userRoles"> <strong>@roles.Name</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                             </div>
                                                         }
-                                                        <input type="button" id="btnAddRole" name="btnAddRole" class="btn btn-primary" value="Update" onclick="AddRole();" />
-                                                    </div>                                                  
-                                                </div>
+                                                        
+                                                    <div class="form-group" id="divSalesman" style="display:none">
+                                                        @*<label class="control-label" for="from_date"><span class="data_inline_label">Supplier</span></label>*@
+                                                        <!--<select name="SalesmenId" id="SalesmenId" style="width:200px !important" class="form-control">
+    </select>-->
+                                                        @Html.DropDownListFor(o => o.SalesmanId, Model.SalesmanList, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(o => o.SalesmanId, "", new { @class = "text-error" })
+                                                    </div>
+                                                        
+                                                    </div>
+                                                    <input type="button" id="btnAddRole" name="btnAddRole" class="btn btn-primary" value="Update" onclick="AddRole();" />
+
+                                                </div>                                                
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -274,6 +285,7 @@ else
 
 <script>
     $(document).ready(function () {
+        debugger;
         if ($("#Id").val() == "") {
             $('a[data-toggle="tab"]').on('click', function () {
                 if ($(this).parent('li').hasClass('disabled')) {
@@ -288,6 +300,10 @@ else
 
         if ($("#Id").val() != "") {
             LoadUserBranchs();
+        }
+        if ($("#userRole_3").is(":checked"))
+        {
+            $("#divSalesman").show();
         }
 
     });
@@ -405,14 +421,25 @@ else
     }
 
     function AddRole() {
+        debugger;
         var role = 0;
         var roleName = "";
+        var mulSelect = 0
         if ($("#userRole_1").is(":checked")) {           
             roleName = "SuperAdmin";
-        } else if ($("#userRole_2").is(":checked")) {           
-            roleName = "User";
+            mulSelect = 1;
         }
-
+        if ($("#userRole_2").is(":checked")) {
+            roleName = "User";
+            mulSelect = mulSelect + 1;
+        }
+        if ($("#userRole_3").is(":checked")) {
+            roleName = "Salesman";
+            mulSelect = mulSelect + 1;
+        }
+        if (mulSelect >= 2) {
+            notify("Please select only 1 role", "error");
+        }
         if (roleName == "") {
             notify("Please select a role", "error");
         } else {
@@ -422,7 +449,8 @@ else
                 url: "/Account/UpdateRole",
                 data: {
                     Id: $("#Id").val(),
-                    roleId: roleName
+                    roleId: roleName,
+                    SalesmanId: $("#SalesmanId").val()
                 },
                 success: function (result) {
                     $.loader('close');
@@ -438,14 +466,28 @@ else
             });
         }
     }
+
     function UpdateRole(role, rolename) {
         if (role == "1") {
             if ($("#userRole_" + role).is(":checked")) {
                 $('#userRole_2').attr('checked', false);
+                $('#userRole_3').attr('checked', false);  
+                $('#divSalesman').hide();
             }
-        } else if (role == "2") {
+        }
+        if (role == "2") {
             if ($("#userRole_" + role).is(":checked")) {
                 $('#userRole_1').attr('checked', false);
+                $('#userRole_3').attr('checked', false);
+                $('#divSalesman').hide();
+            }
+        }
+        if (role == "3") {
+            if ($("#userRole_" + role).is(":checked")) {
+                $('#userRole_1').attr('checked', false);
+                $('#userRole_2').attr('checked', false);
+                $('#divSalesman').show();
+               
             }
         }
     }

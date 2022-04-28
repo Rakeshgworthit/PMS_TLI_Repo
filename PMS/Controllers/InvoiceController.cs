@@ -830,28 +830,16 @@ namespace PMS.Controllers
 
         #region Verification
 
-        public ActionResult LoadApproval(Int32 Id)
+        public ActionResult LoadApproval(Int32 Id,string Amount)
         {
             ViewBag.receiptID = Id;
             string uid = User.Identity.GetUserId();
             Int32 branchid = Common.SessionManagement.SelectedBranchID;
-            ReceiptsViewModel objView = new ReceiptsViewModel();
+            InvoiceViewModel objView = new InvoiceViewModel();
+           
             Int32 projectId = 0;
             try
             {
-                //objView.bankList = Common.CommonFunction.BankList();
-                //objView.mode_of_paymentList = Common.CommonFunction.ModeofPaymentList();
-                //if (User.IsInRole("SuperAdmin"))
-                //{
-                //    objView.branchList = Common.CommonFunction.BranchList();
-                //    objView.projectList = Common.CommonFunction.UserProjectListWithID("00000000-0000-0000-0000-000000000000", projectId);
-                //}
-                //else
-                //{
-                //    objView.branchList = Common.CommonFunction.UserBranchList(uid);
-                //    objView.projectList = Common.CommonFunction.UserProjectListWithID(uid, projectId);
-                //}
-                //objView.IsActiveList = Common.CommonFunction.StatusList();
                 return View(objView);
             }
             catch (Exception ex)

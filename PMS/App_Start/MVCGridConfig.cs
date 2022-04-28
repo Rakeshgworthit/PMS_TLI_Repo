@@ -871,6 +871,49 @@ namespace PMS
                })
            );
 
+            MVCGridDefinitionTable.Add("SupplierInvoicesAdmin", new MVCGridBuilder<Database.SSP_SupplierInvoices_Result>()
+              .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+              .WithPaging(true, 20)
+              .WithPageParameterNames("hdnUID", "brId", "SearchFrom", "SearchTo", "SearchSupplier_id", "searchText")
+              .AddColumns(cols =>
+              {
+                  cols.Add("invoice_date").WithHeaderText("Date").WithCellCssClassExpression(p => "col-sm-2").WithSorting(true).WithValueExpression(p => p.Invoice_date);
+                  cols.Add("supplier_name").WithHeaderText("Supplier").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.supplier_name);
+                   //cols.Add("company_name").WithHeaderText("Company").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.company_name);
+                   cols.Add("ActionLink").WithSorting(false).WithHeaderText("Approve").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1").WithValueExpression((p, c) => p.Id.ToString())
+                   .WithValueTemplate("<a  class='btn-xs' title='Verify'><span class='glyphicon glyphicon-ok'></span></a>");
+                   //cols.Add("CreatedUpdated").WithHeaderText("Created/Updated").WithCellCssClassExpression(p => "col-sm-5")
+                   //     .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.CreatedUpdated);
+                   cols.Add("SupplierInvoiceItems").WithHeaderText("Invoice/Items").WithCellCssClassExpression(p => "col-sm-5")
+                       .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.SupplierInvoiceItems.Replace(";", "</br>").Replace("Invoice#", "<strong>Invoice#: </strong>").Replace("Amount", "<strong>Amount: </strong>").Replace("Site# ", "<strong>Site: </strong>").Replace("SalesPerson#", "<strong>Sales Person: </strong>"));
+                  cols.Add("ViewLink").WithSorting(false).WithHeaderText("").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-2")
+                   .WithValueExpression((p, c) => p.Id.ToString()).WithValueTemplate("<a onclick=ShowCustomerModel({Value}); class='btn-xs' title='Edit'><span class='glyphicon glyphicon-pencil'></span></a><a onclick=DeleteConfirm('/Invoice/Delete_SupplierInvoiceById','id',{Value});  class='btnDelete btn-xs' title='Delete'><span class='glyphicon glyphicon-trash'></span></a>"); //<a title='Print' onclick=openModelpop('/Invoice/PrintPreview','id',{Value}); class='btn-xs'><span class='glyphicon glyphicon-print'></span></a>
+               })
+              .WithSorting(true, "invoice_date")
+              .WithRetrieveDataMethod((context) =>
+              {
+                  var options = context.QueryOptions;
+                  int totalRecords = 0;
+                  SupplierInvoiceService repo = new SupplierInvoiceService();
+                  string sortColumn = options.GetSortColumnData<string>();
+                  string uid = context.QueryOptions.GetPageParameterString("hdnUID");
+                  string globalSearch = options.GetPageParameterString("searchText");
+                  DateTime SearchFrom = Convert.ToDateTime(context.QueryOptions.GetPageParameterString("SearchFrom"));
+                  DateTime SearchTo = Convert.ToDateTime(context.QueryOptions.GetPageParameterString("SearchTo"));
+                  var items = repo.SearchSupplierInvoice(uid, Convert.ToInt32(context.QueryOptions.GetPageParameterString("brId")), Convert.ToInt32(options.GetLimitOffset()) + 1, Convert.ToInt32(options.GetLimitRowcount()), sortColumn, options.SortDirection.ToString(), Convert.ToDateTime(context.QueryOptions.GetPageParameterString("SearchFrom")), Convert.ToDateTime(context.QueryOptions.GetPageParameterString("SearchTo")), Convert.ToInt32(context.QueryOptions.GetPageParameterString("SearchSupplier_id")), globalSearch);
+                  if (items != null && items.Count > 0)
+                  {
+                      totalRecords = Convert.ToInt32(items[0].TotalRecords);
+                  }
+
+                  return new QueryResult<Database.SSP_SupplierInvoices_Result>()
+                  {
+                      Items = items,
+                      TotalRecords = totalRecords
+                  };
+              })
+          );
+
             //********************End Supplier Invoice Grid **********************************************//
 
 

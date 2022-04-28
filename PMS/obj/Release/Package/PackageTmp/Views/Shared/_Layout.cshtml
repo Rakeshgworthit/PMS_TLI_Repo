@@ -115,71 +115,76 @@
                     <li><div class="left-bg"></div></li>
                     <li class="time">
                         @*<h1 class="animated fadeInLeft">21:00</h1>
-                        <p class="animated fadeInRight">Sat,October 1st 2029</p>*@
+            <p class="animated fadeInRight">Sat,October 1st 2029</p>*@
                         <a href="/Home?ReturnUrl=@HttpContext.Current.Request.RawUrl" title="Switch Company"><span class="fa-toggle-on fa"></span> Switch Company</a>
                     </li>
-                    <li class="ripple">
-                        <a class="tree-toggle nav-header">
-                            <span class="fa-home fa"></span> Admin
-                            <span class="fa-angle-right fa right-arrow text-right"></span>
-                        </a>
-                        <ul class="nav nav-list tree">                            
-                            @if (User.IsInRole("SuperAdmin"))
-                            {
-                                @*<li><a href="/Admin/company">Company</a></li>*@
-                                <li><a href="/Admin/Branches">Company</a></li>
-                                <li><a href="/Admin/Banks">Banks</a></li>
-                                <li><a href="/Admin/Expensecategory">Expense Category</a></li>
-                                <li><a href="/Account/Users">Users</a></li>                                
-                            }
-                            <li><a href="/Admin/Salesmen">Salesmen</a></li>
-                            <li><a href="/Customer">Customer</a></li>
-                            <li><a href="/Supplier/">Supplier</a></li>
+                    @if (!User.IsInRole("Salesman"))
+                    {
+                        <li class="ripple">
+                            <a class="tree-toggle nav-header">
+                                <span class="fa-home fa"></span> Admin
+                                <span class="fa-angle-right fa right-arrow text-right"></span>
+                            </a>
+                            <ul class="nav nav-list tree">
+                                @if (User.IsInRole("SuperAdmin"))
+                                {
+                                    @*<li><a href="/Admin/company">Company</a></li>*@
+                                    <li><a href="/Admin/Branches">Company</a></li>
+                                    <li><a href="/Admin/Banks">Banks</a></li>
+                                    <li><a href="/Admin/Expensecategory">Expense Category</a></li>
+                                    <li><a href="/Account/Users">Users</a></li>
 
-                            <li><a href="/Loan/">Loan</a></li>
+                                }
+                                <li><a href="/Admin/Salesmen">Salesmen</a></li>
+                                <li><a href="/Customer">Customer</a></li>
+                                <li><a href="/Supplier/">Supplier</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="ripple">
-                        <a class="tree-toggle nav-header">
-                            <span class="fa-diamond fa"></span> Manage Projects
-                            <span class="fa-angle-right fa right-arrow text-right"></span>
-                        </a>
-                        <ul class="nav nav-list tree">
-                            <li><a href="/Projects">Contracts</a></li>
-                            <li><a href="/Projects/Additions">Additions & Omissions</a></li>
-                            <li><a href="/Invoice">Customer Invoice</a></li>
-                            <li><a href="/Receipts">Customer Payments</a></li>
-                            <li><a href="/Invoice/SupplierInvoice">Supplier Invoice</a></li>
-                            <li><a href="/Payments">Supplier Payments</a></li>
-                            @*<li><a href="/Invoice/DesignerInvoice">Designer Invoice</a></li>
-                            <li><a href="/Receipts/DesignerReceipts">Designer Receipts</a></li>*@
-                            <li><a href="/Expense">Expense</a></li>
-                        </ul>
-                    </li>    
-                    <li class="active ripple">
-                        <a class="tree-toggle nav-header">
-                            <span class="fa-area-chart fa"></span> Reports
-                            <span class="fa-angle-right fa right-arrow text-right"></span>
-                        </a>
-                        <ul class="nav nav-list tree">
-                            <li><a href="/Report/ReceiptReport">Customer Payment Report</a></li>
-                            @*<li><a href="/Report/DesignerInvoiceReport">Designer Payment Report</a></li>*@
-                            <li><a href="/Report/SaleSummaryReport">Sales Summary</a></li>
-                            <li><a href="/Report/PaymentReport">Supplier Payment Report</a></li>
-                            <li><a href="/Report/IndividualSaleReport">Individual Sale Report</a></li>
-                            <li><a href="/Report/ProjectListingReport">Project Listing Report</a></li>
-                            <li><a href="/Report/ProjectbyAddress">Project By Address</a></li>
-                            <li><a href="/Report/ProjectSummaryReport">Weekly Project report</a></li>
-                            <li><a href="/Report/ProjectCostingReport">Project Costing Report</a></li>
-                            <li><a href="/Report/BankChequeDetails">Cheque Running Number</a></li>
-                            <li><a href="/Report/SupplierReport">Supplier Report</a></li>
-                            <li><a href="/Report/LoanReport">Loan Report</a></li>
-                            <li><a href="/Report/ExpenseReport">Expense Report</a></li>
-                            <li>&nbsp;</li>
-</ul>
-                    </li>                
-                </ul>
+                            </ul>
+                        </li>
+                    }
+                        <li class="ripple">
+                            <a class="tree-toggle nav-header">
+                                <span class="fa-diamond fa"></span> Manage Projects
+                                <span class="fa-angle-right fa right-arrow text-right"></span>
+                            </a>
+                            <ul class="nav nav-list tree">
+                                <li><a href="/Projects">Contracts</a></li>
+                                <li><a href="/Projects/Additions">Additions & Omissions</a></li>
+                                <li><a href="/Invoice">Customer Invoice</a></li>
+                                <li><a href="/Receipts">Customer Payments</a></li>
+                                <li><a href="/Invoice/SupplierInvoice">Supplier Invoice</a></li>
+                                <li><a href="/Payments">Supplier Payments</a></li>
+                                <li><a href="/Loan/">Loan</a></li>
+                                @*<li><a href="/Invoice/DesignerInvoice">Designer Invoice</a></li>
+                    <li><a href="/Receipts/DesignerReceipts">Designer Receipts</a></li>*@
+                                <li><a href="/Expense">Expense</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="active ripple">
+                            <a class="tree-toggle nav-header">
+                                <span class="fa-area-chart fa"></span> Reports
+                                <span class="fa-angle-right fa right-arrow text-right"></span>
+                            </a>
+                            <ul class="nav nav-list tree">
+                                <li><a href="/Report/ReceiptReport">Customer Payment Report</a></li>
+                                @*<li><a href="/Report/DesignerInvoiceReport">Designer Payment Report</a></li>*@
+                                <li><a href="/Report/SaleSummaryReport">Sales Summary</a></li>
+                                <li><a href="/Report/PaymentReport">Supplier Payment Report</a></li>
+                                <li><a href="/Report/IndividualSaleReport">Individual Sale Report</a></li>
+                                <li><a href="/Report/ProjectListingReport">Project Listing Report</a></li>
+                                <li><a href="/Report/ProjectbyAddress">Project By Address</a></li>
+                                <li><a href="/Report/ProjectSummaryReport">Weekly Project report</a></li>
+                                <li><a href="/Report/ProjectCostingReport">Project Costing Report</a></li>
+                                <li><a href="/Report/BankChequeDetails">Cheque Running Number</a></li>
+                                <li><a href="/Report/SupplierReport">Supplier Report</a></li>
+                                <li><a href="/Report/LoanReport">Loan Report</a></li>
+                                <li><a href="/Report/ExpenseReport">Expense Report</a></li>
+                                <li>&nbsp;</li>
+                            </ul>
+                        </li>
+
+                    </ul>
             </div>
         </div>
         <!-- end: Left Menu -->

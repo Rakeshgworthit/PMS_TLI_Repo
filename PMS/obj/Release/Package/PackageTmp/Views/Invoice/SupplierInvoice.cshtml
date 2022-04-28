@@ -44,11 +44,19 @@
                         </div>
                     }
                 </div>
-
+                
                 <div class="responsive-table">
-                    @Html.MVCGrid("SupplierInvoices", new { hdnUID = Model.UID, brId = 0, SearchFrom = Model.SearchFrom, SearchTo = Model.SearchTo, SearchSupplier_id = Model.SearchSupplier_id, searchText = Model.SearchText })
+                    @if (!User.IsInRole("Salesman"))
+                    {
+                        @Html.MVCGrid("SupplierInvoices", new { hdnUID = Model.UID, brId = 0, SearchFrom = Model.SearchFrom, SearchTo = Model.SearchTo, SearchSupplier_id = Model.SearchSupplier_id, searchText = Model.SearchText })
+                    }
+                    else
+                    {
+                        @Html.MVCGrid("SupplierInvoicesAdmin", new { hdnUID = Model.UID, brId = 0, SearchFrom = Model.SearchFrom, SearchTo = Model.SearchTo, SearchSupplier_id = Model.SearchSupplier_id, searchText = Model.SearchText })
+                    }
                 </div>
-            </div>
+                     
+                </div>
         </div>
     </div>
 </div>
@@ -68,27 +76,27 @@
         $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
 
         $.ajax({
-            type: "POST",
+                            type: "POST",
             url: "/Invoice/LoadAddEditSupplierInvoice", // the URL of the controller action method
             data: {
-                Id: obj
+                                Id: obj
             },
             success: function (result) {
                 $("#ModelForm").html(result);
                 $.loader('close');
-            },
+                                },
             error: function (req, status, error) {
-                // do something with error
-            }
-        });
+                                    // do something with error
+                                }
+                            });
         $("#myModal").modal('show');
-    }
+                        }
 
 
-    function SavePaymentForm(actiontype) {
-        debugger;
-        var chval = true;
-        var form = $('#frmInvoice');
+                        function SavePaymentForm(actiontype) {
+                            debugger;
+                            var chval = true;
+                            var form = $('#frmInvoice');
         $.validator.unobtrusive.parse(form);
 
         //if ($('#frmInvoice').find("#is_tax").val() == 'true')
@@ -103,40 +111,40 @@
         //}
 
         $(".item_salesperson").each(function () {
-            if ($(this).val() == "" || $(this).val() == "null" || $(this).val() == null) {
+                                if ($(this).val() == "" || $(this).val() == "null" || $(this).val() == null) {
                 $(this).addClass("errorCls");
-                chval = false;
-            }
-        });
+                                    chval = false;
+                                }
+                            });
 
         $(".item_project").each(function () {
-            if ($(this).val() == "" || $(this).val() == "null" || $(this).val() == null) {
+                                if ($(this).val() == "" || $(this).val() == "null" || $(this).val() == null) {
                 $(this).addClass("errorCls");
-                chval = false;
-            }
-        });
+                                    chval = false;
+                                }
+                            });
 
-        if (form.valid() && IsDecimal() && chval) {
-            //var comp_id = $('#frmInvoice').find("#Company_id").val();
+                            if (form.valid() && IsDecimal() && chval) {
+                                //var comp_id = $('#frmInvoice').find("#Company_id").val();
 
-            var jsonData = {
+                                var jsonData = {
                 Id: $('#frmInvoice').find("#Id").val(),
                 supplier_id: $('#frmInvoice').find("#supplier_id").val(),
                 Invoice_date: $('#frmInvoice').find("#Invoice_date").val(),
                 invoice_details: []
             };
             $("#tblbody tr").each(function () {
-                var item_salesperson = encodeURIComponent($(this).find(".item_salesperson").val());
-                var item_project = $(this).find(".item_project").val();
-                var item_invoicenum = encodeURIComponent($(this).find(".item_invoicenum").val());
-                var item_gst = $(this).find(".item_gst").val();
-                var item_InvoiceAmtwithoutgst = $(this).find(".item_InvoiceAmtwithoutgst").val();
-                var item_InvoiceAmtwithgst = $(this).find(".item_InvoiceAmtwithgst").val();
-                var item_AgreedAmtwithoutgst = $(this).find(".item_AgreedAmtwithoutgst").val();
-                var item_AgreedAmt = $(this).find(".item_AgreedAmt").val();
-                var Id = $(this).find(".item_id").val();
-                jsonData.invoice_details.push({
-                    Id: Id,
+                                var item_salesperson = encodeURIComponent($(this).find(".item_salesperson").val());
+                                var item_project = $(this).find(".item_project").val();
+                                var item_invoicenum = encodeURIComponent($(this).find(".item_invoicenum").val());
+                                var item_gst = $(this).find(".item_gst").val();
+                                var item_InvoiceAmtwithoutgst = $(this).find(".item_InvoiceAmtwithoutgst").val();
+                                var item_InvoiceAmtwithgst = $(this).find(".item_InvoiceAmtwithgst").val();
+                                var item_AgreedAmtwithoutgst = $(this).find(".item_AgreedAmtwithoutgst").val();
+                                var item_AgreedAmt = $(this).find(".item_AgreedAmt").val();
+                                var Id = $(this).find(".item_id").val();
+                                jsonData.invoice_details.push({
+                                Id: Id,
                     invoice_id: 0,
                     item_project: item_project,
                     item_salesperson: item_salesperson,
@@ -146,50 +154,51 @@
                     item_InvoiceAmtwithgst: item_InvoiceAmtwithgst,
                     item_AgreedAmtwithoutgst: item_AgreedAmtwithoutgst,
                     item_AgreedAmt: item_AgreedAmt
-                });
-            });
-            console.log('invoiceData', jsonData.invoice_details);
-            var cc = jsonData.invoice_details;
-            debugger;
+                                });
+                            });
+                            console.log('invoiceData', jsonData.invoice_details);
+                            var cc = jsonData.invoice_details;
+                            debugger;
 
-            var paymentReturnID = "";
+                            var paymentReturnID = "";
             $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
 
             $.ajax({
-                type: "POST",
+                            type: "POST",
                 url: "/Invoice/SaveUpdateSupplierInvoice", // the URL of the controller action method
                 data: "invoiceobj=" + JSON.stringify(jsonData), // optional data
                 success: function (result) {
                     $.loader('close');
-                    if (result.cls == "error") {
-                        notify(result.msg, result.cls);
-                    } else {
+                                    if (result.cls == "error") {
+                                        notify(result.msg, result.cls);
+                                    } else {
                         $("#btnClosePayment").click();
-                        loadGrid();
-                        paymentReturnID = String(result.id);
-                        notify(result.msg, result.cls);
-                    }
-                },
+                                        loadGrid();
+                                        paymentReturnID = String(result.id);
+                                        notify(result.msg, result.cls);
+                                    }
+                                },
                 error: function (req, status, error) {
                     // do something with error
                     $.loader('close');
-                    notify(error, "error");
-                }
-            }).done(function () {
-                if (actiontype == "saveprint" && paymentReturnID != "") {
-                    setTimeout(function () {
-                        openModelpop('/Invoice/PrintPreview', 'id', paymentReturnID);
-                    }, 600);
-                }
-            });
+                                    notify(error, "error");
+                                }
+                            }).done(function () {
+                                if (actiontype == "saveprint" && paymentReturnID != "") {
+                                    setTimeout(function () {
+                                        openModelpop('/Invoice/PrintPreview', 'id', paymentReturnID);
+                                    }, 600);
+                                }
+                            });
 
-        }
-    }
+                        }
+                    }
 
 
-    function loadGrid() {
-        MVCGrid.reloadGrid('SupplierInvoices');
-    }
+                    function loadGrid() {
+
+                        MVCGrid.reloadGrid('SupplierInvoices');
+                    }
 
 
     $(function () {
@@ -198,52 +207,52 @@
 
         $("#SearchTo").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
         $('#SearchTo').removeAttr("data-val-date");
-    });
+                });
 
-    function isNumber(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    }
+                function isNumber(n) {
+                    return !isNaN(parseFloat(n)) && isFinite(n);
+                }
 
-    function IsDecimal() {
-        //var regexp = /^\d+(\.\d{1,2})?$/;
-        //var regexp = /^-?\d+(\.\d{0,2})?$/;
-        var regexp = /^-?[0-9]\d*(\.\d+)?$/;
-        var ret = true;
+                function IsDecimal() {
+                    //var regexp = /^\d+(\.\d{1,2})?$/;
+                    //var regexp = /^-?\d+(\.\d{0,2})?$/;
+                    var regexp = /^-?[0-9]\d*(\.\d+)?$/;
+                var ret = true;
         $(".amount").each(function () {
-            debugger;
-            if (regexp.test($(this).val()) == false) {
+                    debugger;
+                    if (regexp.test($(this).val()) == false) {
                 $(this).addClass("errorCls");
-                ret = false;
-            }
-        });
+                        ret = false;
+                    }
+                });
 
         $(".item_Contractnumber").each(function () {
-            debugger;
-            if ($(this).val() == "") {
+                    debugger;
+                    if ($(this).val() == "") {
                 $(this).addClass("errorCls");
-                ret = false;
-            }
-        });
+                        ret = false;
+                    }
+                });
 
-        return ret;
+                return ret;
     }
 
     function LoadSalesmenCustomer() {
-        if ($("#Sales_person").val() != "0") {
-            var _val = "";
-            var _txt = "";
+                    if ($("#Sales_person").val() != "0") {
+                    var _val = "";
+                    var _txt = "";
             $("#Bill_to").html("");
 
             $.getJSON("/Invoice/GetCustomerBySalesmen?id=" + $("#Sales_person").val() + "", function (response) {
                 $.each(response, function () {
-                    _val = this.Value;
-                    _txt = this.Text;
+                            _val = this.Value;
+                            _txt = this.Text;
 
                     $("#Bill_to").each(function () {
                         $(this).append($("<option />").val(_val).text(_txt));
+                            });
+                        });
                     });
-                });
-            });
-        }
+                }
     }
 </script>
