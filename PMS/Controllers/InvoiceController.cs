@@ -9,6 +9,10 @@ using PMS.Repository.DataService;
 using PMS.Repository.Infrastructure;
 using PMS.Database;
 using PMS.Common;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace PMS.Controllers
 {
@@ -830,36 +834,96 @@ namespace PMS.Controllers
 
         #region Verification
 
-        public ActionResult LoadApproval(Int32 Id,string Amount)
+        public ActionResult LoadApproval(Int32 Id)
         {
-            ViewBag.receiptID = Id;
-            string uid = User.Identity.GetUserId();
-            Int32 branchid = Common.SessionManagement.SelectedBranchID;
-            InvoiceViewModel objView = new InvoiceViewModel();
-           
-            Int32 projectId = 0;
+            InvoiceApprovalInfoViewModel objView = new InvoiceApprovalInfoViewModel();
+            List<ApprovalInfoList> objPDList = new List<ApprovalInfoList>();
+            decimal Amount = 0;
+            string Remarks = "";
+
+            SqlCommand Cmd;
             try
             {
+                using (var Conn = Common.CommonFunction.GetConnection())
+                {
+                    Cmd = new SqlCommand("SSP_GETApprovalInfo", Conn);
+                    Cmd.CommandType = CommandType.StoredProcedure;
+                    Cmd.Parameters.AddWithValue("@InvoiceId", Id);
+                    IDataReader Ireader = Cmd.ExecuteReader();
+                    while (Ireader.Read())
+                    {
+                        ApprovalInfoList _GetApprovalItem = new ApprovalInfoList();
+                        _GetApprovalItem.InvoiceId = Ireader.GetInt32(0);
+                        _GetApprovalItem.Supplier_Id = Ireader.GetInt32(1);
+                        _GetApprovalItem.InvoiceDetailId = Ireader.GetInt32(2);
+                        _GetApprovalItem.invoice_amt_without_gst = Ireader.GetDecimal(3);
+                        _GetApprovalItem.agreed_amt_without_gst = Ireader.GetDecimal(4);
+                        _GetApprovalItem.invoice_amt_with_gst = Ireader.GetDecimal(5);
+                        _GetApprovalItem.Agreed_Amt = Ireader.GetDecimal(6);
+                        _GetApprovalItem.InvoiceAmount = Ireader.GetDecimal(7);
+                        _GetApprovalItem.ApprovedAmount = Ireader.GetDecimal(8);
+                        _GetApprovalItem.InvoiceAmountAftGst = Ireader.GetDecimal(9);
+                        _GetApprovalItem.ApprovedAmtAftGst = Ireader.GetDecimal(10);
+                        _GetApprovalItem.ProjectNumber = Ireader.GetString(11);
+                        _GetApprovalItem.Salesman = Ireader.GetString(12);
+                        _GetApprovalItem.ApprovedRemarks = Ireader.GetString(13);
+                        Amount = _GetApprovalItem.ApprovedAmount;
+                        Remarks = _GetApprovalItem.ApprovedRemarks;
+                        objPDList.Add(_GetApprovalItem);
+                    }
+                    Common.CommonFunction.CloseConnection(Conn);
+                }
+                if (objView == null)
+                {
+                    objView.Id = Id;
+                }
+                else
+                {
+                    objView.ApprovalInfoList = objPDList;
+                    objView.ApprovedAmount = Amount;
+                    objView.ApprovedRemarks = Remarks;
+                    objView.Id = Id;
+                    
+                }
+
                 return View(objView);
             }
             catch (Exception ex)
             {
-                //throw ex;
-                     
-                //ExceptionLog.WriteLog(ex, $"Method Name: LoadAddEdit, Parameter : Id={Id}");
+                throw ex;
                 return null;
             }
             finally
             {
                 objView = null;
+                objPDList = null;
             }
         }
 
-        public JsonResult UpdateApprovedStatus(string projectId)
+        public JsonResult UpdateApprovedStatus(string InvoiceId, decimal Amount, string Remarks)
         {
+            SqlCommand Cmd;
+            try
+            {
+                using (var Conn = Common.CommonFunction.GetConnection())
+                {
+                    Cmd = new SqlCommand("SSP_UpdateApprovalAmount", Conn);
+                    Cmd.CommandType = CommandType.StoredProcedure;
+                    Cmd.Parameters.AddWithValue("@Id", InvoiceId);
+                    Cmd.Parameters.AddWithValue("@Amount", Amount);
+                    Cmd.Parameters.AddWithValue("@Remarks", Remarks);
+                    Cmd.ExecuteNonQuery();
+                        
+                }
+                return Json(new { msg = "Receipt Approved successfully.", cls = "success" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { msg = "Approved Failed.", cls = "Error" });
+            }
 
-            return Json(new { msg = "Receipt Approved successfully.", cls = "success" });
-        }
+        } 
+
         #endregion
     }
 }

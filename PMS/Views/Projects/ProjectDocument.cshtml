@@ -70,7 +70,7 @@
                                             <td>@Html.Raw(pdlist.project_number)</td> 
                                             <td>@pdlist.uploaded_on.ToString("MM/dd/yyyy")</td>                                                                                        
                                             <td><a target="_blank" title="View document" href="@pdlist.document_path/@pdlist.file_name">View</a></td>
-                                            <td><a target="_blank" title="Delete document" onclick="deletedocument(@pdlist.document_id,@pdlist.project_id, '@pdlist.file_name', '@pdlist.document_path')" href="Javascript:void(2)">Delete</a></td>
+                                            <td><a target="_blank" title="Delete document" onclick="deletedocument(@pdlist.document_id,@pdlist.project_id, '@pdlist.file_name', '@pdlist.document_path')" href="Javascript:void(3)">Delete</a></td>
                                         </tr>
                                     }
                                 }
@@ -81,7 +81,7 @@
                         
                     </tbody>
                 </table>
-</div>
+        </div>
     </div>
 </div>
 

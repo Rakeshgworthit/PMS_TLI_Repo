@@ -22,6 +22,7 @@ namespace PMS.Models
         public List<SelectListItem> IsTaxList { get; set; }
         public List<tbl_invoice_items> InvoiceItemList { get; set; }
         public List<tbl_supplierinvoice_items> SupplierInvoiceItemList { get; set; }
+        public List<InvoiceApprovalInfoViewModel> ApprovalInfoList { get; set; }
         public List<tbl_designerinvoice_items> DesignerInvoiceItemList { get; set; }
         //public List<SelectListItem> DesignerList { get; set; }
         public List<SelectListItem> hdnProjectList { get; set; }
@@ -213,5 +214,40 @@ namespace PMS.Models
         public decimal tax_amount { get; set; }
         public string invoicedate { get; set; }
         public bool IsPayment { get; set; }
+    }
+
+    public class InvoiceApprovalInfoViewModel
+    {
+        public long Id { get; set; }
+        public decimal ApprovedAmount { get; set; }
+        public string ApprovedRemarks { get; set; }
+
+        public List<ApprovalInfoList> ApprovalInfoList { get; set; }
+    }
+
+    public class ApprovalInfoList
+    {
+        public Int32 InvoiceId { get; set; }
+        public Int32 Supplier_Id { get; set; }
+        public Int32 InvoiceDetailId { get; set; }
+        
+        public decimal invoice_amt_without_gst { get; set; }
+
+        public decimal agreed_amt_without_gst { get; set; }
+        public decimal invoice_amt_with_gst { get; set; }
+        public decimal Agreed_Amt { get; set; }
+        public decimal InvoiceAmount { get; set; }
+
+        public decimal ApprovedAmount { get; set; }
+
+        public decimal InvoiceAmountAftGst { get; set; }
+        public decimal ApprovedAmtAftGst { get; set; }
+
+        public string ProjectNumber { get; set; }
+
+        public string Salesman { get; set; }
+        public string ApprovedRemarks { get; set; }
+
+
     }
 }

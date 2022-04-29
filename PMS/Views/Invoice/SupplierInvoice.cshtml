@@ -46,7 +46,7 @@
                 </div>
                 
                 <div class="responsive-table">
-                    @if (!User.IsInRole("Salesman"))
+                    @if (User.IsInRole("Salesman"))
                     {
                         @Html.MVCGrid("SupplierInvoices", new { hdnUID = Model.UID, brId = 0, SearchFrom = Model.SearchFrom, SearchTo = Model.SearchTo, SearchSupplier_id = Model.SearchSupplier_id, searchText = Model.SearchText })
                     }
@@ -254,5 +254,11 @@
                         });
                     });
                 }
+    }
+
+    function ApprovalInfo(id) {
+        debugger;
+        window.open("/Invoice/LoadApproval?Id=" + id, 'targetWindow', 'toolbar=no,location=no, status=no, menubar=no, scrollbars=yes,resizable=yes,width=850,height=500');
+        //UploadFile
     }
 </script>

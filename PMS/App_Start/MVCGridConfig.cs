@@ -838,7 +838,7 @@ namespace PMS
                    cols.Add("supplier_name").WithHeaderText("Supplier").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.supplier_name);
                    //cols.Add("company_name").WithHeaderText("Company").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.company_name);
                    cols.Add("ActionLink").WithSorting(false).WithHeaderText("Approve").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1").WithValueExpression((p, c) => p.Id.ToString())
-                    .WithValueTemplate("<a onclick=openModelpop('/Invoice/LoadApproval','id',{Value}); class='btn-xs' title='Approve'><span class='glyphicon glyphicon-pencil'></span></a>");
+                    .WithValueTemplate("<a onclick=ApprovalInfo({Value}); class='btn-xs' title='Approve'><span class='glyphicon glyphicon-pencil'></span></a>");
                    //cols.Add("CreatedUpdated").WithHeaderText("Created/Updated").WithCellCssClassExpression(p => "col-sm-5")
                    //     .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.CreatedUpdated);
                    cols.Add("SupplierInvoiceItems").WithHeaderText("Invoice/Items").WithCellCssClassExpression(p => "col-sm-5")
@@ -880,7 +880,7 @@ namespace PMS
                   cols.Add("invoice_date").WithHeaderText("Date").WithCellCssClassExpression(p => "col-sm-2").WithSorting(true).WithValueExpression(p => p.Invoice_date);
                   cols.Add("supplier_name").WithHeaderText("Supplier").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.supplier_name);
                    //cols.Add("company_name").WithHeaderText("Company").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.company_name);
-                   cols.Add("ActionLink").WithSorting(false).WithHeaderText("Approve").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1").WithValueExpression((p, c) => p.Id.ToString())
+                   cols.Add("ActionLink").WithSorting(false).WithHeaderText("Verify").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1").WithValueExpression((p, c) => p.Id.ToString())
                    .WithValueTemplate("<a  class='btn-xs' title='Verify'><span class='glyphicon glyphicon-ok'></span></a>");
                    //cols.Add("CreatedUpdated").WithHeaderText("Created/Updated").WithCellCssClassExpression(p => "col-sm-5")
                    //     .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.CreatedUpdated);
@@ -912,8 +912,8 @@ namespace PMS
                       TotalRecords = totalRecords
                   };
               })
-          );
-
+          );         
+           
             //********************End Supplier Invoice Grid **********************************************//
 
 
