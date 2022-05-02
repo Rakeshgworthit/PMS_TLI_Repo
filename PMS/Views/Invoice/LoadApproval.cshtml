@@ -71,7 +71,10 @@
                     </tr>
                     <tr>
                         <td><strong>Approved Remarks</strong></td>
-                        <td><input type="text" id="ApprovedRemarks" name="ApprovedRemarks" value="@Model.ApprovedRemarks" rows="3" cols="40"></Input></td>
+                        <td>
+                            @Html.TextAreaFor(x=> x.ApprovedRemarks, Model.ApprovedRemarks)
+                            @*<input type="text" id="ApprovedRemarks" name="ApprovedRemarks" value="@Model.ApprovedRemarks" rows="3" cols="40"></Input>*@
+                        </td>
                     </tr>
                     <tr>
                         <td>
