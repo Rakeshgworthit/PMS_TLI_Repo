@@ -22,5 +22,7 @@ namespace PMS.Database
         public decimal Gst { get; set; }
         public decimal AgreedAmountWithoutGst { get; set; }
         public decimal AgreedAmount { get; set; }
+        public string document_path { get; set; }
+        public int DetailId { get; set; }
     }
 }

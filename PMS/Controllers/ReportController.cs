@@ -1378,6 +1378,9 @@ namespace PMS.Controllers
             public string PaymentDate { get; set; }
             public string Invoicedate { get; set; }
             public int invoice_id { get; set; }
+            public string document_path { get; set; }
+            public int project_id { get; set; }
+            public int DetailId { get; set; }
         }
 
         public class ReceiptCls
@@ -1766,10 +1769,13 @@ namespace PMS.Controllers
                         AgreedAmount = d.AgreedAmount,
                         Gst = d.Gst,
                         InvNo = d.InvNo,
-                        invoice_id=d.invoice_id,
+                        invoice_id = d.invoice_id,
                         SupplierName = d.SupplierName,
                         Invoicedate = d.invoice_date,
                         PaymentDate = d.payment_date,
+                        document_path = d.document_path,
+                        project_id = d.project_id,
+                        DetailId = d.DetailId,
                     }).ToList();
                 //if (paymentResult != null && paymentResult.Count > 0)
                 //{
@@ -1913,6 +1919,7 @@ namespace PMS.Controllers
             str.Append("<th style='text-align:right;'>Agreed Amount Without Gst</th>");
             str.Append("<th style='text-align:right;'>Agreed Amount With Gst</th>");
             str.Append("<th style='text-align:right;'>Payment Amount</th>");
+            str.Append("<th style='text-align:right;'>Preview Invoice</th>");
             //str.Append("<th style='text-align:right;'>GST Supplier</th>");
             str.Append("</tr>");
 
@@ -1928,6 +1935,9 @@ namespace PMS.Controllers
                 str.Append("<td align='right'>$" + CommonFunction.ConvertAmountoDecimal(Convert.ToDecimal(payments.AgreedAmountWithoutGst)) + "</td>");//CommonFunction.ConvertAmountoDecimal(Convert.ToDecimal(nets)
                 str.Append("<td align='right'>$" + CommonFunction.ConvertAmountoDecimal(Convert.ToDecimal(payments.AgreedAmount)) + "</td>");
                 str.Append("<td align='right'>$" + CommonFunction.ConvertAmountoDecimal(Convert.ToDecimal(payments.Gst)) + "</td>");
+                str.Append("<td>");
+                str.Append("&nbsp; <a title='Preview Document' class='btn-large' onclick='InvoiceFilePreviewInReport(" + payments.project_id + "," + payments.DetailId + ");'  href='javascript:void(0)' ><i class='fa fa-file' aria-hidden='true'></i></a>");
+                str.Append("</td>");
                 str.Append("</tr>");
             }
 

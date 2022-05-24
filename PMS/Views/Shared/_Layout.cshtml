@@ -308,7 +308,7 @@
             debugger
             $("#modalcontent").html("");
             $.ajax({
-                url: '@Url.Action("GetFilePathByProjectBudgetDetailsId", "ProjectsBudget")',
+                url: '@Url.Action("GetFilePathByProjectBudgetDetailsId", "Invoice")',
                 type: "POST",
                 data: {
                     ProjectId: projectid,
