@@ -44,6 +44,8 @@ namespace PMS.Models
 
         public List<tbl_supplierinvoice_items> invoice_details { get; set; }
 
+        public List<supplierinvoice_items> invoice_detailsNew { get; set; }
+
         public static SupplierInvoiceViewModel FromJson(string val)
         {
             JObject paymentobj = JObject.Parse(val);
@@ -76,5 +78,54 @@ namespace PMS.Models
 
             return obj;
         }
+
+        public static SupplierInvoiceViewModel FromJsonNew(string val)
+        {
+            JObject paymentobj = JObject.Parse(val);
+            SupplierInvoiceViewModel obj = new SupplierInvoiceViewModel();
+            obj.invoice_detailsNew = new List<supplierinvoice_items>();
+
+            string invdate = Convert.ToString(paymentobj["Invoice_date"]);
+            obj.Invoice_date = Convert.ToDateTime(invdate);
+            obj.Id = (int)paymentobj["Id"];
+            obj.supplier_id = (int)paymentobj["supplier_id"];
+
+            List<supplierinvoice_items> invoicedetails = new List<supplierinvoice_items>();
+            foreach (JObject pd in paymentobj["invoice_details"])
+            {
+                supplierinvoice_items d = new supplierinvoice_items();
+                d.Id = Convert.ToInt32(pd["Id"]);
+                d.invoice_id = Convert.ToInt32(pd["invoice_id"]);
+                d.salesperson_id = Convert.ToInt32(pd["item_salesperson"]);
+                d.project_id = Convert.ToInt32(pd["item_project"]);
+                d.invoice_number = (string)pd["item_invoicenum"];
+                d.gst = (decimal)(pd["item_gst"]);
+                d.invoice_amt_without_gst = (decimal)(pd["item_InvoiceAmtwithoutgst"]);
+                d.invoice_amt_with_gst = (decimal)(pd["item_InvoiceAmtwithgst"]);
+                d.agreed_amt_without_gst = Convert.ToDecimal((pd["item_AgreedAmtwithoutgst"]));
+                d.agreed_amt = (decimal)(pd["item_AgreedAmt"]);
+                d.FileName = (string)(pd["FileName"]);                 
+                invoicedetails.Add(d);
+            }
+            obj.invoice_detailsNew.AddRange(invoicedetails);
+
+            return obj;
+        }
     }
+
+    public  class supplierinvoice_items
+    {
+        public int Id { get; set; }
+        public int invoice_id { get; set; }
+        public int salesperson_id { get; set; }
+        public int project_id { get; set; }
+        public string invoice_number { get; set; }
+        public Nullable<decimal> gst { get; set; }
+        public Nullable<decimal> invoice_amt_without_gst { get; set; }
+        public Nullable<decimal> invoice_amt_with_gst { get; set; }
+        public Nullable<decimal> agreed_amt_without_gst { get; set; }
+        public Nullable<decimal> agreed_amt { get; set; }        
+        public string FileName { get; set; }
+    }
+
 }

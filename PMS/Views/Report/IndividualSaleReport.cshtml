@@ -62,6 +62,12 @@
             $('#SearchForm').attr('action', "ExportIndividualSaleReport").submit();
         }
     }
+    $(function () {      
+        var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 0) {
+            $("#ddlSalesmen").prop("disabled", true);
+        }
+    });
 
     $("#ddlStatus").change(function () {
 

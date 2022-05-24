@@ -13,7 +13,11 @@
 <script src="/Content/js/jquery.min.js"></script>
 <script src="/Content/js/jquery.ui.min.js"></script>
 
-<div class="container" style="width:850px;">
+<!--<div class="modal-header">-->
+@*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+<!--<h4 class="modal-title">Approval Info</h4>
+</div>-->
+<div class="modal-body" style="width:850px;">
     <div class="row">
         <div class="col-md-12">
             <h4 class="animated fadeInLeft text-primary">Approval Info</h4>
@@ -26,7 +30,7 @@
                         <th>Invoice Amt(Gst)</th>
                         <th>Agreed Amt</th>
                         <th>Agreed Amt(Gst)</th>
-
+                        <th>View</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -49,6 +53,8 @@
                                 <td>@Html.Raw(pdlist.invoice_amt_with_gst)</td>
                                 <td>@Html.Raw(pdlist.agreed_amt_without_gst)</td>
                                 <td>@pdlist.Agreed_Amt</td>
+                                @*<td><a title='Preview Document' onclick="InvoiceFilePreview(@pdlist.ProjectId,@pdlist.InvoiceDetailId);" class='btn-large' href='javascript:void(0)'><i class='glyphicon glyphicon-file' aria-hidden='true'></i></a></td>*@
+                                <td><a target="_blank" title="View document" class='glyphicon glyphicon-file' href="@pdlist.documentPath"></a></td>
                                 @*<td><a target="_blank" title="View document" href="@pdlist.document_path/@pdlist.file_name">View</a></td>*@
                             </tr>
 
@@ -60,46 +66,77 @@
 
                 </tbody>
             </table>
-            <form class="form-horizontal" id="frmAddJob" name="frmAddJob" method="post" enctype="multipart/form-data">
+            <!--<form class="form-horizontal" id="frmAddJob" name="frmAddJob" method="post" enctype="multipart/form-data">
                 <table class="table">
-                    <tr>
-                        <td><strong>Approved Amount</strong></td>
-                        <td>
-                            <input type="text" id="ApprovedAmount" name="ApprovedAmount" value="@Model.ApprovedAmount" />
-                            @*<input type="hidden" id="project_id" name="project_id" />*@
-                        </td>
+                    <tr >
+                        <td style="left:auto"><strong>Total Amount</strong>  </td>
+                        <td style="margin-right: 40%">
+                            <input type="text" id="TotalAmount" name="TotalAmount" value="@Model.TotalAmount" />-->
+            @*<input type="hidden" id="project_id" name="project_id" />*@
+            <!--</td>
+            </tr>
+            <tr>
+                <td><strong>Approved Amount</strong></td>
+                <td>
+                    <input type="text" id="ApprovedAmount" name="ApprovedAmount" value="@Model.ApprovedAmount" />-->
+            @*<input type="hidden" id="project_id" name="project_id" />*@
+            <!--</td>
+            </tr>
+            <tr>
+                <td><strong>Approved Remarks</strong></td>
+                <td>
+                    @Html.TextAreaFor(x=> x.ApprovedRemarks, Model.ApprovedRemarks)-->
+            @*<input type="text" id="ApprovedRemarks" name="ApprovedRemarks" value="@Model.ApprovedRemarks" rows="3" cols="40"></Input>*@
+            <!--</td>
                     </tr>
                     <tr>
-                        <td><strong>Approved Remarks</strong></td>
                         <td>
-                            @Html.TextAreaFor(x=> x.ApprovedRemarks, Model.ApprovedRemarks)
-                            @*<input type="text" id="ApprovedRemarks" name="ApprovedRemarks" value="@Model.ApprovedRemarks" rows="3" cols="40"></Input>*@
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="button" id="btnSave" name="Save" value="Save" class="btn btn-secondary"  onclick="SaveForm();" href="Javascript:void(0)"  />
+                            <input type="button" id="btnSave" name="Save" value="Approve" class="btn btn-secondary" onclick="SaveForm();" href="Javascript:void(0)"  />
                             <input type="button" id="btnClose" name="Close" value="Close" class="btn btn-secondary" data-dismiss="modal"/>
                         </td>
-                    </tr>                    
+                    </tr>
                 </table>
-            </form>
+            </form>-->
 
 
         </div>
     </div>
 </div>
+<div class="container" >
+    <label class="control-label col-sm-3" for="pwd">Total Amount:</label>
+    <input type="text" id="TotalAmount" name="TotalAmount" value="@Model.TotalAmount" />
+</div>
+<div class="container" >
+    <label class="control-label col-sm-3" for="pwd">Approved Amount:</label>
+    <input type="text" id="ApprovedAmount" name="ApprovedAmount" value="@Model.ApprovedAmount" />
+</div>
+<div class="container" >
+    <label class="control-label col-sm-3" for="pwd"> Approval Remarks</label>
+    @Html.TextAreaFor(x => x.ApprovedRemarks, Model.ApprovedRemarks)
+</div>
+@if (User.IsInRole("Salesman"))
+{
+    <div class="modal-footer">
+        <button type="button" id="btnSave" name="btnSave" class="btn btn-secondary" onclick="SaveForm();">Approve</button>
+        <button type="button" id="btnCloseApproval" name="btnCloseApproval" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-<style>
-    body {
-        background: #fff !important;
-    }
+    </div>
+}
 
-    .container {
-        font-size: 12px;
-    }
-</style>
-<script>
+    <style>
+        body {
+            background: #fff !important;
+        }
+
+        .container {
+            font-size: 14px;
+            margin-left: 45%;
+            width: 100%;
+            padding-bottom: 2%;
+        }        
+        
+    </style>
+    <script>
 
     function SaveForm() {
         debugger;
@@ -107,23 +144,29 @@
         var Amount = $("#ApprovedAmount").val();
         var Remarks = $("#ApprovedRemarks").val();
         /*alert(prjid);*/
-            $.ajax({
-                type: "POST",
-                url: "/Invoice/UpdateApprovedStatus", // the URL of the controller action method
-                data: {
-                    InvoiceId: InvoiceId,
-                    Amount: Amount,
-                    Remarks: Remarks
-                },
-                success: function (result) {
-                    debugger;
-                    notify(result.msg, "success");
-                    //$("#remarks").html("Receipt - " + result);
-                },
-                error: function (req, status, error) {
+        $.ajax({
+            type: "POST",
+            url: "/Invoice/UpdateApprovedStatus", // the URL of the controller action method
+            data: {
+                InvoiceId: InvoiceId,
+                Amount: Amount,
+                Remarks: Remarks
+            },
+            success: function (result) {
+                debugger;
+                notify(result.msg, result.cls);
+                //notify("Receipt Approved successfully", "success");
+                //$("#remarks").html("Receipt - " + result);
+            },
+            error: function (req, status, error) {
 
-                }
-            });
+            }
+        });
+    }
+
+     function CloseModal() {
+        window.location = '@Url.Action("", "Invoice")';
         }
 
-</script>
+    
+    </script>

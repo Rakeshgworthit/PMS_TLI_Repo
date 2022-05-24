@@ -36,7 +36,7 @@ namespace PMS.Models
         [Range(minimum: 1, maximum: 99999999, ErrorMessage = "Please select a customer")]
         public int Bill_to { get; set; }
 
-        
+
         public string Designer_name { get; set; }
 
         [Required(ErrorMessage = "Enter invoice date")]
@@ -191,8 +191,19 @@ namespace PMS.Models
             return obj;
         }
 
-    }
+        public string document_path { get; set; }
+        public Int16 doc_id { get; set; }
+        public Int16 id_type { get; set; }
+        public string doc_path { get; set; }
 
+        public string project_number { get; set; }
+
+    }
+        public class GetDocumentdetails
+        {
+            public string document_path { get; set; }
+
+        }
 
     public class  InvoicePaymentViewmodel
     {
@@ -219,6 +230,8 @@ namespace PMS.Models
     public class InvoiceApprovalInfoViewModel
     {
         public long Id { get; set; }
+
+        public decimal TotalAmount { get; set; }
         public decimal ApprovedAmount { get; set; }
         public string ApprovedRemarks { get; set; }
 
@@ -230,7 +243,7 @@ namespace PMS.Models
         public Int32 InvoiceId { get; set; }
         public Int32 Supplier_Id { get; set; }
         public Int32 InvoiceDetailId { get; set; }
-        
+
         public decimal invoice_amt_without_gst { get; set; }
 
         public decimal agreed_amt_without_gst { get; set; }
@@ -245,8 +258,12 @@ namespace PMS.Models
 
         public string ProjectNumber { get; set; }
 
+        public long ProjectId { get; set; }
+
         public string Salesman { get; set; }
         public string ApprovedRemarks { get; set; }
+
+        public string documentPath { get; set; }
 
 
     }

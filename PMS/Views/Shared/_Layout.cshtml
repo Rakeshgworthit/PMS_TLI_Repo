@@ -66,42 +66,42 @@
                     <b>@PMS.Common.SessionManagement.SelectedBranchName</b>
                 </a>
                 @*<ul class="nav navbar-nav search-nav">
-                    <li>
-                        <div class="search">
-                            <span class="fa fa-search icon-search" style="font-size:23px;"></span>
-                            <div class="form-group form-animate-text">
-                                <input type="text" class="form-text" required>
-                                <span class="bar"></span>
-                                <label class="label-search">Type anywhere to <b>Search</b> </label>
+                        <li>
+                            <div class="search">
+                                <span class="fa fa-search icon-search" style="font-size:23px;"></span>
+                                <div class="form-group form-animate-text">
+                                    <input type="text" class="form-text" required>
+                                    <span class="bar"></span>
+                                    <label class="label-search">Type anywhere to <b>Search</b> </label>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>*@
-    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-    {
-    @Html.AntiForgeryToken()
-                <ul class="nav navbar-nav navbar-right user-nav">
-                    <li class="user-name"><span>@User.Identity.GetUserName()</span></li>
-                    <li class="dropdown avatar-dropdown">
-                        <img src="/content/img/avatar.jpg" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" />                       
-                        <ul class="dropdown-menu user-dropdown">
-                            <li><a href="/Manage/changepassword"><span class="fa fa-user"></span> Change Password</a></li>
-                            <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="fa fa-power-off "></span> Logout</a></li>
-                            @*<li role="separator" class="divider"></li>
-                            <li class="more">
-                                <ul>
-                                    <li><a href=""><span class="fa fa-cogs"></span></a></li>
-                                    <li><a href=""><span class="fa fa-lock"></span></a></li>
-                                    <li><a href=""><span class="fa fa-power-off "></span></a></li>
-                                </ul>
-                            </li>*@
-                        </ul>
-                        @*}*@
-                    </li>
-                   
-                    @*<li><a href="#" class="opener-right-menu"><span class="fa fa-coffee"></span></a></li>*@
-                </ul>
-    }
+                        </li>
+                    </ul>*@
+                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <ul class="nav navbar-nav navbar-right user-nav">
+                        <li class="user-name"><span>@User.Identity.GetUserName()</span></li>
+                        <li class="dropdown avatar-dropdown">
+                            <img src="/content/img/avatar.jpg" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" />
+                            <ul class="dropdown-menu user-dropdown">
+                                <li><a href="/Manage/changepassword"><span class="fa fa-user"></span> Change Password</a></li>
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="fa fa-power-off "></span> Logout</a></li>
+                                @*<li role="separator" class="divider"></li>
+                                    <li class="more">
+                                        <ul>
+                                            <li><a href=""><span class="fa fa-cogs"></span></a></li>
+                                            <li><a href=""><span class="fa fa-lock"></span></a></li>
+                                            <li><a href=""><span class="fa fa-power-off "></span></a></li>
+                                        </ul>
+                                    </li>*@
+                            </ul>
+                            @*}*@
+                        </li>
+
+                        @*<li><a href="#" class="opener-right-menu"><span class="fa fa-coffee"></span></a></li>*@
+                    </ul>
+                }
             </div>
         </div>
     </nav>
@@ -115,7 +115,7 @@
                     <li><div class="left-bg"></div></li>
                     <li class="time">
                         @*<h1 class="animated fadeInLeft">21:00</h1>
-            <p class="animated fadeInRight">Sat,October 1st 2029</p>*@
+                            <p class="animated fadeInRight">Sat,October 1st 2029</p>*@
                         <a href="/Home?ReturnUrl=@HttpContext.Current.Request.RawUrl" title="Switch Company"><span class="fa-toggle-on fa"></span> Switch Company</a>
                     </li>
                     @if (!User.IsInRole("Salesman"))
@@ -142,49 +142,49 @@
                             </ul>
                         </li>
                     }
-                        <li class="ripple">
-                            <a class="tree-toggle nav-header">
-                                <span class="fa-diamond fa"></span> Manage Projects
-                                <span class="fa-angle-right fa right-arrow text-right"></span>
-                            </a>
-                            <ul class="nav nav-list tree">
-                                <li><a href="/Projects">Contracts</a></li>
-                                <li><a href="/Projects/Additions">Additions & Omissions</a></li>
-                                <li><a href="/Invoice">Customer Invoice</a></li>
-                                <li><a href="/Receipts">Customer Payments</a></li>
-                                <li><a href="/Invoice/SupplierInvoice">Supplier Invoice</a></li>
-                                <li><a href="/Payments">Supplier Payments</a></li>
-                                <li><a href="/Loan/">Loan</a></li>
-                                @*<li><a href="/Invoice/DesignerInvoice">Designer Invoice</a></li>
-                    <li><a href="/Receipts/DesignerReceipts">Designer Receipts</a></li>*@
-                                <li><a href="/Expense">Expense</a></li>
-                            </ul>
-                        </li>
+                    <li class="ripple">
+                        <a class="tree-toggle nav-header">
+                            <span class="fa-diamond fa"></span> Manage Projects
+                            <span class="fa-angle-right fa right-arrow text-right"></span>
+                        </a>
+                        <ul class="nav nav-list tree">
+                            <li><a href="/Projects">Contracts</a></li>
+                            <li><a href="/Projects/Additions">Additions & Omissions</a></li>
+                            <li><a href="/Invoice">Customer Invoice</a></li>
+                            <li><a href="/Receipts">Customer Payments</a></li>
+                            <li><a href="/Invoice/SupplierInvoice">Supplier Invoice</a></li>
+                            <li><a href="/Payments">Supplier Payments</a></li>
+                            <li><a href="/Loan/">Loan</a></li>
+                            @*<li><a href="/Invoice/DesignerInvoice">Designer Invoice</a></li>
+                                <li><a href="/Receipts/DesignerReceipts">Designer Receipts</a></li>*@
+                            <li><a href="/Expense">Expense</a></li>
+                        </ul>
+                    </li>
 
-                        <li class="active ripple">
-                            <a class="tree-toggle nav-header">
-                                <span class="fa-area-chart fa"></span> Reports
-                                <span class="fa-angle-right fa right-arrow text-right"></span>
-                            </a>
-                            <ul class="nav nav-list tree">
-                                <li><a href="/Report/ReceiptReport">Customer Payment Report</a></li>
-                                @*<li><a href="/Report/DesignerInvoiceReport">Designer Payment Report</a></li>*@
-                                <li><a href="/Report/SaleSummaryReport">Sales Summary</a></li>
-                                <li><a href="/Report/PaymentReport">Supplier Payment Report</a></li>
-                                <li><a href="/Report/IndividualSaleReport">Individual Sale Report</a></li>
-                                <li><a href="/Report/ProjectListingReport">Project Listing Report</a></li>
-                                <li><a href="/Report/ProjectbyAddress">Project By Address</a></li>
-                                <li><a href="/Report/ProjectSummaryReport">Weekly Project report</a></li>
-                                <li><a href="/Report/ProjectCostingReport">Project Costing Report</a></li>
-                                <li><a href="/Report/BankChequeDetails">Cheque Running Number</a></li>
-                                <li><a href="/Report/SupplierReport">Supplier Report</a></li>
-                                <li><a href="/Report/LoanReport">Loan Report</a></li>
-                                <li><a href="/Report/ExpenseReport">Expense Report</a></li>
-                                <li>&nbsp;</li>
-                            </ul>
-                        </li>
+                    <li class="active ripple">
+                        <a class="tree-toggle nav-header">
+                            <span class="fa-area-chart fa"></span> Reports
+                            <span class="fa-angle-right fa right-arrow text-right"></span>
+                        </a>
+                        <ul class="nav nav-list tree">
+                            <li><a href="/Report/ReceiptReport">Customer Payment Report</a></li>
+                            @*<li><a href="/Report/DesignerInvoiceReport">Designer Payment Report</a></li>*@
+                            <li><a href="/Report/SaleSummaryReport">Sales Summary</a></li>
+                            <li><a href="/Report/PaymentReport">Supplier Payment Report</a></li>
+                            <li><a href="/Report/IndividualSaleReport">Individual Sale Report</a></li>
+                            <li><a href="/Report/ProjectListingReport">Project Listing Report</a></li>
+                            <li><a href="/Report/ProjectbyAddress">Project By Address</a></li>
+                            <li><a href="/Report/ProjectSummaryReport">Weekly Project report</a></li>
+                            <li><a href="/Report/ProjectCostingReport">Project Costing Report</a></li>
+                            <li><a href="/Report/BankChequeDetails">Cheque Running Number</a></li>
+                            <li><a href="/Report/SupplierReport">Supplier Report</a></li>
+                            <li><a href="/Report/LoanReport">Loan Report</a></li>
+                            <li><a href="/Report/ExpenseReport">Expense Report</a></li>
+                            <li>&nbsp;</li>
+                        </ul>
+                    </li>
 
-                    </ul>
+                </ul>
             </div>
         </div>
         <!-- end: Left Menu -->
@@ -211,7 +211,7 @@
                             <li><a href="/Admin/Banks">Banks</a></li>
                             <li><a href="/Customer">Customer</a></li>
                             <li><a href="/Supplier/">Supplier</a></li>
-                                                  
+
                         </ul>
                     </li>
                     <li class="ripple">
@@ -225,7 +225,7 @@
                             <li><a href="/Receipts">Receipts</a></li>
                             <li><a href="/Payments">Payments</a></li>
                         </ul>
-                    </li>     
+                    </li>
                     <li class="ripple">
                         <a class="tree-toggle nav-header">
                             <span class="fa-diamond fa"></span>Reports
@@ -243,7 +243,7 @@
                             <li><a href="/Report/BankChequeDetails">Bank Cheque Details</a></li>
                             <li><a href="/Report/SupplierReport">Supplier Report</a></li>
                         </ul>
-                    </li>               
+                    </li>
                 </ul>
             </div>
         </div>
@@ -253,17 +253,15 @@
     </button>
     <!-- end: Mobile -->
     <!-- start: Javascript -->
-  
-
     <!-- plugins -->
     <script src="/Content/js/plugins/moment.min.js"></script>
     <script src="/Content/js/plugins/jquery.nicescroll.js"></script>
     @*<script src="/Content/js/plugins/fullcalendar.min.js"></script>
-   
-    <script src="/Content/js/plugins/jquery.vmap.min.js"></script>
-    <script src="/Content/js/plugins/maps/jquery.vmap.world.js"></script>
-    <script src="/Content/js/plugins/jquery.vmap.sampledata.js"></script>
-    <script src="/Content/js/plugins/chart.min.js"></script>*@
+
+        <script src="/Content/js/plugins/jquery.vmap.min.js"></script>
+        <script src="/Content/js/plugins/maps/jquery.vmap.world.js"></script>
+        <script src="/Content/js/plugins/jquery.vmap.sampledata.js"></script>
+        <script src="/Content/js/plugins/chart.min.js"></script>*@
 
     <!-- custom -->
     <script src="/scripts/jquery.loader.js"></script>
@@ -289,7 +287,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <b>Confirmation</b>  
+                    <b>Confirmation</b>
                 </div>
                 <div class="modal-body">
                     Are you sure want to delete this record?
@@ -297,16 +295,43 @@
 
                 <div class="modal-footer">
 
-                    <button type="button"  data-dismiss="modal"  class="Deletebtn btn btn-primary" id="delete">Delete</button>
+                    <button type="button" data-dismiss="modal" class="Deletebtn btn btn-primary" id="delete">Delete</button>
 
                     <button type="button" data-dismiss="modal" class="btn">Cancel</button>
                 </div>
             </div>
         </div>
-</div>
+    </div>
+    <script>
+
+        function InvoiceFilePreviewInReport(projectid, project_budget_details_id) {
+            debugger
+            $("#modalcontent").html("");
+            $.ajax({
+                url: '@Url.Action("GetFilePathByProjectBudgetDetailsId", "ProjectsBudget")',
+                type: "POST",
+                data: {
+                    ProjectId: projectid,
+                    ProjectBudgetDetailsId: project_budget_details_id
+                },
+                success: function (result) {
+                    //debugger;
+                    var path = window.location.origin + result.data;
+                    window.open(path, '_blank');
+                    //printJS(path);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.loader('close');
+                    notify("Fail", "error");
+                    notify(jqXHR, "error");
+                }
+            });
+            $("#mainModel").modal('show');
+        }
+
+    </script>
 
 
-       
 
 </body>
 </html>

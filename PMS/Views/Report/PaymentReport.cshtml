@@ -85,8 +85,13 @@
 
         $("#to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
         $('#to_date').removeAttr("data-val-date");
+
+        var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 0) {
+            $("#ddlSalesmen").prop("disabled", true);
+        }
     });
-    
+
     $("#ddlStatus").change(function () {
 
         var Id = $('#ddlStatus').val();
@@ -110,5 +115,5 @@
 
         })
     });
-    
+
 </script>

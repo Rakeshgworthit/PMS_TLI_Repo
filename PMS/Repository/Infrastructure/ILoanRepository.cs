@@ -7,7 +7,7 @@ namespace PMS.Repository.Infrastructure
 {
     public interface ILoanRepositor : IGenericRepository<loan>
     {
-        List<SSP_Loan_Result> SearchLoans(string userId, Int32 branchid, Int32 StartIndex, Int32 PageSize, string SortBy, string OrderBy, DateTime FromDate, DateTime ToDate);
+        List<SSP_Loan_Result> SearchLoans(string userId, Int32 branchid, Int32 StartIndex, Int32 PageSize, string SortBy, string OrderBy, DateTime FromDate, DateTime ToDate,int SalesmanId);
 
     }
 }

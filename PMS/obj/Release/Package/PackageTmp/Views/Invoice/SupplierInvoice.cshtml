@@ -10,12 +10,15 @@
         <div class="col-md-6">
             <h3 class="animated fadeInLeft text-primary">Invoices</h3>
         </div>
-        <div class="col-md-6" style="margin-top:10px;">
-            <button type="button" onclick="ShowCustomerModel(0);" class='btn btn-primary pull-right'>
-                <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
-            </button>
+        @if (!User.IsInRole("Salesman"))
+        {
+            <div class="col-md-6" style="margin-top:10px;">
+                <button type="button" onclick="ShowCustomerModel(0);" class='btn btn-primary pull-right'>
+                    <i class="fa fa-plus" aria-hidden="true"></i><span style="padding-left:10px;">Add</span>
+                </button>
+            </div>
+        }
         </div>
-    </div>
 </div>
 <div class="col-md-12 padding-0">
     <div class="col-md-12">
@@ -46,7 +49,7 @@
                 </div>
                 
                 <div class="responsive-table">
-                    @if (!User.IsInRole("Salesman"))
+                    @if (User.IsInRole("Salesman"))
                     {
                         @Html.MVCGrid("SupplierInvoices", new { hdnUID = Model.UID, brId = 0, SearchFrom = Model.SearchFrom, SearchTo = Model.SearchTo, SearchSupplier_id = Model.SearchSupplier_id, searchText = Model.SearchText })
                     }
@@ -63,7 +66,7 @@
 
 <div id="divModel">
     <div id="myModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog modal-lg modal-content-left" style="width:1010px;">
+        <div class="modal-dialog modal-lg modal-content-left" style="width:1600px;">
             <div class="modal-content" id="ModelForm">
             </div>
         </div>
@@ -93,10 +96,11 @@
                         }
 
 
-                        function SavePaymentForm(actiontype) {
-                            debugger;
-                            var chval = true;
-                            var form = $('#frmInvoice');
+
+    function SavePaymentForm(actiontype) {
+        debugger;
+        var chval = true;
+        var form = $('#frmInvoice');
         $.validator.unobtrusive.parse(form);
 
         //if ($('#frmInvoice').find("#is_tax").val() == 'true')
@@ -111,40 +115,72 @@
         //}
 
         $(".item_salesperson").each(function () {
-                                if ($(this).val() == "" || $(this).val() == "null" || $(this).val() == null) {
+            if ($(this).val() == "" || $(this).val() == "null" || $(this).val() == null) {
                 $(this).addClass("errorCls");
-                                    chval = false;
-                                }
-                            });
+                chval = false;
+            }
+        });
 
         $(".item_project").each(function () {
-                                if ($(this).val() == "" || $(this).val() == "null" || $(this).val() == null) {
+            if ($(this).val() == "" || $(this).val() == "null" || $(this).val() == null) {
                 $(this).addClass("errorCls");
-                                    chval = false;
-                                }
-                            });
+                chval = false;
+            }
+        });
+      
+        var fileUpload = $('#FileName').get(0);        
+        var files = fileUpload.files;
+          var fileData = new FormData();
+          fileData.append(files[0].name, files[0]);
+        if (files.length > 0) {
+            var fileData = new FormData();
+            fileData.append(files[0].name, files[0]);
+        }
+        else {
+            notify("Please Select Files", "error");
+            $('div.k-loading-mask').css('display', 'none');
+            chval = false;
 
-                            if (form.valid() && IsDecimal() && chval) {
-                                //var comp_id = $('#frmInvoice').find("#Company_id").val();
+        }
+        //var files1 = actiontype.files;
+        //if (files1.length > 0)
+        //{
+        //    var fileData1 = new FormData();
 
-                                var jsonData = {
+        //    for (var i = 0; i < files1.length; i++) {
+        //        fileData1.append("uploadedfile", files1[i]);
+        //    }
+        //}
+        if (form.valid() && IsDecimal() && chval) {
+            //var comp_id = $('#frmInvoice').find("#Company_id").val();
+
+            var jsonData = {
                 Id: $('#frmInvoice').find("#Id").val(),
                 supplier_id: $('#frmInvoice').find("#supplier_id").val(),
                 Invoice_date: $('#frmInvoice').find("#Invoice_date").val(),
                 invoice_details: []
             };
             $("#tblbody tr").each(function () {
-                                var item_salesperson = encodeURIComponent($(this).find(".item_salesperson").val());
-                                var item_project = $(this).find(".item_project").val();
-                                var item_invoicenum = encodeURIComponent($(this).find(".item_invoicenum").val());
-                                var item_gst = $(this).find(".item_gst").val();
-                                var item_InvoiceAmtwithoutgst = $(this).find(".item_InvoiceAmtwithoutgst").val();
-                                var item_InvoiceAmtwithgst = $(this).find(".item_InvoiceAmtwithgst").val();
-                                var item_AgreedAmtwithoutgst = $(this).find(".item_AgreedAmtwithoutgst").val();
-                                var item_AgreedAmt = $(this).find(".item_AgreedAmt").val();
-                                var Id = $(this).find(".item_id").val();
-                                jsonData.invoice_details.push({
-                                Id: Id,
+                var item_salesperson = encodeURIComponent($(this).find(".item_salesperson").val());
+                var item_project = $(this).find(".item_project").val();
+                var item_invoicenum = encodeURIComponent($(this).find(".item_invoicenum").val());
+                var item_gst = $(this).find(".item_gst").val();
+                var item_InvoiceAmtwithoutgst = $(this).find(".item_InvoiceAmtwithoutgst").val();
+                var item_InvoiceAmtwithgst = $(this).find(".item_InvoiceAmtwithgst").val();
+                var item_AgreedAmtwithoutgst = $(this).find(".item_AgreedAmtwithoutgst").val();
+                var item_AgreedAmt = $(this).find(".item_AgreedAmt").val();
+                var Id = $(this).find(".item_id").val();
+                var fileUpload = $(this).find(".FileName").get(0);
+                var files = fileUpload.files;
+                //  var fileData = new FormData();
+                //  fileData.append(files[0].name, files[0]);
+                if (files.length > 0) {
+                    var fileData = new FormData();
+                    fileData.append(files[0].name, files[0]);
+                }
+                var FileName = files
+                jsonData.invoice_details.push({
+                    Id: Id,
                     invoice_id: 0,
                     item_project: item_project,
                     item_salesperson: item_salesperson,
@@ -153,46 +189,52 @@
                     item_InvoiceAmtwithoutgst: item_InvoiceAmtwithoutgst,
                     item_InvoiceAmtwithgst: item_InvoiceAmtwithgst,
                     item_AgreedAmtwithoutgst: item_AgreedAmtwithoutgst,
-                    item_AgreedAmt: item_AgreedAmt
-                                });
-                            });
-                            console.log('invoiceData', jsonData.invoice_details);
-                            var cc = jsonData.invoice_details;
-                            debugger;
+                    item_AgreedAmt: item_AgreedAmt,
+                    FileName: FileName
+                });
+            });
+            console.log('invoiceData', jsonData.invoice_details);
+            debugger;
+            var cc = jsonData.invoice_details;
+            debugger;
 
-                            var paymentReturnID = "";
+            var paymentReturnID = "";
             $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
 
             $.ajax({
-                            type: "POST",
-                url: "/Invoice/SaveUpdateSupplierInvoice", // the URL of the controller action method
-                data: "invoiceobj=" + JSON.stringify(jsonData), // optional data
+                url: '@Url.Action("SaveUpdateSupplierInvoice", "Invoice")?JsonBudget=' + encodeURIComponent(JSON.stringify(jsonData)),
+                //url: "/Invoice/SaveUpdateSupplierInvoice", // the URL of the controller action method
+                type: "POST",
+                dataType: "json",
+                processData: false, //remember to set processData and ContentType to false, otherwise you may get an error
+                contentType: false,
+                data: fileData,// optional data
                 success: function (result) {
                     $.loader('close');
-                                    if (result.cls == "error") {
-                                        notify(result.msg, result.cls);
-                                    } else {
+                    if (result.cls == "error") {
+                        notify(result.msg, result.cls);
+                    } else {
                         $("#btnClosePayment").click();
-                                        loadGrid();
-                                        paymentReturnID = String(result.id);
-                                        notify(result.msg, result.cls);
-                                    }
-                                },
+                        loadGrid();
+                        paymentReturnID = String(result.id);
+                        notify(result.msg, result.cls);
+                    }
+                },
                 error: function (req, status, error) {
                     // do something with error
                     $.loader('close');
-                                    notify(error, "error");
-                                }
-                            }).done(function () {
-                                if (actiontype == "saveprint" && paymentReturnID != "") {
-                                    setTimeout(function () {
-                                        openModelpop('/Invoice/PrintPreview', 'id', paymentReturnID);
-                                    }, 600);
-                                }
-                            });
+                    notify(error, "error");
+                }
+            }).done(function () {
+                if (actiontype == "saveprint" && paymentReturnID != "") {
+                    setTimeout(function () {
+                        openModelpop('/Invoice/PrintPreview', 'id', paymentReturnID);
+                    }, 600);
+                }
+            });
 
-                        }
-                    }
+        }
+    }
 
 
                     function loadGrid() {
@@ -255,4 +297,13 @@
                     });
                 }
     }
+
+    function ApprovalInfo(id) {
+        debugger;
+        window.open("/Invoice/LoadApproval?Id=" + id, 'targetWindow', 'toolbar=no,location=no, status=no, menubar=no, scrollbars=yes,resizable=yes,width=850,height=500');
+        //UploadFile
+    }
+
+
+    
 </script>

@@ -112,6 +112,14 @@
     $('#from_date').removeAttr("data-val-date");
     $('#to_date').removeAttr("data-val-date");
 
+    $(document).ready(function () {
+        //debugger;
+        var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 0) {
+            $("#ProjectSalesmenId").prop("disabled", true);
+        }
+
+    });
 
     function SaveProject() {
         var form = $('#frmProject');
@@ -160,7 +168,14 @@
     }
 
     function loadGrid() {
-        MVCGrid.reloadGrid('MyProjects');
+
+        var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 1) {
+            MVCGrid.reloadGrid('MyProjects');
+        }
+        else {
+            MVCGrid.reloadGrid('MyProjectsForSalesman');
+        }
     }
 
     function ShowCustomerModel(obj) {

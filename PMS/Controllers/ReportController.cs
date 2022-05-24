@@ -23,9 +23,11 @@ namespace PMS.Controllers
         {
             string uid = User.Identity.GetUserId();
             List<SelectListItem> branchList = new List<SelectListItem>();
+            ViewBag.IsAdminLogin = 1;
             if (User.IsInRole("Salesman"))
             {
                 objView.SalesmenId = Common.CommonFunction.GetSalesmanIdByUser(uid);
+                ViewBag.IsAdminLogin = 0;
             }
             if (User.IsInRole("SuperAdmin"))
             {
@@ -39,7 +41,6 @@ namespace PMS.Controllers
                 objView.ProjectList = CommonFunction.UserProjectList(uid);
             }
             objView.Uid = uid;
-
             //branchList.Insert(0, new SelectListItem { Text = "Select Branch", Value = "0" });
             //objView.BranchList = branchList;
 
@@ -567,9 +568,11 @@ namespace PMS.Controllers
                 // objView.ProjectList = CommonFunction.UserProjectList(uid);
             }
             objView.Uid = uid;
+            ViewBag.IsAdminLogin = 1;
             if (User.IsInRole("Salesman"))
             {
                 objView.SalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.Uid);
+                ViewBag.IsAdminLogin = 0;
             }
 
             DateTime now = DateTime.Now;
@@ -783,6 +786,12 @@ namespace PMS.Controllers
             }
            // salesmenList = Common.CommonFunction.AllSalesmen();
             objView.Uid = uid;
+            ViewBag.IsAdminLogin = 1;
+            if (User.IsInRole("Salesman"))
+            {
+                objView.SalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.Uid);
+                ViewBag.IsAdminLogin = 0;
+            }
             // objView.SalenmenList = salesmenList;
             objView.SalesmenAndUserList = CommonFunction.SalesmenListStatusWise("");
             objView.SalesmenStatusList = CommonFunction.SalesmenStatusList();
@@ -939,6 +948,12 @@ namespace PMS.Controllers
 
             // objView.BranchList = branchList;
             // objView.SalenmenList = salesmenList;
+            ViewBag.IsAdminLogin = 1;
+            if (User.IsInRole("Salesman"))
+            {
+                objView.SalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.Uid);
+                ViewBag.IsAdminLogin = 0;
+            }
             objView.SalesmenAndUserList = CommonFunction.SalesmenListStatusWise("");
             objView.SalesmenStatusList = CommonFunction.SalesmenStatusList();
             //objView.YearList = Common.CommonFunction.YearList();
@@ -1037,6 +1052,12 @@ namespace PMS.Controllers
             }
            // salesmenList = CommonFunction.AllSalesmen();
             objView.Uid = uid;
+            ViewBag.IsAdminLogin = 1;
+            if (User.IsInRole("Salesman"))
+            {
+                objView.SalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.Uid);
+                ViewBag.IsAdminLogin = 0;
+            }
             // objView.SalenmenList = salesmenList;
             objView.SalesmenAndUserList = CommonFunction.SalesmenListStatusWise("");
             objView.SalesmenStatusList = CommonFunction.SalesmenStatusList();
@@ -1319,9 +1340,11 @@ namespace PMS.Controllers
             }
 
             objView.Uid = uid;
+            ViewBag.IsAdminLogin = 1;
             if (User.IsInRole("Salesman"))
             {
                 objView.SalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.Uid);
+                ViewBag.IsAdminLogin = 0;
             }
             objView.YearList = CommonFunction.YearList();
             if (objView.ReportYear == 0)

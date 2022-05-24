@@ -688,7 +688,7 @@ namespace PMS
             MVCGridDefinitionTable.Add("LoanGrid", new MVCGridBuilder<Database.SSP_Loan_Result>()
                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                .WithPaging(true, 20)
-               .WithPageParameterNames("hdnUID", "brId", "SearchFrom", "SearchTo")
+               .WithPageParameterNames("hdnUID", "brId", "SearchFrom", "SearchTo","SalesmanId")
                .AddColumns(cols =>
                {
                    cols.Add("loan_date").WithHeaderText("Date").WithCellCssClassExpression(p => "col-sm-1").WithSorting(true).WithValueExpression(i => i.loan_date);
@@ -712,7 +712,7 @@ namespace PMS
                    ILoanRepositor repo = new LoanService();
                    string sortColumn = options.GetSortColumnData<string>();
                    string uid = context.QueryOptions.GetPageParameterString("hdnUID");
-                   var items = repo.SearchLoans(uid, Convert.ToInt32(context.QueryOptions.GetPageParameterString("brId")), Convert.ToInt32(options.GetLimitOffset()) + 1, Convert.ToInt32(options.GetLimitRowcount()), sortColumn, options.SortDirection.ToString(), Convert.ToDateTime(context.QueryOptions.GetPageParameterString("SearchFrom")), Convert.ToDateTime(context.QueryOptions.GetPageParameterString("SearchTo")));
+                   var items = repo.SearchLoans(uid, Convert.ToInt32(context.QueryOptions.GetPageParameterString("brId")), Convert.ToInt32(options.GetLimitOffset()) + 1, Convert.ToInt32(options.GetLimitRowcount()), sortColumn, options.SortDirection.ToString(), Convert.ToDateTime(context.QueryOptions.GetPageParameterString("SearchFrom")), Convert.ToDateTime(context.QueryOptions.GetPageParameterString("SearchTo")), Convert.ToInt32(context.QueryOptions.GetPageParameterString("SalesmanId")));
                    if (items != null && items.Count > 0)
                    {
                        totalRecords = Convert.ToInt32(items[0].TotalRecords);
@@ -837,14 +837,14 @@ namespace PMS
                    cols.Add("invoice_date").WithHeaderText("Date").WithCellCssClassExpression(p => "col-sm-2").WithSorting(true).WithValueExpression(p => p.Invoice_date);
                    cols.Add("supplier_name").WithHeaderText("Supplier").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.supplier_name);
                    //cols.Add("company_name").WithHeaderText("Company").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.company_name);
-                   cols.Add("ActionLink").WithSorting(false).WithHeaderText("Approve").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1").WithValueExpression((p, c) => p.Id.ToString())
+                   cols.Add("ActionLink").WithSorting(false).WithHeaderText("Approve Info").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1").WithValueExpression((p, c) => p.Id.ToString())
                     .WithValueTemplate("<a onclick=ApprovalInfo({Value}); class='btn-xs' title='Approve'><span class='glyphicon glyphicon-pencil'></span></a>");
                    //cols.Add("CreatedUpdated").WithHeaderText("Created/Updated").WithCellCssClassExpression(p => "col-sm-5")
                    //     .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.CreatedUpdated);
                    cols.Add("SupplierInvoiceItems").WithHeaderText("Invoice/Items").WithCellCssClassExpression(p => "col-sm-5")
                         .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.SupplierInvoiceItems.Replace(";", "</br>").Replace("Invoice#", "<strong>Invoice#: </strong>").Replace("Amount", "<strong>Amount: </strong>").Replace("Site# ", "<strong>Site: </strong>").Replace("SalesPerson#", "<strong>Sales Person: </strong>"));
-                   cols.Add("ViewLink").WithSorting(false).WithHeaderText("").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-2")
-                    .WithValueExpression((p, c) => p.Id.ToString()).WithValueTemplate("<a onclick=ShowCustomerModel({Value}); class='btn-xs' title='Edit'><span class='glyphicon glyphicon-pencil'></span></a><a onclick=DeleteConfirm('/Invoice/Delete_SupplierInvoiceById','id',{Value});  class='btnDelete btn-xs' title='Delete'><span class='glyphicon glyphicon-trash'></span></a>"); //<a title='Print' onclick=openModelpop('/Invoice/PrintPreview','id',{Value}); class='btn-xs'><span class='glyphicon glyphicon-print'></span></a>
+                   //cols.Add("ViewLink").WithSorting(false).WithHeaderText("").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-2")
+                   // .WithValueExpression((p, c) => p.Id.ToString()).WithValueTemplate("<a onclick=ShowCustomerModel({Value}); class='btn-xs' title='Edit'><span class='glyphicon glyphicon-pencil'></span></a><a onclick=DeleteConfirm('/Invoice/Delete_SupplierInvoiceById','id',{Value});  class='btnDelete btn-xs' title='Delete'><span class='glyphicon glyphicon-trash'></span></a>"); //<a title='Print' onclick=openModelpop('/Invoice/PrintPreview','id',{Value}); class='btn-xs'><span class='glyphicon glyphicon-print'></span></a>
                })
                .WithSorting(true, "invoice_date")
                .WithRetrieveDataMethod((context) =>
@@ -877,14 +877,17 @@ namespace PMS
               .WithPageParameterNames("hdnUID", "brId", "SearchFrom", "SearchTo", "SearchSupplier_id", "searchText")
               .AddColumns(cols =>
               {
-                  cols.Add("invoice_date").WithHeaderText("Date").WithCellCssClassExpression(p => "col-sm-2").WithSorting(true).WithValueExpression(p => p.Invoice_date);
-                  cols.Add("supplier_name").WithHeaderText("Supplier").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.supplier_name);
+                  cols.Add("invoice_date").WithHeaderText("Date").WithCellCssClassExpression(p => "col-sm-1").WithSorting(true).WithValueExpression(p => p.Invoice_date);
+                  cols.Add("supplier_name").WithHeaderText("Supplier").WithCellCssClassExpression(p => "col-sm-2").WithSorting(true).WithValueExpression(i => i.supplier_name);
                    //cols.Add("company_name").WithHeaderText("Company").WithCellCssClassExpression(p => "col-sm-3").WithSorting(true).WithValueExpression(i => i.company_name);
                    cols.Add("ActionLink").WithSorting(false).WithHeaderText("Verify").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1").WithValueExpression((p, c) => p.Id.ToString())
                    .WithValueTemplate("<a  class='btn-xs' title='Verify'><span class='glyphicon glyphicon-ok'></span></a>");
-                   //cols.Add("CreatedUpdated").WithHeaderText("Created/Updated").WithCellCssClassExpression(p => "col-sm-5")
-                   //     .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.CreatedUpdated);
-                   cols.Add("SupplierInvoiceItems").WithHeaderText("Invoice/Items").WithCellCssClassExpression(p => "col-sm-5")
+                   cols.Add("ActionLink1").WithSorting(false).WithHeaderText("Approve Info").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-1").WithValueExpression((p, c) => p.Id.ToString())
+                    .WithValueTemplate("<a onclick=ApprovalInfo({Value}); class='btn-xs' title='Approve'><span class='glyphicon glyphicon-pencil'></span></a>");
+
+                  //cols.Add("CreatedUpdated").WithHeaderText("Created/Updated").WithCellCssClassExpression(p => "col-sm-5")
+                  //     .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.CreatedUpdated);
+                  cols.Add("SupplierInvoiceItems").WithHeaderText("Invoice/Items").WithCellCssClassExpression(p => "col-sm-5")
                        .WithHtmlEncoding(false).WithSorting(false).WithValueExpression(i => i.SupplierInvoiceItems.Replace(";", "</br>").Replace("Invoice#", "<strong>Invoice#: </strong>").Replace("Amount", "<strong>Amount: </strong>").Replace("Site# ", "<strong>Site: </strong>").Replace("SalesPerson#", "<strong>Sales Person: </strong>"));
                   cols.Add("ViewLink").WithSorting(false).WithHeaderText("").WithHtmlEncoding(false).WithCellCssClassExpression(p => "col-sm-2")
                    .WithValueExpression((p, c) => p.Id.ToString()).WithValueTemplate("<a onclick=ShowCustomerModel({Value}); class='btn-xs' title='Edit'><span class='glyphicon glyphicon-pencil'></span></a><a onclick=DeleteConfirm('/Invoice/Delete_SupplierInvoiceById','id',{Value});  class='btnDelete btn-xs' title='Delete'><span class='glyphicon glyphicon-trash'></span></a>"); //<a title='Print' onclick=openModelpop('/Invoice/PrintPreview','id',{Value}); class='btn-xs'><span class='glyphicon glyphicon-print'></span></a>

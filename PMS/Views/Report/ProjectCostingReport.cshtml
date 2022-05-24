@@ -61,7 +61,7 @@
 </div>
 
 <script>
-    function SubmitAs(obj) {        
+    function SubmitAs(obj) {
         if ($("#ProjectId").val() == "0") {
             notify("Please select a project.", "error");
             return false;
@@ -85,19 +85,22 @@
                 $("#ProjectId").trigger("chosen:updated");
                 $("#ProjectId").trigger("liszt:updated");
             });
-            
+
         });
         $.loader('close');
-       
-     
+
+
         //$("#ProjectId").chosen();
-       
+
     }
     $(function () {
         $("#ProjectId").chosen();
         $("#ProjectId").width(260);
+         var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 0) {
+            $("#ddlSalesmen").prop("disabled", true);
+        }
 
-      
     });
     $("#ddlStatus").change(function () {
 

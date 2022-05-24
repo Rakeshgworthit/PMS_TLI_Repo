@@ -62,7 +62,7 @@
 <script>
     function SaveForm() {
         var form = $('#frmProject');
-        $.validator.unobtrusive.parse(form);       
+        $.validator.unobtrusive.parse(form);
         $("#project_id_chosen").next(".field-validation-valid").html('');
         if ($("#project_id").val() <= 0) {
             $("#project_id_chosen").next(".field-validation-valid").html('Please select a project');
@@ -70,7 +70,7 @@
             return false;
         }
         if (form.valid()) {
-           
+
 
             $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
             $.ajax({
@@ -85,10 +85,10 @@
                     gst_percentage: $("#gst_percentage").val(),
                     gst_amount: $("#gst_amount").val(),
                     total_amount: $("#total_amount").val(),
-                    remarks: $("#remarks").val(),                   
+                    remarks: $("#remarks").val(),
                     isactive: $("#isactive").val(),
                     record_type: $("#record_type").val()
-                }, 
+                },
                 success: function (result) {
                     $.loader('close');
                     if (result.cls == "error") {
@@ -99,7 +99,7 @@
                         notify(result.msg, result.cls);
                     }
                 },
-                error: function (req, status, error) {                   
+                error: function (req, status, error) {
                     notify(error, "error");
                 }
             });
@@ -112,12 +112,18 @@
 
 
     $(function () {
+        debugger;
         $("#SearchProject").chosen();
         $("#SearchFrom").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
         $('#SearchFrom').removeAttr("data-val-date");
 
         $("#SearchTo").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
         $('#SearchTo').removeAttr("data-val-date");
+
+        var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 0) {
+            $("#ProjectSalesmenId").prop("disabled", true);
+        }
     });
 
 </script>

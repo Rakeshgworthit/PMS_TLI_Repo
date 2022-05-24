@@ -8,14 +8,14 @@
 }
 
 function notify(msg, type) {
-        notif({
-            msg: msg,
-            type: type,
-            position: "center",
-            opacity: 0.9,
-            timeout: 2000
-        });
-    }
+    notif({
+        msg: msg,
+        type: type,
+        position: "center",
+        opacity: 0.9,
+        timeout: 2000
+    });
+}
 
     function reloadGrid(gridname)
     {

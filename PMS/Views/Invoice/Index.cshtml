@@ -190,6 +190,11 @@
 
         $("#SearchTo").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
         $('#SearchTo').removeAttr("data-val-date");
+
+         var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 0) {
+            $("#SearchSales_person").prop("disabled", true);
+        }
     });
 
     function isNumber(n) {

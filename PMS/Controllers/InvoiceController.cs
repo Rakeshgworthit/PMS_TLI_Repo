@@ -13,6 +13,9 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
+using System.IO;
+using static PMS.Models.InvoiceViewModel;
 
 namespace PMS.Controllers
 {
@@ -45,9 +48,11 @@ namespace PMS.Controllers
             {
                 objView.UID = User.Identity.GetUserId();
             }
+            ViewBag.IsAdminLogin = 1;
             if (User.IsInRole("Salesman"))
             {
                 objView.SearchSales_person = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);
+                ViewBag.IsAdminLogin = 0;
             }
             DateTime now = DateTime.Now;
             var CurrentstartDate = new DateTime(now.Year, now.Month, 1);
@@ -129,7 +134,20 @@ namespace PMS.Controllers
                 objView.Invoice_date = DateTime.Now;
                 objView.hdnProjectList = new List<SelectListItem>();
             }
-
+            if (User.IsInRole("SuperAdmin"))
+            {
+                objView.UID = "00000000-0000-0000-0000-000000000000";
+            }
+            else
+            {
+                objView.UID = User.Identity.GetUserId();
+            }
+            ViewBag.IsAdminLogin = 1;
+            if (User.IsInRole("Salesman"))
+            {
+                objView.Sales_person = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);
+                ViewBag.IsAdminLogin = 0;
+            }
             objView.InvoiceItemList = InvoiceItemList;
 
             return View(objView);
@@ -445,8 +463,25 @@ namespace PMS.Controllers
                 objView.Invoice_date = DateTime.Now;
                 //objView.hdnProjectList = new List<SelectListItem>();
             }
-
-            objView.SupplierInvoiceItemList = InvoiceItemEditList;
+            if (User.IsInRole("SuperAdmin"))
+            {
+                objView.UID = "00000000-0000-0000-0000-000000000000";
+                //branchList = Common.CommonFunction.BranchList();
+            }
+            else
+            {
+                objView.UID = User.Identity.GetUserId();
+                // branchList = Common.CommonFunction.UserBranchList(objView.UID);
+            }
+            if (User.IsInRole("Salesman"))
+            {
+                ViewBag.SalesmanId = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);
+            }
+            else
+            {
+                ViewBag.SalesmanId = 0;
+            }
+            objView.SupplierInvoiceItemList = InvoiceItemEditList;        
 
             return View(objView);
         }
@@ -481,12 +516,19 @@ namespace PMS.Controllers
             }
         }
 
-        public JsonResult SaveUpdateSupplierInvoice(SupplierInvoiceViewModel objView)
+        public JsonResult SaveUpdateSupplierInvoice(string JsonBudget)
         {
-            if (!string.IsNullOrEmpty(Request.Params["invoiceobj"]))
-            {
-                objView = SupplierInvoiceViewModel.FromJson(Request.Params["invoiceobj"]);
-            }
+
+            SupplierInvoiceViewModel objView = SupplierInvoiceViewModel.FromJsonNew(JsonBudget);
+            //JsonConvert.DeserializeObject<SupplierInvoiceViewModel>(JsonBudget);
+            string FilePath = ConfigurationManager.AppSettings["PhysicalPath"].ToString();
+            string fname = "";
+            string filename = "";
+            string extension = string.Empty;
+            string fileNameWithExt = string.Empty;
+            string filepathRoot = string.Empty;
+            int ItemId = 0;
+           
 
             string uid = User.Identity.GetUserId();
             tbl_supplier_invoice objRec = new tbl_supplier_invoice();
@@ -507,7 +549,7 @@ namespace PMS.Controllers
                     using (PMSEntities obj = new PMSEntities())
                     {
                         List<int> list1 = new List<int>();
-                        foreach (var update_item in objView.invoice_details.Where(o => o.Id > 0).ToList())
+                        foreach (var update_item in objView.invoice_detailsNew.Where(o => o.Id > 0).ToList())
                         {
                             list1.Add(update_item.Id);
                         }
@@ -527,7 +569,7 @@ namespace PMS.Controllers
 
                                 if (a > 0)
                                 {
-                                    foreach (var update_item in objView.invoice_details.Where(o => o.Id > 0).ToList())
+                                    foreach (var update_item in objView.invoice_detailsNew.Where(o => o.Id > 0).ToList())
                                     {
                                         tbl_supplierinvoice_items _obj = obj.tbl_supplierinvoice_items.Where(o => o.Id == update_item.Id).SingleOrDefault();
 
@@ -542,15 +584,31 @@ namespace PMS.Controllers
                                             _obj.agreed_amt_without_gst = update_item.agreed_amt_without_gst;
                                             _obj.agreed_amt = update_item.agreed_amt;
 
-                                            obj.SaveChanges();
+                                            obj.SaveChanges();                                           
+                                        }
+                                        if (update_item.FileName != "")
+                                        {
+                                            fname = update_item.FileName.Substring(12, (update_item.FileName.Length - 12));
+                                            ItemId = update_item.Id;
+                                            filename = string.Concat(Path.GetFileNameWithoutExtension(fname), update_item.invoice_number, Path.GetExtension(fname));
+                                            string doc_Path = "/UploadDocuments/" + "/ProjectBudget/" + update_item.project_id + "/";
+                                            Common.CommonFunction.SaveDocument(filename, update_item.project_id, extension, doc_Path + filename, ItemId);
                                         }
                                     }
-                                    foreach (var item in objView.invoice_details.Where(o => o.Id == 0).ToList())
+                                    foreach (var item in objView.invoice_detailsNew.Where(o => o.Id == 0).ToList())
                                     {
                                         obj.SSP_Add_SupplierInvoice_Items(Convert.ToInt32(objRec.Id), Convert.ToInt32(item.salesperson_id),
                                             Convert.ToInt32(item.project_id), Convert.ToString(item.invoice_number),
                                             Convert.ToDecimal(item.gst), Convert.ToDecimal(item.invoice_amt_without_gst), Convert.ToDecimal(item.invoice_amt_with_gst), Convert.ToDecimal(item.agreed_amt_without_gst),
                                             Convert.ToDecimal(item.agreed_amt));
+                                        if (item.FileName != "")
+                                        {
+                                            fname = item.FileName.Substring(12, (item.FileName.Length - 12));
+                                            ItemId = Common.CommonFunction.GetSupplierInvoiceItemId(item.Id, item.project_id, item.salesperson_id, item.invoice_number);
+                                            filename = string.Concat(Path.GetFileNameWithoutExtension(fname), item.invoice_number, Path.GetExtension(fname));
+                                            string doc_Path = "/UploadDocuments/" + "/ProjectBudget/" + item.project_id + "/";
+                                            Common.CommonFunction.SaveDocument(filename, item.project_id, extension, doc_Path + filename, ItemId);
+                                        }
                                     }
                                 }
                                 else
@@ -562,7 +620,7 @@ namespace PMS.Controllers
                         }
                         else
                         {
-                            foreach (var update_item in objView.invoice_details.Where(o => o.Id > 0).ToList())
+                            foreach (var update_item in objView.invoice_detailsNew.Where(o => o.Id > 0).ToList())
                             {
                                 tbl_supplierinvoice_items _obj = obj.tbl_supplierinvoice_items.Where(o => o.Id == update_item.Id).SingleOrDefault();
 
@@ -579,13 +637,30 @@ namespace PMS.Controllers
 
                                     obj.SaveChanges();
                                 }
+                                if (update_item.FileName != "" )
+                                {
+                                    fname = update_item.FileName.Substring(12, (update_item.FileName.Length - 12));
+                                    ItemId = update_item.Id;
+                                    filename = string.Concat(Path.GetFileNameWithoutExtension(fname), update_item.invoice_number, Path.GetExtension(fname));
+                                    string doc_Path = "/UploadDocuments/" + "/ProjectBudget/" + update_item.project_id + "/";
+                                    Common.CommonFunction.SaveDocument(filename, update_item.project_id, extension, doc_Path + filename, ItemId);
+                                }
                             }
-                            foreach (var item in objView.invoice_details.Where(o => o.Id == 0).ToList())
+                            foreach (var item in objView.invoice_detailsNew.Where(o => o.Id == 0).ToList())
                             {
                                 obj.SSP_Add_SupplierInvoice_Items(Convert.ToInt32(objRec.Id), Convert.ToInt32(item.salesperson_id),
                                     Convert.ToInt32(item.project_id), Convert.ToString(item.invoice_number),
                                     Convert.ToDecimal(item.gst), Convert.ToDecimal(item.invoice_amt_without_gst), Convert.ToDecimal(item.invoice_amt_with_gst), Convert.ToDecimal(item.agreed_amt_without_gst),
                                     Convert.ToDecimal(item.agreed_amt));
+
+                                if (item.FileName != "")
+                                {
+                                    fname = item.FileName.Substring(12, (item.FileName.Length - 12));
+                                    ItemId = Common.CommonFunction.GetSupplierInvoiceItemId(Convert.ToInt32(objRec.Id), item.project_id, item.salesperson_id, item.invoice_number);
+                                    filename = string.Concat(Path.GetFileNameWithoutExtension(fname), item.invoice_number, Path.GetExtension(fname));
+                                    string doc_Path = "/UploadDocuments/" + "/ProjectBudget/" + item.project_id + "/";
+                                    Common.CommonFunction.SaveDocument(filename, item.project_id, extension, doc_Path + filename, ItemId);
+                                }
                             }
                         }
                     }
@@ -607,18 +682,67 @@ namespace PMS.Controllers
 
                 using (PMSEntities obj = new PMSEntities())
                 {
-                    foreach (var item in objView.invoice_details)
+                    foreach (var item in objView.invoice_detailsNew)
                     {
                         obj.SSP_Add_SupplierInvoice_Items(Convert.ToInt32(objRec.Id), Convert.ToInt32(item.salesperson_id),
                                Convert.ToInt32(item.project_id), Convert.ToString(item.invoice_number),
                                Convert.ToDecimal(item.gst), Convert.ToDecimal(item.invoice_amt_without_gst), Convert.ToDecimal(item.invoice_amt_with_gst), Convert.ToDecimal(item.agreed_amt_without_gst), Convert.ToDecimal(item.agreed_amt));
+
+                       
+                        fname = item.FileName.Substring(12, (item.FileName.Length-12));                        
+                        ItemId = Common.CommonFunction.GetSupplierInvoiceItemId(Convert.ToInt32(objRec.Id), item.project_id, item.salesperson_id, item.invoice_number);
+                        filename = string.Concat(Path.GetFileNameWithoutExtension(fname), item.invoice_number, Path.GetExtension(fname));
+                        string doc_Path = "/UploadDocuments/" + "/ProjectBudget/" + item.project_id + "/";
+                        Common.CommonFunction.SaveDocument(filename, item.project_id, extension, doc_Path + filename, ItemId);
+
                     }
                 }
 
                 return Json(new { msg = "Supplier Invoice created successfully.", cls = "success", id = Convert.ToString(objRec.Id) });
             }
         }
+        public JsonResult UploadDocument(string ProjectId,string InvoiceNo)
+        {
+            string FilePath = ConfigurationManager.AppSettings["PhysicalPath"].ToString();
+            string fname = "";
+            string filename = "";
+            string extension = string.Empty;
+            string fileNameWithExt = string.Empty;
+            string filepathRoot = string.Empty;
+            try
+            {
+                //SupplierInvoiceViewModel objView = SupplierInvoiceViewModel.FromJsonNew(JsonBudget);
+                if (Request.Files.Count > 0)
+                {
+                    HttpPostedFileBase file = Request.Files[0] as HttpPostedFileBase;
+                    string fileName = file.FileName;
+                    fileNameWithExt = fileName;
+                    string doc_Path = "/UploadDocuments/" + "/ProjectBudget/" + ProjectId + "/";
+                    string dirPath = FilePath + doc_Path;
 
+                    string UploadPath = "~/UploadDocuments/ProjectBudget/" + ProjectId;
+                    if (!Directory.Exists(dirPath))
+                    {
+                        Directory.CreateDirectory(dirPath);
+                    }
+                    string addTimeStampToFileName = string.Empty;
+                    //if (file.ContentLength == 0)
+                    //   continue;
+                    if (file.ContentLength > 0)
+                    {
+                        addTimeStampToFileName = string.Concat(Path.GetFileNameWithoutExtension(fileName), InvoiceNo, Path.GetExtension(file.FileName));
+                        filepathRoot = Path.Combine(HttpContext.Request.MapPath(UploadPath), addTimeStampToFileName);
+                        extension = Path.GetExtension(file.FileName);
+                        file.SaveAs(filepathRoot);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return Json(new { msg = "Document Uploaded Successfully", cls = "success" });
+        }
         public ActionResult Delete_SupplierInvoiceById(Int32 Id)
         {
             if (Id > 0)
@@ -637,6 +761,7 @@ namespace PMS.Controllers
 
             return RedirectToAction("SupplierInvoice");
         }
+
         #endregion
 
         #region Designer Invoice
@@ -838,8 +963,9 @@ namespace PMS.Controllers
         {
             InvoiceApprovalInfoViewModel objView = new InvoiceApprovalInfoViewModel();
             List<ApprovalInfoList> objPDList = new List<ApprovalInfoList>();
-            decimal Amount = 0;
+            decimal AppAmount = 0;
             string Remarks = "";
+            decimal totalAmount = 0;
 
             SqlCommand Cmd;
             try
@@ -867,8 +993,11 @@ namespace PMS.Controllers
                         _GetApprovalItem.ProjectNumber = Ireader.GetString(11);
                         _GetApprovalItem.Salesman = Ireader.GetString(12);
                         _GetApprovalItem.ApprovedRemarks = Ireader.GetString(13);
-                        Amount = _GetApprovalItem.ApprovedAmount;
+                        _GetApprovalItem.ProjectId = Convert.ToInt64(Ireader.GetInt32(14));
+                        _GetApprovalItem.documentPath = Ireader.GetString(15);
+                        AppAmount = _GetApprovalItem.ApprovedAmtAftGst;
                         Remarks = _GetApprovalItem.ApprovedRemarks;
+                        totalAmount = _GetApprovalItem.InvoiceAmountAftGst;
                         objPDList.Add(_GetApprovalItem);
                     }
                     Common.CommonFunction.CloseConnection(Conn);
@@ -880,10 +1009,11 @@ namespace PMS.Controllers
                 else
                 {
                     objView.ApprovalInfoList = objPDList;
-                    objView.ApprovedAmount = Amount;
+                    objView.TotalAmount = totalAmount;
+                    objView.ApprovedAmount = AppAmount;
                     objView.ApprovedRemarks = Remarks;
                     objView.Id = Id;
-                    
+
                 }
 
                 return View(objView);
@@ -919,10 +1049,119 @@ namespace PMS.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { msg = "Approved Failed.", cls = "Error" });
+                return Json(new { msg = "Approved Failed.", cls = "error" });
             }
 
-        } 
+        }
+
+        public JsonResult GetFilePathByProjectBudgetDetailsId(Int64 ProjectId, int ProjectBudgetDetailsId)
+        {
+            string path = string.Empty;
+            try
+            {
+                long projectId = ProjectId;
+                List<GetDocumentdetails> getDocs = Get_DocumentsForProjectBudget(ProjectBudgetDetailsId);
+                if (getDocs.Count > 0)
+                {
+                    foreach (var item in getDocs)
+                    {
+                        path = item.document_path;
+                    }
+                }
+                else
+                {
+                    path = string.Empty;
+                }
+
+                //path = _IProjectsBudget.GetFilePathById(ProjectId);
+            }
+            catch (Exception ex)
+            {
+                //ExceptionLog.WriteLog(ex, "Method Name: GetFilePathById");
+                throw ex; 
+            }
+            finally
+            {
+
+            }
+            return Json(new { data = path }, JsonRequestBehavior.AllowGet);
+        }
+
+        public List<GetDocumentdetails> Get_DocumentsForProjectBudget(int ProjectBudgetDetailsId)
+        {
+            List<InvoiceViewModel> _GetDocumentList;
+            List<GetDocumentdetails> _GetDocumentdetails = new List<GetDocumentdetails>();
+
+            try
+            {
+
+                _GetDocumentList = new List<InvoiceViewModel>();
+                _GetDocumentList = Get_DocumentsForProjectBudgetDetails(ProjectBudgetDetailsId);
+                if (_GetDocumentList != null && _GetDocumentList.Count > 0)
+                {
+                    for (int i = 0; _GetDocumentList.Count > i; i++)
+                    {
+                        if (_GetDocumentList[i].doc_id == 11)
+                        {
+                            GetDocumentdetails _GetDocumentpath = new GetDocumentdetails();
+                            _GetDocumentpath.document_path = _GetDocumentList[i].document_path;
+                            _GetDocumentdetails.Add(_GetDocumentpath);
+                        }
+
+                    }
+
+                }
+                else
+                {
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //ExceptionLog.WriteLog(ex, "Method Name: Get_Documents");
+                throw ex;
+            }
+            finally
+            {
+                _GetDocumentList = null;
+            }
+            return _GetDocumentdetails;
+        }
+
+        public List<InvoiceViewModel> Get_DocumentsForProjectBudgetDetails(int SupplierInvoiceItemId)
+        {
+            List<InvoiceViewModel> obj = new List<InvoiceViewModel>();
+            try
+            {
+                using (var Conn = Common.CommonFunction.GetConnection())
+                {
+                    SqlCommand cmd = new SqlCommand("Get_Documents_For_Project_Budget", Conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PROJECT_BUDGET_DETAILS_ID", SupplierInvoiceItemId);
+                    IDataReader Ireader = cmd.ExecuteReader();
+                    while (Ireader.Read())
+                    {
+                        InvoiceViewModel _GetQuotationDeatils = new InvoiceViewModel();
+                        _GetQuotationDeatils.doc_id = Ireader.GetInt16(0);
+                        _GetQuotationDeatils.document_path = Ireader.GetString(1);
+                        _GetQuotationDeatils.id_type = Ireader.GetInt16(2);
+                        _GetQuotationDeatils.project_number = Ireader.GetString(3);
+                        obj.Add(_GetQuotationDeatils);
+                    }
+                }
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                //ExceptionLog.WriteLog(ex, "Method Name: Get_DocumentsForProjectBudget Parameters= " + ProjectBudgetDetailsId);
+                throw ex;
+            }
+            finally
+            {
+                obj = null;
+            }
+        }
+
 
         #endregion
     }

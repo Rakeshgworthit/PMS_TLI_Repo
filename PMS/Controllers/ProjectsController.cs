@@ -44,13 +44,15 @@ namespace PMS.Controllers
             }
             else
             {
-                objView.UID = User.Identity.GetUserId();
-               // branchList = Common.CommonFunction.UserBranchList(objView.UID);
+                objView.UID = User.Identity.GetUserId();                
+                // branchList = Common.CommonFunction.UserBranchList(objView.UID);
             }
+            ViewBag.IsAdminLogin = 1;
             if (User.IsInRole("Salesman"))
             {
                 objView.ProjectSalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);
                 //branchList = Common.CommonFunction.BranchList();
+                ViewBag.IsAdminLogin = 0;
             }
             //branchList.Insert(0, new SelectListItem { Text = "Please Select", Value = "0" });
             // objView.BranchList = branchList;
@@ -185,14 +187,16 @@ namespace PMS.Controllers
             if (User.IsInRole("SuperAdmin"))
             {
                 objView.UID = "00000000-0000-0000-0000-000000000000";
+                ViewBag.IsAdminLogin = 1;
             }
             else
             {
-                objView.UID = User.Identity.GetUserId();
+                objView.UID = User.Identity.GetUserId();                
             }
             if (User.IsInRole("Salesman"))
             {
                 objView.ProjectSalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);
+                ViewBag.IsAdminLogin = 0;
             }
 
             DateTime now = DateTime.Now;
@@ -426,7 +430,7 @@ namespace PMS.Controllers
                 objView = null;
                 objPDList = null;
             }
-        }
+        }       
 
         public ActionResult SaveDocument(Int32 project_id, string file_desc)
         {
@@ -499,7 +503,6 @@ namespace PMS.Controllers
             {
             }
         }
-
 
         public void DeleteDocument(Int32 Id, string FilePath, string FileName,long project_id)
         {

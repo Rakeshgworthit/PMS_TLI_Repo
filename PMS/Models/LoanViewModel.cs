@@ -42,7 +42,7 @@ namespace PMS.Models
         public System.DateTime updated_on { get; set; }
         public bool isactive { get; set; }
 
-
+        public int SalesmanId { get; set; }
 
 
         public List<SelectListItem> bankList { get; set; }

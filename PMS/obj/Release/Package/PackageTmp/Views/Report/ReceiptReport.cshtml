@@ -80,14 +80,22 @@
 
 
     $(document).ready(function () {
+        debugger;
         $('#tableid').DataTable({
             "paging": false,
             "ordering": true,
             "info": false,
             "searching": false,
         });
+
+
+        var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 0) {
+            $("#ddlSalesmen").prop("disabled", true);
+        }
+
         $("#ddlStatus").change(function () {
-           
+
             var Id = $('#ddlStatus').val();
             $.ajax({
                 type: 'POST',
@@ -97,7 +105,7 @@
                 dataType: "json",
                 success: function (Model) {
                     {
-                       
+
                         $("#ddlSalesmen").empty();
                         $.each(Model.SalesmenAndUserList, function () {
                             $("#ddlSalesmen").append($("<option/>").val(this.Value).text(this.Text));
@@ -128,7 +136,7 @@
         }
     }
     $(function () {
-       
+
 
         $("#ProjectId").chosen();
         $("#ProjectId").width(260);
@@ -136,11 +144,11 @@
         $("#from_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
         $('#from_date').removeAttr("data-val-date");
 
-       
+
 
         $("#to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
         $('#to_date').removeAttr("data-val-date");
-        
+
     });
 
     function GetSalesmenList() {

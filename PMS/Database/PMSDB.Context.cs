@@ -547,7 +547,7 @@ namespace PMS.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SSP_Invoices_Result>("SSP_Invoices", userIDParameter, companyIdParameter, fromDateParameter, toDateParameter, billToIdParameter, salesMenIdParameter, startRowIndexParameter, pageSizeParameter, colSortParameter, orderByParameter, isTaxParameter, searchTextParameter);
         }
     
-        public virtual ObjectResult<SSP_Loan_Result> SSP_Loan(Nullable<System.Guid> userID, Nullable<int> branchId, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<int> startRowIndex, Nullable<int> pageSize, string colSort, string orderBy)
+        public virtual ObjectResult<SSP_Loan_Result> SSP_Loan(Nullable<System.Guid> userID, Nullable<int> branchId, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<int> startRowIndex, Nullable<int> pageSize, string colSort, string orderBy, Nullable<int> SalesmanId)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
@@ -580,8 +580,13 @@ namespace PMS.Database
             var orderByParameter = orderBy != null ?
                 new ObjectParameter("OrderBy", orderBy) :
                 new ObjectParameter("OrderBy", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SSP_Loan_Result>("SSP_Loan", userIDParameter, branchIdParameter, fromDateParameter, toDateParameter, startRowIndexParameter, pageSizeParameter, colSortParameter, orderByParameter);
+
+            var SalesmanIdParameter = SalesmanId != null ?
+               new ObjectParameter("SalesmanId", SalesmanId) :
+               new ObjectParameter("SalesmanId", typeof(int));
+
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SSP_Loan_Result>("SSP_Loan", userIDParameter, branchIdParameter, fromDateParameter, toDateParameter, startRowIndexParameter, pageSizeParameter, colSortParameter, orderByParameter,SalesmanIdParameter);
         }
     
         public virtual ObjectResult<SSP_LoanReport_Result> SSP_LoanReport(Nullable<int> employeeId, Nullable<int> employeeType, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)

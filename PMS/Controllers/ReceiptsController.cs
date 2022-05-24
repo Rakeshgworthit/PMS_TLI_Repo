@@ -41,9 +41,11 @@ namespace PMS.Controllers
             {
                 objView.UID = User.Identity.GetUserId();
             }
+            ViewBag.IsAdminLogin = 1;
             if (User.IsInRole("Salesman"))
             {
                 objView.ProjectSalesmenId = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);
+                ViewBag.IsAdminLogin = 0;
             }
 
             DateTime now = DateTime.Now;
@@ -150,6 +152,20 @@ namespace PMS.Controllers
                 objView.projectList = new List<SelectListItem>();
                 objView.invoiceList = new List<SelectListItem>();
                 objView.bank_id = SessionManagement.SelectedBranchBankId;
+            }
+            if (User.IsInRole("SuperAdmin"))
+            {
+                objView.UID = "00000000-0000-0000-0000-000000000000";
+            }
+            else
+            {
+                objView.UID = User.Identity.GetUserId();
+            }
+            ViewBag.IsAdminLogin = 1;
+            if (User.IsInRole("Salesman"))
+            {
+                objView.sales_man_id = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);
+                ViewBag.IsAdminLogin = 0;
             }
 
             objView.bankList = CommonFunction.BankList();

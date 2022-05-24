@@ -177,6 +177,11 @@
 
         $("#Invoice_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
         $('#Invoice_date').removeAttr("data-val-date");
+
+        var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 0) {
+            $("#Sales_person").prop("disabled", true);
+        }
     });
     $(document).ready(function () {
         //CalculateTotalAmtAfterDiscount();
@@ -184,7 +189,10 @@
             $('#frmInvoice').find("#Company_id").attr('disabled', 'disabled');
             $('#frmInvoice').find("#Bill_to").attr('disabled', 'disabled');
         }
-
+        var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 0) {
+            $("#Sales_person").prop("disabled", true);
+        }
         //$(".item_project").change(function () {
         //    GetProjectDescription(this)
         //});
@@ -290,19 +298,19 @@
     }
 
     function CalculateAmount() {
-       
+
         var tax = $("#tax").val();
         var calculated_total_sum = 0;
         $("#tblbody .item_amount").each(function () {
             var get_textbox_value = $(this).val();
             if ($.isNumeric(get_textbox_value)) {
-                calculated_total_sum += parseFloat((get_textbox_value * tax)/100);               
+                calculated_total_sum += parseFloat((get_textbox_value * tax)/100);
             }
         });
         $("#tax_amount").val(calculated_total_sum.toFixed(2));
         }
 
-  
+
 </script>
 
 

@@ -24,23 +24,25 @@
                 <div class="well">
                     @using (Html.BeginForm("Index", "Loan", FormMethod.Post, new { id = "SearchForm", name = "SearchForm" }))
                     {
-                        <div class="form-inline">
-                            <div class="form-group ">
-                                <input id="SearchFrom" name="SearchFrom" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.SearchFrom).ToString("dd/MM/yyyy")" />
-                            </div>
-                            <div class="form-group">
-                                <input id="SearchTo" name="SearchTo" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.SearchTo).ToString("dd/MM/yyyy")" />
-                            </div>
-
-                            <input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
-                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <div class="form-inline">
+                        <div class="form-group ">
+                            <input id="SearchFrom" name="SearchFrom" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.SearchFrom).ToString("dd/MM/yyyy")" />
                         </div>
+                        <div class="form-group">
+                            <input id="SearchTo" name="SearchTo" class="form-control" style="width:100px" value="@Convert.ToDateTime(Model.SearchTo).ToString("dd/MM/yyyy")" />
+                        </div>
+
+                        <input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
+                        <input type="hidden" id="SalesmanId" name="SalesmanId" value="@Model.SalesmanId" />
+                        <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
                     }
                 </div>
                 <div class="responsive-table">
                     <input type="hidden" id="branch_id" name="branch_id" value="@PMS.Common.SessionManagement.SelectedBranchID" />
 
-                    @Html.MVCGrid("LoanGrid", new { hdnUID = Model.UID, brId = PMS.Common.SessionManagement.SelectedBranchID, SearchFrom = Model.SearchFrom, SearchTo = Model.SearchTo })
+                    @Html.MVCGrid("LoanGrid", new { hdnUID = Model.UID, brId = PMS.Common.SessionManagement.SelectedBranchID, SearchFrom = Model.SearchFrom, SearchTo = Model.SearchTo , SalesmanId =Model.SalesmanId})
+                
                 </div>
             </div>
         </div>

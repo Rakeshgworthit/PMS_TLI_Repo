@@ -73,7 +73,7 @@
         return er.test(value);
     }
 
-    function SavePaymentForm(actiontype) {        
+    function SavePaymentForm(actiontype) {
         var chval = false;
         //if (String($("#payment_mode").val()) == "4" && $("#cheque_number").val() == "" && ($("#bank_id").val() == "" || $("#bank_id").val() == "0")) {
         //    $(".chequenumbervalidation").show();
@@ -93,16 +93,16 @@
         //    if (isNumber($("#cheque_number").val()) == false) {
         //        $(".chequenumbervalidation").show();
         //        chval = true;
-        //    } 
+        //    }
         //}
         //else {
         //    chval = false;
         //    $(".chequenumbervalidation").hide();
         //    $(".bankvalidation").hide();
         //}
-        var form = $('#frmPayment');        
-        $.validator.unobtrusive.parse(form);       
-        if (form.valid() && chval==false) {          
+        var form = $('#frmPayment');
+        $.validator.unobtrusive.parse(form);
+        if (form.valid() && chval==false) {
             var jsonData = {
                 id: $('#frmPayment').find("#id").val(),
                 payment_date: $('#frmPayment').find("#payment_date").val(),
@@ -127,7 +127,7 @@
                 var agreed_amount_val = $(this).find(".agreed_amount").val();
                 var loan_amount_val = $(this).find(".loan_amount").val();
                 jsonData.payment_details.push({
-                    invoice_id: invoice_id,                    
+                    invoice_id: invoice_id,
                     payment_amount: payment_amount_val,
                     agreed_amount: agreed_amount_val,
                     loan_amount: loan_amount_val,
@@ -171,8 +171,8 @@
 
         //    var jsonDatachkExisting = {
         //        id: $('#frmPayment').find("#id").val(),
-        //        supplier_id: $('#frmPayment').find("#supplier_id").val(),              
-        //       // project_id: $('#frmPayment').find("#project_id").val(),              
+        //        supplier_id: $('#frmPayment').find("#supplier_id").val(),
+        //       // project_id: $('#frmPayment').find("#project_id").val(),
         //        payment_details_chk_Existing: []
         //    };
         //    $("#tblbody tr").each(function () {
@@ -183,7 +183,7 @@
         //            project_id: project_id_val,
         //        });
         //    });
-           
+
         //    var paymentReturnID = "";
         //    $.loader({ content: "<img src='/Content/img/Preloader_3.gif' />" });
 
@@ -193,8 +193,8 @@
         //        url: "/Payments/CheckExistingPayment", // the URL of the controller action method
         //        data: "payobjchkExist=" + JSON.stringify(jsonDatachkExisting), // optional data
         //        success: function (result) {
-        //            $.loader('close');                    
-        //            if (result != "0") {                        
+        //            $.loader('close');
+        //            if (result != "0") {
         //                if (confirm("There is a payment for this supplier in this project, do you want to add another payment?"))
         //                {
         //                    AddNewRecord = true;
@@ -236,12 +236,12 @@
         //                });
         //            }
         //        },
-        //        error: function (req, status, error) {                    
+        //        error: function (req, status, error) {
         //            $.loader('close');
         //            notify(error, "error");
         //        }
         //    });
-            
+
         }
     }
 
@@ -315,7 +315,7 @@
             });
         }
     }
-   
+
     function FillPaymentDropdown(obj) {
         $("#supplier_id").html("");
         var options = $("#supplier_id");
@@ -335,6 +335,11 @@
 
         $("#SearchTo").datepicker({ changeMonth: true, changeYear: true, dateFormat: "dd/mm/yy" });
         $('#SearchTo').removeAttr("data-val-date");
+
+        var IsAdminLogin = '@ViewBag.IsAdminLogin';
+        if (IsAdminLogin == 0) {
+            $("#ProjectSalesmenId").prop("disabled", true);
+        }
     });
 
     function isNumber(n) {

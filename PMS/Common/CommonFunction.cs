@@ -9,6 +9,8 @@ using PMS.Database;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using PMS.Models;
+using static PMS.Models.InvoiceViewModel;
 
 namespace PMS.Common
 {
@@ -1195,6 +1197,63 @@ namespace PMS.Common
             Conn.Close();
         }
 
+        public static void SaveDocument(string fileName,int ProjectId,string extension,string DocPath,int ItemId )
+        {
+            using (var Conn = Common.CommonFunction.GetConnection())
+            {
+                SqlCommand cmd = new SqlCommand("Upsert_project_Document", Conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@DOCUMENT_NAME", fileName);
+                cmd.Parameters.AddWithValue("@ACTIVITY_TYPE", 0);
+                cmd.Parameters.AddWithValue("@SUB_ACTIVITY_TYPE", 0);
+                cmd.Parameters.AddWithValue("@REMARKS", "");
+                cmd.Parameters.AddWithValue("@ACTIVE_FLAG", 1);
+                cmd.Parameters.AddWithValue("@CREATED_BY", 1);
+                cmd.Parameters.AddWithValue("@SUPER_ID", ProjectId);
+                cmd.Parameters.AddWithValue("@ID", 11);
+                cmd.Parameters.AddWithValue("@ID_TYPE", 7);
+                cmd.Parameters.AddWithValue("@SUBDETAILS_ID", 0);
+                cmd.Parameters.AddWithValue("@SUBSUBDETAILS_ID", 0);
+                cmd.Parameters.AddWithValue("@FILE_TYPE", extension);
+                cmd.Parameters.AddWithValue("@DOCUMENT_CONTENT_TYPE_ID", 0);
+                cmd.Parameters.AddWithValue("@DOCUMENT_PATH ", DocPath);
+                cmd.Parameters.AddWithValue("@DOC_CONFIG_ID ", 1);
+                cmd.Parameters.AddWithValue("@COMPANY_ID ", 1);
+                cmd.Parameters.AddWithValue("@PROJECT_BUDGET_DETAILS_ID ", ItemId);
+                cmd.ExecuteNonQuery();
+                Common.CommonFunction.CloseConnection(Conn);
+            }
+        }
 
+        public static int GetSupplierInvoiceItemId(int InvoiceId,int ProjectId,int SalemanId,string InvoiceNumber)
+        {
+            int ItemId = 0;
+            try
+            {
+
+                using (var Conn = Common.CommonFunction.GetConnection())
+                {
+                    SqlCommand cmd = new SqlCommand("SSP_GetSupplierInvoiceItemId", Conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@inInvoiceId", InvoiceId);
+                    cmd.Parameters.AddWithValue("@inSalesmenId", SalemanId);
+                    cmd.Parameters.AddWithValue("@inProjectId", ProjectId);
+                    cmd.Parameters.AddWithValue("@inInvoiceNumber", InvoiceNumber);
+                    IDataReader ireader = cmd.ExecuteReader();
+                    while (ireader.Read())
+                    {
+                        ItemId = ireader.GetInt32(0);
+                    }
+                    Common.CommonFunction.CloseConnection(Conn);
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return ItemId;
+        }
+
+        
     }
 }

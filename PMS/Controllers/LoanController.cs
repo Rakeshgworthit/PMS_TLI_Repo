@@ -33,7 +33,10 @@ namespace PMS.Controllers
             {
                 objView.UID = User.Identity.GetUserId();
             }
-
+            if (User.IsInRole("Salesman"))
+            {
+                objView.SalesmanId = Common.CommonFunction.GetSalesmanIdByUser(objView.UID);                
+            }
             DateTime now = DateTime.Now;
             var startDate = new DateTime(now.Year, now.Month, 1);
             var endDate = startDate.AddMonths(1).AddDays(-1);
