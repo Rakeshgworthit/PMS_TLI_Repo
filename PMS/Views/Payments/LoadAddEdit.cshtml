@@ -303,25 +303,28 @@
         $(".ddlproject_id").width(260);
     });
     $(document).ready(function () {
+        debugger;
         CalculateTotalAmtAfterDiscount(0);
+        GetRebateAmt();
         //$('#LoanTotalamount').text($('#hdnloanTotal').val());
-
+        
         if ($("#id").val() != "0") {
+            $("#supplier_id").prop("disabled", true);
             //LoanAmtCalculation(id);
         }
     });
 
     function AddNew() {
+        debugger;
         var projectDropDownHTML = String($("#invoice_id1").html());
         var idval = $("#maintainID").val();
         var idnum = parseInt(idval) + 1;
         var addnewHtML = "";
         var gstpercentagevalue = String($("#hdngst_percentage").val());
         addnewHtML = "<tr id='tr" + idnum + "'>";
+         //addnewHtML = addnewHtML + "<td><input type='number' id='loan_amount" + idnum + "' name='loan_amount" + idnum + "' class='loan_amount form-control' onkeyup='LoanAmtCalculation(" + idnum + ");'  onkeyup='onkeydown(" + idnum + ");'/></td>";
+
         addnewHtML = addnewHtML + "<td><select id='invoice_id" + idnum + "' name='invoice_id" + idnum + "' class='invoice_id form-control' onchange='FillInvAmt(" + idnum + ");'>" + projectDropDownHTML + "</select></td>";
-
-        //addnewHtML = addnewHtML + "<td><input type='number' id='loan_amount" + idnum + "' name='loan_amount" + idnum + "' class='loan_amount form-control' onkeyup='LoanAmtCalculation(" + idnum + ");'  onkeyup='onkeydown(" + idnum + ");'/></td>";
-
         addnewHtML = addnewHtML + "<td><input  id='agreed_amount" + idnum + "' name='agreed_amount" + idnum + "' class='agreed_amount form-control amount' /></td>";
         addnewHtML = addnewHtML + "<td><input id='payment_amount" + idnum + "' name='payment_amount" + idnum + "' class='payment_amount form-control amount' onkeyup='CalculateGSTTotalAmount(" + idnum + ")' onkeydown='CalculateGSTTotalAmount(" + idnum + ")' /></td>";
 
@@ -335,14 +338,16 @@
         $(".ddlproject_id").width(260);
     }
     function RemoveElement(idnum) {
+        debugger;
         $("#tr" + idnum).remove();
-        CalculateTotalAmtAfterDiscount(0);
+        CalculateTotalAmtAfterDiscount(idnum);
         //LoanAmtCalculation(id);
     }
 
 
     /* Not in use  */
     function CalculateGSTTotalAmount(idctrl) {
+        debugger;
         //var camount = $("#invoice_amount"+ idctrl +"").val();
         //$("#total_amount" + idctrl + "").val(camount);
         //var gstp = $("#gst_percentage" + idctrl + "").val();
@@ -374,11 +379,11 @@
         //    $("#gst_amount" + idctrl + "").val(GST);
         //    $("#invoice_amount" + idctrl + "").val(CAmount)
         //}
-        CalculateTotalAmtAfterDiscount(1);
+        CalculateTotalAmtAfterDiscount(idctrl);
     }
 
     function CalculateTotalAmtAfterDiscount(_obj) {
-
+        /*debugger;*/
         if (_obj == 0 && parseFloat($("#rebate_per").val()) > 0) {
             $("#rebate_per").val(0);
         }
@@ -395,7 +400,10 @@
         }
 
         if (parseFloat(totalamount) > 0) {
+            debugger;
+            var Rebate = $("#rebate_per").val();
             if (parseFloat($("#rebate_per").val()) > 0) {
+                
                 //alert(totalamount);
                 // alert($("#rebate_per").val());
                 //debugger;
@@ -493,7 +501,9 @@
     }
 
     function GetRebateAmt() {
-        if ($("#supplier_id").val() > 0 && $("#id").val() == "0") {
+        debugger;
+        if ($("#supplier_id").val() > 0 )//&& $("#id").val() == "0")
+        {
             $.ajax({
                 type: "POST",
                 url: "/Payments/GetSupplierRebateAmt", // the URL of the controller action method
@@ -502,7 +512,9 @@
                 },
                 success: function (result) {
                     //alert(result);
+                   
                     $("#rebate_per").val(result);
+                    var results = result;
                     ///this will work if new record insert
                     if ($("#id").val() == "0") {
                         CalculateTotalAmtAfterDiscount();
@@ -513,7 +525,7 @@
                 }
             });
 
-            $(".invoice_id option").remove();
+           // $(".invoice_id option").remove();
             $.getJSON("/Payments/GetInvoiceList?Id=" + $("#supplier_id").val() + "", function (response) {
                 $.each(response, function () {
                     // debugger;
